@@ -22,7 +22,7 @@ export const signStyle = StyleSheet.create({
     width: styleSizes.bigButton.width,
   },
   buttonLink: {
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
   },
   buttonLinkText: {
     color: "#000",

@@ -13,33 +13,29 @@ import { signUpStyles } from "../styles/styles";
 
 const SignUpForm = () => {
   return (
-    <VStack style={signUpStyles.container}>
+    <VStack style={signUpStyles.formStackContainer}>
       <Box style={signUpStyles.box}>
         <FormControl isRequired>
           <FormControl.Label>Full Name</FormControl.Label>
-          <Input
-            placeholder="i.e. James Jhonson"
-            variant="outline"
-            style={signUpStyles.input.width}
-          />
+          <Input placeholder="i.e. James Jhonson" variant="outline" h={35} />
         </FormControl>
       </Box>
       <Box style={signUpStyles.box}>
         <FormControl isRequired>
           <FormControl.Label>Create Password</FormControl.Label>
-          <Input placeholder="Your Password" variant="outline" />
+          <Input placeholder="Your Password" variant="outline" h={35} />
         </FormControl>
       </Box>
       <Box style={signUpStyles.box}>
         <FormControl isRequired>
           <FormControl.Label>ReType Password</FormControl.Label>
-          <Input placeholder="Your Password" variant="outline" />
+          <Input placeholder="Your Password" variant="outline" h={35} />
         </FormControl>
       </Box>
       <Box style={signUpStyles.box}>
         <FormControl isRequired>
           <FormControl.Label>Email</FormControl.Label>
-          <Input placeholder="Email Address" variant="outline" />
+          <Input placeholder="Email Address" variant="outline" h={35} />
         </FormControl>
       </Box>
       <Box style={signUpStyles.box}>
