@@ -4,26 +4,31 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SplashScreen = ({navigation}) => {
 
-    const [isFirstLaunch, setIsFirstLaunch] = useState(true)
-
     const checkFirstLaunch = async () => {
         const result = await AsyncStorage.getItem('isFirstTimeOpen')
+        console.log('check', result)
         if(result == null) {
-            setIsFirstLaunch(true)
+            return true
         } else {
-            setIsFirstLaunch(false)
+            return false
         }
     }
 
-    useEffect(async () => {
-        checkFirstLaunch() 
-
-        setTimeout(() => {
-            navigation.replace(isFirstLaunch ? 'Onboarding' : 'Main')
-        }, 5000);
-
+    useEffect(() => {
+        ;(async() => {
+        const isFirst = await checkFirstLaunch()
+        
+        if(isFirst) {
+            setTimeout(() => { 
+                navigation.replace('Onboarding')
+            }, 5000);
+        } else {
+            setTimeout(() => { 
+                navigation.replace('Sign')
+            }, 5000);
+        }
+        })()
     }, [])
-
 
 
     return (
