@@ -1,9 +1,11 @@
 import { screenWidth, screenHeight } from "../services/layout";
 import { StyleSheet } from "react-native";
+import { styleSizes } from "./styleSizes";
 
 export const signStyle = StyleSheet.create({
   screenContanier: {
     height: screenHeight,
+    width: screenWidth,
     padding: 10,
   },
   heading: {
@@ -17,10 +19,10 @@ export const signStyle = StyleSheet.create({
   },
   button: {
     margin: 3,
-    width: screenWidth / 2,
+    width: styleSizes.bigButton.width,
   },
   buttonLink: {
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
   },
   buttonLinkText: {
     color: "#000",

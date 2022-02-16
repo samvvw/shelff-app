@@ -1,15 +1,15 @@
-import { NativeBaseProvider } from 'native-base'
-import AppStack from './src/stacks/AppStack'
-
+import { NativeBaseProvider, StatusBar } from "native-base";
+import AppStack from "./src/stacks/AppStack";
+import { SSRProvider } from "@react-aria/ssr";
 
 const App = () => {
-
   return (
-    <NativeBaseProvider>
-      <AppStack />
-    </NativeBaseProvider>
+    <SSRProvider>
+      <NativeBaseProvider>
+        <AppStack />
+      </NativeBaseProvider>
+    </SSRProvider>
+  );
+};
 
-  )
-}
-
-export default App
+export default App;
