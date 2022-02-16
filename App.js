@@ -1,11 +1,15 @@
-import { NativeBaseProvider, StatusBar } from "native-base";
+import { NativeBaseProvider } from 'native-base'
+import AppStack from './src/stacks/AppStack'
 
-import Sign from "./src/screens/Sign";
 
-export default function App() {
+const App = () => {
+
   return (
     <NativeBaseProvider>
-      <Sign />
+      <AppStack />
     </NativeBaseProvider>
-  );
+
+  )
 }
+
+export default App
