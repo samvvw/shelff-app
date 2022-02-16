@@ -2,7 +2,7 @@ import { NativeBaseProvider, StatusBar } from "native-base";
 import AppStack from "./src/stacks/AppStack";
 import { SSRProvider } from "@react-aria/ssr";
 
-export default function App() {
+const App = () => {
   return (
     <SSRProvider>
       <NativeBaseProvider>
@@ -10,4 +10,6 @@ export default function App() {
       </NativeBaseProvider>
     </SSRProvider>
   );
-}
+};
+
+export default App;
