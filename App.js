@@ -1,11 +1,14 @@
 import { NativeBaseProvider, StatusBar } from "native-base";
+import { SSRProvider } from "@react-aria/ssr";
 
-import Sign from "./src/screens/Sign";
+import SignUp from "./src/screens/SignUp";
 
 export default function App() {
   return (
-    <NativeBaseProvider>
-      <Sign />
-    </NativeBaseProvider>
+    <SSRProvider>
+      <NativeBaseProvider>
+        <SignUp />
+      </NativeBaseProvider>
+    </SSRProvider>
   );
 }
