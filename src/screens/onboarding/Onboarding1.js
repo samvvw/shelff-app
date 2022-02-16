@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const Onboarding1 = ({navigation, handleNext}) => {
 
     const toMain = () => {
-        navigation.replace('Main')
+        navigation.replace('Sign')
         AsyncStorage.setItem('isFirstTimeOpen', 'no')
     }
 
