@@ -7,6 +7,8 @@ import {
   Text,
   Box,
   Checkbox,
+  Container,
+  View,
 } from "native-base";
 
 import { signUpStyles } from "../styles/styles";
@@ -39,15 +41,15 @@ const SignUpForm = () => {
         </FormControl>
       </Box>
       <Box style={signUpStyles.box}>
-        <Text>
+        <Text style={signUpStyles.textPriority}>
           Shelff’s priority is your privacy. We will never sell or give your
           information to third parties.
         </Text>
       </Box>
 
       <Box style={signUpStyles.box}>
-        <Checkbox>
-          <Text style={signUpStyles.checkbox}>
+        <Checkbox style={signUpStyles.checkbox}>
+          <Text style={signUpStyles.checkboxText}>
             I have read and agree to Shelff’s Terms of Service
           </Text>
         </Checkbox>
