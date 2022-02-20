@@ -1,5 +1,5 @@
 import { SSRProvider } from "@react-aria/ssr";
-import { NativeBaseProvider, StatusBar } from "native-base";
+import { NativeBaseProvider, StatusBar, extendTheme } from "native-base";
 import AppStack from "./src/stacks/AppStack";
 
 import React, {useState} from "react";
@@ -19,6 +19,32 @@ import { useFonts } from 'expo-font';
 //   })
 // }
 
+//for native-base font customization
+//https://docs.nativebase.io/customizing-fonts
+//https://github.com/GeekyAnts/NativeBase/issues/4406
+const theme = extendTheme({
+  fontConfig: {
+    googleSans: {
+        regular: {
+            normal: 'GoogleSans-Regular',
+            italic: 'GoogleSans-Italic',
+        },
+        medium: {
+            normal: 'GoogleSans-Medium',
+            italic: 'GoogleSans-MediumItalic',
+        },
+        bold: {
+            normal: 'GoogleSans-Bold',
+            italic: 'GoogleSans-BoldItalic',
+        },
+    }
+  },
+  fonts: {
+    heading: 'googleSans',
+    body: 'googleSans',
+    mono: 'googleSans',
+  },
+});
 
 const App = () => {
 
@@ -52,7 +78,7 @@ const App = () => {
 
   return (
     <SSRProvider>
-      <NativeBaseProvider>
+      <NativeBaseProvider theme={theme}>
         <AppStack />
       </NativeBaseProvider>
     </SSRProvider>
