@@ -4,10 +4,14 @@ import { styleSizes } from "./styleSizes";
 export const signUpStyle = StyleSheet.create({
   heading: {
     padding: 10,
+    fontSize: 24,
   },
   formStackContainer: {
-    width: styleSizes.screen.width,
-    padding: 10,
+    // padding: 10,
+
+    // width: "100%",
+    flex: 1,
+    margin: 0,
   },
   input: {
     width: styleSizes.formInput.width,
@@ -15,12 +19,24 @@ export const signUpStyle = StyleSheet.create({
   },
   box: {
     paddingBottom: 10,
+    padding: 10,
   },
   button: {
     marginTop: 10,
+    fontSize: 16,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  textPriority: {
+    fontSize: 12,
+    marginLeft: 27,
+    marginRight: 27,
   },
   checkbox: {
-    paddingLeft: 10,
+    alignContent: "flex-start",
+  },
+  checkboxText: {
+    marginLeft: 10,
     fontSize: 12,
   },
   alreadyAccount: {
@@ -30,8 +46,10 @@ export const signUpStyle = StyleSheet.create({
   buttonLogin: {
     backgroundColor: "transparent",
     color: "#d3d3d3",
+    fontSize: 16,
   },
   hStack: {
     alignItems: "center",
+    paddingBottom: 20,
   },
 });

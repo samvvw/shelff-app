@@ -1,5 +1,5 @@
 import react from "react";
-import { Text, Box, Button, VStack, Center, Heading } from "native-base";
+import { Text, Box, Button, VStack, Center, View, Heading } from "native-base";
 import { signStyles } from "../styles/styles";
 
 const Sign = ({ navigation }) => {
@@ -7,11 +7,13 @@ const Sign = ({ navigation }) => {
     navigation.push("SignUp");
   };
   return (
-    <VStack style={signStyles.screenContanier}>
-      <Center>
-        <Heading style={signStyles.heading}>
-          <Text style={signStyles.headingText}>Shelff</Text>
-        </Heading>
+    <View style={signStyles.screenContanier}>
+      <VStack style={signStyles.stack}>
+        <Center>
+          <Heading style={signStyles.heading}>
+            <Text style={signStyles.headingText}>Shelff</Text>
+          </Heading>
+        </Center>
         <Text>
           Lorem ipsum dolor sit amet, consectetur adipiscing dolor sit amet
           elit.
@@ -22,13 +24,16 @@ const Sign = ({ navigation }) => {
           </Button>
           <Button style={signStyles.button}>Continue with Google</Button>
         </Box>
-        <Box>
+
+        <Box style={signStyles.loginButtonBox}>
           <Button style={signStyles.buttonLink}>
-            <Text style={signStyles.buttonLinkText}>Log In &gt;</Text>
+            <Center>
+              <Text style={signStyles.buttonLinkText}>Log In &gt;</Text>
+            </Center>
           </Button>
         </Box>
-      </Center>
-    </VStack>
+      </VStack>
+    </View>
   );
 };
 

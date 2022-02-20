@@ -1,4 +1,4 @@
-import { screenWidth, screenHeight } from "../services/layout";
+import { screenWidth, screenHeight } from "../layout/layout";
 import { StyleSheet } from "react-native";
 import { styleSizes } from "./styleSizes";
 
@@ -8,18 +8,28 @@ export const signStyle = StyleSheet.create({
     width: screenWidth,
     padding: 10,
   },
+  stack: {
+    height: screenHeight,
+  },
   heading: {
-    paddingTop: 180,
+    paddingTop: 100,
   },
   headingText: {
     fontSize: 72,
   },
   buttonBox: {
-    marginTop: screenHeight / 2.7,
+    position: "absolute",
+    bottom: 70,
+  },
+  loginButtonBox: {
+    position: "absolute",
+    bottom: 30,
+
+    width: screenWidth,
   },
   button: {
     margin: 3,
-    width: styleSizes.bigButton.width,
+    width: screenWidth - 20,
   },
   buttonLink: {
     backgroundColor: "transparent",
