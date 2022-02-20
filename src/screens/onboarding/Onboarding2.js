@@ -1,29 +1,42 @@
 import React from 'react'
-import {Flex, Image, Text, Button} from 'native-base'
+import {View, Image, Text, TouchableOpacity} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { onboardingStyles } from "../../styles/styles";
 
 
-const Onboarding2 = ({navigation, handleNext}) => {
-
-    const toMain = () => {
-        navigation.replace('Sign')
-        AsyncStorage.setItem('isFirstTimeOpen', 'no')
-    }
+const Onboarding2 = ({navigation, handleNext, handleSkip}) => {
 
     const toNext = () => {
         handleNext()
     }
 
+    const toGetStarted = () => {
+        handleSkip()
+    }
+
     return (
-        <Flex alignItems='center'>
-            <Image source={require('../../../assets/images/onboarding/onboarding2.jpg')} alt='onboarding2' height='60%'/>
-            <Text mt='12' mb='5' fontSize='25'>Feature B</Text>
-            <Text w='80%' fontSize='16'>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</Text>
-            <Flex flexDirection="row" justifyContent="space-between" alignItems='center' w='80%' my='5'>
-                <Text onPress={toMain} w='30%'>SKIP</Text>
-                <Button onPress={toNext} w='30%'>NEXT</Button>
-            </Flex>
-        </Flex>
+        <View style={onboardingStyles.screenContanier}>
+            <Image 
+                source={require('../../../assets/images/onboarding/onboarding2.jpg')} 
+                alt='onboarding2'
+                style={onboardingStyles.image}    
+            />
+            <View style={onboardingStyles.wrapper}>
+                <View style={onboardingStyles.textWrapper}>
+                    <Text style={onboardingStyles.heading}>How to Discard Items</Text>
+                    <Text style={onboardingStyles.text}>It is a long established fact that a reader will be distracted by the readable content of a page.</Text>
+                </View>
+                <View style={onboardingStyles.buttonWrapper}>
+                    <TouchableOpacity
+                        onPress={toNext} 
+                        style={onboardingStyles.button}
+                    >
+                        <Text style={onboardingStyles.buttonText}>Continue</Text>
+                    </TouchableOpacity>
+                    <Text onPress={toGetStarted} style={onboardingStyles.skip}>Skip</Text>
+                </View>
+            </View>
+        </View>
     )
 }
 

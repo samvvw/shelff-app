@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { screenWidth, screenHeight } from "../services/layout";
+import { screenWidth, screenHeight } from "../layout/layout";
 
 export const styleSizes = StyleSheet.create({
   bigButton: {
@@ -11,5 +11,9 @@ export const styleSizes = StyleSheet.create({
   screen: {
     width: screenWidth,
     height: screenHeight,
+  },
+  button: {
+    height: 50,
+    borderRadius: 10,
   },
 });

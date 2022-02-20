@@ -7,13 +7,17 @@ import {
   Button,
   Heading,
   Box,
+  ScrollView,
 } from "native-base";
 import SignUpForm from "../forms/SignUpForm";
 import { signUpStyles } from "../styles/styles";
 
-const SignUp = () => {
+const SignUp = ({ navigation }) => {
+  const handleLogIn = () => {
+    navigation.push("LogIn");
+  };
   return (
-    <Container>
+    <ScrollView>
       <Box style={signUpStyles.heading}>
         <Heading>Create and Account</Heading>
         <Heading size="sm">Welcome to Shelff</Heading>
@@ -23,12 +27,12 @@ const SignUp = () => {
       <Center style={signUpStyles.alreadyAccount}>
         <HStack style={signUpStyles.hStack}>
           <Text>Already have an account?</Text>
-          <Button style={signUpStyles.buttonLogin}>
+          <Button onPress={handleLogIn} style={signUpStyles.buttonLogin}>
             <Text style={signUpStyles.buttonLogin}>Login</Text>
           </Button>
         </HStack>
       </Center>
-    </Container>
+    </ScrollView>
   );
 };
 

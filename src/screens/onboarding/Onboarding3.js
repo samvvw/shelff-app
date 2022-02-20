@@ -1,24 +1,38 @@
 import React from 'react'
-import {Flex, Image, Text, Button} from 'native-base'
+import {View, Image, Text, TouchableOpacity} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { onboardingStyles } from "../../styles/styles";
 
 
-const Onboarding3 = ({navigation}) => {
+const Onboarding3 = ({navigation, handleSkip}) => {
 
-    const toMain = () => {
-        navigation.replace('Sign')
-        AsyncStorage.setItem('isFirstTimeOpen', 'no')
+    const toGetStarted = () => {
+        handleSkip()
     }
 
     return (
-        <Flex alignItems='center'>
-            <Image source={require('../../../assets/images/onboarding/onboarding3.jpg')} alt='onboarding3' height='60%'/>
-            <Text mt='12' mb='5' fontSize='25'>Feature C</Text>
-            <Text w='80%' fontSize='16'>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</Text>
-            <Flex flexDirection="row" justifyContent="flex-end" alignItems='center' w='80%' my='5'>
-                <Button onPress={toMain} w='30%'>NEXT</Button>
-            </Flex>
-        </Flex>
+        <View style={onboardingStyles.screenContanier}>
+            <Image 
+                source={require('../../../assets/images/onboarding/onboarding3.jpg')} 
+                alt='onboarding3'
+                style={onboardingStyles.image}    
+            />
+            <View style={onboardingStyles.wrapper}>
+                <View style={onboardingStyles.textWrapper}>
+                    <Text style={onboardingStyles.heading}>Learn Preservation Tips</Text>
+                    <Text style={onboardingStyles.text}>It is a long established fact that a reader will be distracted by the readable content of a page.</Text>
+                </View>
+                <View style={onboardingStyles.buttonWrapper}>
+                    <TouchableOpacity
+                        onPress={toGetStarted} 
+                        style={onboardingStyles.button}
+                    >
+                        <Text style={onboardingStyles.buttonText}>Continue</Text>
+                    </TouchableOpacity>
+                    <Text onPress={toGetStarted} style={onboardingStyles.skip}>Skip</Text>
+                </View>
+            </View>
+        </View>
     )
 }
 
