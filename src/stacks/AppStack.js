@@ -16,26 +16,21 @@ const AppStack = () => {
       <Stack.Navigator>
         {/* <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} /> */}
-
         <Stack.Screen
           name="LogIn"
           component={LogIn}
           options={{ headerShown: true }}
         />
-
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Sign"
           component={Sign}
           options={{ headerShown: false }}
-        /> */}
-
-        {/* 
+        />
         <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={{ headerShown: true }}
-        />{" "}
-        */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

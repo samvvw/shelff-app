@@ -1,4 +1,4 @@
-import { screenWidth, screenHeight } from "../services/layout";
+import { screenWidth, screenHeight } from "../layout/layout";
 import { StyleSheet } from "react-native";
 // import { styleSizes } from "./styleSizes";
 
@@ -9,14 +9,10 @@ export const loginInStyle = StyleSheet.create({
     padding: 16,
   },
   heading: {
-    // padding: 10
-    padding: 0,
     marginTop: 21,
-    backgroundColor: "red",
-    height: 50,
-    alignContent: "flex-end",
   },
   hedingText: {
+    paddingTop: 10,
     fontSize: 24,
   },
   input: {},
@@ -27,20 +23,42 @@ export const loginInStyle = StyleSheet.create({
     fontSize: 14,
   },
   box: {
-    marginTop: 24,
+    marginTop: 20,
   },
-  forgotPassword: {
-    backgroundColor: "transparent",
-  },
+
   forgotPasswordText: {
     width: screenWidth - 32,
     textAlign: "right",
     color: "blue",
+    fontSize: 11,
   },
   buttonsBox: {
     marginTop: 46,
   },
   buttonText: {
     fontSize: 17,
+  },
+  boxTerm: {
+    marginTop: 42,
+    borderBottomColor: "gray",
+    borderStyle: "solid",
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+  },
+
+  termsText: {
+    fontSize: 12,
+  },
+  buttonTermsText: {
+    color: "blue",
+    fontSize: 12,
+    marginLeft: 7,
+  },
+  signUpText: {
+    fontSize: 16,
+  },
+  signUptext: {
+    color: "blue",
+    marginLeft: 12,
   },
 });
