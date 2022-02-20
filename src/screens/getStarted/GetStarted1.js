@@ -1,42 +1,43 @@
 import React from 'react'
 import {View, Image, Text, TouchableOpacity} from 'react-native'
-import { onboardingStyles } from "../../styles/styles";
+import { onboardingStyles } from "../../styles/styles";   
 
 
-const Onboarding1 = ({navigation, handleNext, handleSkip}) => {
+const GetStarted1 = ({navigation, handleNext, handleSign}) => {
 
     const toNext = () => {
         handleNext()
     }
 
-    const toGetStarted = () => {
-        handleSkip()
+    const toSign = () => {
+        handleSign()
     }
 
     return (
         <View style={onboardingStyles.screenContanier}>
             <Image 
-                source={require('../../../assets/images/onboarding/onboarding1.jpg')} 
-                alt='onboarding1'
+                source={require('../../../assets/images/onboarding/onboarding4.jpg')} 
+                alt='Get Started'
                 style={onboardingStyles.image}    
             />
             <View style={onboardingStyles.wrapper}>
                 <View style={onboardingStyles.textWrapper}>
-                    <Text style={onboardingStyles.heading}>How to Add New Item</Text>
-                    <Text style={onboardingStyles.text}>It is a long established fact that a reader will be distracted by the readable content of a page.</Text>
+                    <Text style={onboardingStyles.text}>Welcome to Shelff a food management program that adapts to you.</Text>
                 </View>
                 <View style={onboardingStyles.buttonWrapper}>
                     <TouchableOpacity
                         onPress={toNext} 
                         style={onboardingStyles.button}
                     >
-                        <Text style={onboardingStyles.buttonText}>Continue</Text>
+                        <Text style={onboardingStyles.buttonText}>Get Started</Text>
                     </TouchableOpacity>
-                    <Text onPress={toGetStarted} style={onboardingStyles.skip}>Skip</Text>
+                    <Text>Already have an account?
+                        <Text onPress={toSign} style={onboardingStyles.skip}>  Login</Text>
+                    </Text>
                 </View>
             </View>
         </View>
     )
 }
 
-export default Onboarding1
+export default GetStarted1

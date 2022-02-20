@@ -5,9 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const SplashScreen = ({navigation}) => {
 
     const checkFirstLaunch = async () => {
-        const result = await AsyncStorage.getItem('isFirstTimeOpen')
-        console.log('check', result)
-        if(result == null) {
+        AsyncStorage.clear() //to check onboarding
+        const firstTimeCheck = await AsyncStorage.getItem('isFirstTimeOpen')
+        console.log('firstTimeCheck', firstTimeCheck)
+        if(firstTimeCheck == null) {
             return true
         } else {
             return false
