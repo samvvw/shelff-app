@@ -3,10 +3,14 @@ import {View, Text, TouchableOpacity} from 'react-native'
 import { getStartedStyles } from "../../styles/styles";
 
 
-const GetStarted2 = ({navigation, handleNext}) => {
+const GetStarted2 = ({navigation, handleNext, handleMain}) => {
 
     const toNext = () => {
         handleNext()
+    }
+
+    const toMyShelff = () => {
+        handleMain()
     }
 
     return (
@@ -22,6 +26,7 @@ const GetStarted2 = ({navigation, handleNext}) => {
                 </View>
                 <View style={getStartedStyles.buttonWrapper}>
                     <TouchableOpacity
+                        onPress={toMyShelff}
                         style={getStartedStyles.whiteButton}
                     >
                         <Text style={getStartedStyles.blueText}>Not now</Text>

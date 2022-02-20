@@ -1,4 +1,4 @@
-import { screenWidth, screenHeight } from "../services/layout";
+import { screenWidth, screenHeight } from "../layout/layout";
 import { StyleSheet } from "react-native";
 
 

@@ -26,6 +26,10 @@ const GetStartedScreen = ({navigation}) => {
         navigation.replace('Sign')
     }
 
+    const handleMain = () => {
+        navigation.replace('MyShelff')
+    }
+
     return (
         <Swiper
             loop={false}
@@ -34,9 +38,9 @@ const GetStartedScreen = ({navigation}) => {
             showsPagination={false}
         >
             <GetStarted1 navigation={navigation} handleNext={handleNext} handleSkip={handleSkip} handleSign={handleSign} />
-            <GetStarted2 navigation={navigation} handleNext={handleNext} handleSkip={handleSkip} />
+            <GetStarted2 navigation={navigation} handleNext={handleNext} handleSkip={handleSkip} handleMain={handleMain}/>
             <GetStarted3 navigation={navigation} handleNext={handleNext} handleSkip={handleSkip} />
-            <GetStarted4 navigation={navigation} handleNext={handleNext} handleSkip={handleSkip} handleSign={handleSign}/>
+            <GetStarted4 navigation={navigation} handleNext={handleNext} handleSkip={handleSkip} handleSign={handleSign} handleMain={handleMain}/>
         </Swiper>
     )
 }

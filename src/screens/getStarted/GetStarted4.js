@@ -3,10 +3,14 @@ import {View, Image, Text, TouchableOpacity} from 'react-native'
 import { onboardingStyles } from "../../styles/styles";
 
 
-const GetStarted4 = ({navigation, handleSign}) => {
+const GetStarted4 = ({navigation, handleSign, handleMain}) => {
 
     const toSign = () => {
         handleSign()
+    }
+
+    const toMyShelff = () => {
+        handleMain()
     }
 
     return (
@@ -27,7 +31,7 @@ const GetStarted4 = ({navigation, handleSign}) => {
                         <Text style={onboardingStyles.buttonText}>Create an account</Text>
                     </TouchableOpacity>
                     <Text>Would you want to test first our App?
-                        <Text style={onboardingStyles.skip}>  Start</Text>
+                        <Text onPress={toMyShelff} style={onboardingStyles.skip}>  Start</Text>
                     </Text>
                 </View>
             </View>
