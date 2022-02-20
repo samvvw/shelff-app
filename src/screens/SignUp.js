@@ -12,7 +12,10 @@ import {
 import SignUpForm from "../forms/SignUpForm";
 import { signUpStyles } from "../styles/styles";
 
-const SignUp = () => {
+const SignUp = ({ navigation }) => {
+  const handleLogIn = () => {
+    navigation.push("LogIn");
+  };
   return (
     <ScrollView>
       <Box style={signUpStyles.heading}>
@@ -24,7 +27,7 @@ const SignUp = () => {
       <Center style={signUpStyles.alreadyAccount}>
         <HStack style={signUpStyles.hStack}>
           <Text>Already have an account?</Text>
-          <Button style={signUpStyles.buttonLogin}>
+          <Button onPress={handleLogIn} style={signUpStyles.buttonLogin}>
             <Text style={signUpStyles.buttonLogin}>Login</Text>
           </Button>
         </HStack>
