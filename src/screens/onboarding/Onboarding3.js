@@ -13,7 +13,7 @@ const Onboarding3 = ({navigation}) => {
     return (
         <Flex alignItems='center'>
             <Image source={require('../../../assets/images/onboarding/onboarding3.jpg')} alt='onboarding3' height='60%'/>
-            <Text mt='12' mb='5' fontWeight='bold' fontSize='25'>Feature C</Text>
+            <Text mt='12' mb='5' fontSize='25'>Feature C</Text>
             <Text w='80%' fontSize='16'>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</Text>
             <Flex flexDirection="row" justifyContent="flex-end" alignItems='center' w='80%' my='5'>
                 <Button onPress={toMain} w='30%'>NEXT</Button>

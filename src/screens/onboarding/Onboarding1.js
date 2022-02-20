@@ -18,7 +18,7 @@ const Onboarding1 = ({navigation, handleNext}) => {
     return (
         <Flex alignItems='center'>
             <Image source={require('../../../assets/images/onboarding/onboarding1.jpg')} alt='onboarding1' height='60%'/>
-            <Text mt='12' mb='5' fontWeight='bold' fontSize='25'>Feature A</Text>
+            <Text mt='12' mb='5' fontSize='25'>Feature A</Text>
             <Text w='80%' fontSize='16'>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</Text>
             <Flex flexDirection="row" justifyContent="space-between" alignItems='center' w='80%' my='5'>
                 <Text onPress={toMain} w='30%'>SKIP</Text>

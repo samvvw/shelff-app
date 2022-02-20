@@ -1,6 +1,7 @@
 import { screenWidth, screenHeight } from "../services/layout";
 import { StyleSheet } from "react-native";
 import { styleSizes } from "./styleSizes";
+import { styleFonts } from "./styleFonts";
 
 export const signStyle = StyleSheet.create({
   screenContanier: {
@@ -13,6 +14,7 @@ export const signStyle = StyleSheet.create({
   },
   headingText: {
     fontSize: 72,
+    fontFamily: styleFonts.italic.fontFamily,
   },
   buttonBox: {
     marginTop: screenHeight / 2.7,

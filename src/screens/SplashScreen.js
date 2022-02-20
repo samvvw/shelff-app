@@ -37,7 +37,6 @@ const SplashScreen = ({navigation}) => {
                 bg='primary.400' 
                 _text={{
                 color: 'white',
-                fontWeight: 'bold',
                 fontSize: 40
                 }} 
                 h='30%'
