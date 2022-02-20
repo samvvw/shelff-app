@@ -12,4 +12,8 @@ export const styleSizes = StyleSheet.create({
     width: screenWidth,
     height: screenHeight,
   },
+  button: {
+    height: 50,
+    borderRadius: 10,
+  },
 });

@@ -1785,12 +1785,14 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
+
 "@react-native-community/datetimepicker@4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-4.0.0.tgz#4629ac3d8d54b4024385f2b2a30bbe13640c6ed3"
   integrity sha512-q3JfDHX5PI0AxFeMsB6jcHSXODloXAqBVsOfkIvm+YbAe1TUs/xZ3qGazsKVBk9EdFyHO4k+S1Q8tQkEnk2YrQ==
   dependencies:
     invariant "^2.2.4"
+
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -6872,6 +6874,12 @@ yargs@^15.1.0, yargs@^15.3.1:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
+
+
+yarn@^1.22.17:
+  version "1.22.17"
+  resolved "https://registry.npmjs.org/yarn/-/yarn-1.22.17.tgz"
+  integrity sha512-H0p241BXaH0UN9IeH//RT82tl5PfNraVpSpEoW+ET7lmopNC61eZ+A+IDvU8FM6Go5vx162SncDL8J1ZjRBriQ==
 
 yocto-queue@^0.1.0:
   version "0.1.0"

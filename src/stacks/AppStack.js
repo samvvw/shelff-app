@@ -7,6 +7,8 @@ import GetStartedScreen from "../screens/getStarted/GetStartedScreen";
 import Sign from "../screens/Sign";
 import SignUp from "../screens/SignUp";
 import MyShelff from "../screens/MyShelff";
+import LogIn from "../screens/logIn/LogIn";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +22,12 @@ const AppStack = () => {
           name="GetStarted" 
           component={GetStartedScreen} 
           options={{ title: 'Shelff' }}/>
+         />
+         <Stack.Screen
+          name="LogIn"
+          component={LogIn}
+          options={{ headerShown: true }}
+        />
         <Stack.Screen
           name="Sign"
           component={Sign}
