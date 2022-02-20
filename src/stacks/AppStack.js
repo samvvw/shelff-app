@@ -21,9 +21,9 @@ const AppStack = () => {
         <Stack.Screen
           name="GetStarted" 
           component={GetStartedScreen} 
-          options={{ title: 'Shelff' }}/>
-         />
-         <Stack.Screen
+          options={{ title: 'Shelff' }}
+        />
+        <Stack.Screen
           name="LogIn"
           component={LogIn}
           options={{ headerShown: true }}
