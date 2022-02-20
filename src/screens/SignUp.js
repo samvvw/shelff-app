@@ -7,13 +7,14 @@ import {
   Button,
   Heading,
   Box,
+  ScrollView,
 } from "native-base";
 import SignUpForm from "../forms/SignUpForm";
 import { signUpStyles } from "../styles/styles";
 
 const SignUp = () => {
   return (
-    <Container>
+    <ScrollView>
       <Box style={signUpStyles.heading}>
         <Heading>Create and Account</Heading>
         <Heading size="sm">Welcome to Shelff</Heading>
@@ -28,7 +29,7 @@ const SignUp = () => {
           </Button>
         </HStack>
       </Center>
-    </Container>
+    </ScrollView>
   );
 };
 
