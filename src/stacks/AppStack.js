@@ -6,6 +6,7 @@ import OnboardingScreen from "../screens/onboarding/OnboardingScreen";
 import Sign from "../screens/Sign";
 import SplashScreen from "../screens/SplashScreen";
 import SignUp from "../screens/SignUp";
+import LogIn from "../screens/logIn/LogIn";
 
 import Test from "../screens/Test";
 
@@ -18,6 +19,11 @@ const AppStack = () => {
         <Stack.Screen name="Test" component={Test} />
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+        <Stack.Screen
+          name="LogIn"
+          component={LogIn}
+          options={{ headerShown: true }}
+        />
         <Stack.Screen
           name="Sign"
           component={Sign}
