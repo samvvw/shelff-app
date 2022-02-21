@@ -3,12 +3,12 @@ import {Center, Text} from 'native-base'
 
 
 
-const MainScreen = () => {
+const MyShelff = () => {
     return (
         <Center>
-            <Text>This is Main Screen</Text>
+            <Text>This is MyShelff</Text>
         </Center>
     )
 }
 
-export default MainScreen
+export default MyShelff

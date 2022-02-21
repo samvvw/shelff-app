@@ -3,7 +3,7 @@ import Swiper from 'react-native-swiper'
 import Onboarding1 from './Onboarding1'
 import Onboarding2 from './Onboarding2'
 import Onboarding3 from './Onboarding3'
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const OnboardingScreen = ({navigation}) => {
 
@@ -17,18 +17,23 @@ const OnboardingScreen = ({navigation}) => {
         }
     }
 
+    const handleSkip = () => {
+        navigation.replace('GetStarted') 
+        AsyncStorage.setItem('isFirstTimeOpen', 'no')
+    }
+
     return (
         <Swiper
             loop={false}
             ref={swiper}
             paginationStyle={{
             position: 'absolute',
-            top: 200,
+            top: 80,
             }}
         >
-            <Onboarding1 navigation={navigation} handleNext={handleNext}/>
-            <Onboarding2 navigation={navigation} handleNext={handleNext}/>
-            <Onboarding3 navigation={navigation}/>
+            <Onboarding1 navigation={navigation} handleNext={handleNext} handleSkip={handleSkip}/>
+            <Onboarding2 navigation={navigation} handleNext={handleNext} handleSkip={handleSkip}/>
+            <Onboarding3 navigation={navigation} handleNext={handleNext} handleSkip={handleSkip}/>
         </Swiper>
     )
 }

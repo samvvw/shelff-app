@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Center } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const SplashScreen = ({ navigation }) => {
+
+const SplashScreen = ({navigation}) => {
+
   const checkFirstLaunch = async () => {
-    AsyncStorage.clear();
-    const result = await AsyncStorage.getItem("isFirstTimeOpen");
-    console.log("check", result);
-    if (result == null) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+      AsyncStorage.clear() //to check onboarding
+      const firstTimeCheck = await AsyncStorage.getItem('isFirstTimeOpen')
+      console.log('firstTimeCheck', firstTimeCheck)
+      if(firstTimeCheck == null) {
+          return true
+      } else {
+          return false
+      }
+  }
 
   useEffect(() => {
     (async () => {
