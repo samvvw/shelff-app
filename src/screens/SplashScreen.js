@@ -26,7 +26,7 @@ const SplashScreen = ({navigation}) => {
         }, 5000);
       } else {
         setTimeout(() => {
-          navigation.replace("Sign");
+          navigation.replace("VerticalMenu");
         }, 5000);
       }
     })();

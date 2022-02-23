@@ -27,7 +27,7 @@ const GetStartedScreen = ({navigation}) => {
     }
 
     const handleMain = () => {
-        navigation.replace('MyShelff')
+        navigation.replace('VerticalMenu')
     }
 
     return (
