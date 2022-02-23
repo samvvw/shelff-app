@@ -10,6 +10,8 @@ import MyShelff from "../screens/MyShelff";
 import LogIn from "../screens/logIn/LogIn";
 
 import Test from "../screens/Test";
+import Footer from "../layout/Footer";
+import VerticalMenu from "../layout/VerticalMenu";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,13 +19,21 @@ const AppStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Test" component={Test} />      
-        <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }}/>
+        <Stack.Screen
+          name="VerticalMenu"
+          component={VerticalMenu}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Splash"
+          component={SplashScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen
-          name="GetStarted" 
-          component={GetStartedScreen} 
-          options={{ title: 'Shelff' }}
+          name="GetStarted"
+          component={GetStartedScreen}
+          options={{ title: "Shelff" }}
         />
         <Stack.Screen
           name="LogIn"
@@ -43,7 +53,7 @@ const AppStack = () => {
         <Stack.Screen
           name="MyShelff"
           component={MyShelff}
-          options={{ headerShown: true }}  //Temporal 
+          options={{ headerShown: true }} //Temporal
         />
       </Stack.Navigator>
     </NavigationContainer>
