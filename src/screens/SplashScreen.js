@@ -26,28 +26,27 @@ const SplashScreen = ({navigation}) => {
         }, 5000);
       } else {
         setTimeout(() => {
-          navigation.replace("Sign");
+          navigation.replace("VerticalMenu");
         }, 5000);
       }
     })();
   }, []);
 
   return (
-    <Center h="100%">
-      <Center
-        bg="primary.400"
-        _text={{
-          color: "white",
-          fontWeight: "bold",
-          fontSize: 40,
-        }}
-        h="30%"
-        w="50%"
-      >
-        Shelff
+      <Center h='100%'>
+          <Center 
+              bg='primary.400' 
+              _text={{
+              color: 'white',
+              fontSize: 40
+              }} 
+              h='30%'
+              w='50%'
+          >
+          Shelff
+          </Center>
       </Center>
-    </Center>
-  );
-};
+  )
+}
 
 export default SplashScreen;

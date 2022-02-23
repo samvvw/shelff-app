@@ -6,10 +6,7 @@ import OnboardingScreen from "../screens/onboarding/OnboardingScreen";
 import GetStartedScreen from "../screens/getStarted/GetStartedScreen";
 import Sign from "../screens/Sign";
 import SignUp from "../screens/SignUp";
-import MyShelff from "../screens/MyShelff";
 import LogIn from "../screens/logIn/LogIn";
-
-import Test from "../screens/Test";
 import Footer from "../layout/Footer";
 import VerticalMenu from "../layout/VerticalMenu";
 
@@ -19,11 +16,6 @@ const AppStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="VerticalMenu"
-          component={VerticalMenu}
-          options={{ headerShown: false }}
-        />
         <Stack.Screen
           name="Splash"
           component={SplashScreen}
@@ -51,9 +43,9 @@ const AppStack = () => {
           options={{ headerShown: true }}
         />
         <Stack.Screen
-          name="MyShelff"
-          component={MyShelff}
-          options={{ headerShown: true }} //Temporal
+          name="VerticalMenu"
+          component={VerticalMenu}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
