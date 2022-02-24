@@ -11,7 +11,9 @@ import {
 import React from "react";
 import { useState } from "react";
 import { screenWidth } from "./layout";
-
+import Category from "../components/list/Category"
+import Storage from "../components/list/Storage"
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -20,6 +22,26 @@ function Feed() {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Feed!</Text>
     </View>
+  );
+}
+
+function List({navigation}) {
+  const Tab = createMaterialTopTabNavigator();
+
+  return (
+    <Tab.Navigator
+    initialRouteName='Category'
+    screenOptions={{
+        tabBarLabelStyle: { fontSize: 15, textTransform: 'none'},
+        tabBarActiveTintColor: '#2c3e50',
+        tabBarIndicatorStyle: {backgroundColor: '#2c3e50'},
+        lazy: true
+    }}
+    >
+      <Tab.Screen name='Category' component={Category} navigation={navigation}/>
+      <Tab.Screen name='Storage' component={Storage} navigation={navigation}/>
+
+    </Tab.Navigator>
   );
 }
 
@@ -85,10 +107,10 @@ const Footer = () => {
         }}
       />
       <Tab.Screen
-        name="Category"
-        component={Profile}
+        name="List"
+        component={List}
         options={{
-          tabBarLabel: "Category",
+          tabBarLabel: "List",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="shape" color={color} size={size} />
           ),
