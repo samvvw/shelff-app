@@ -1,46 +1,51 @@
 import {
-  HStack,
-  Center,
-  Pressable,
+  // HStack,
+  // Center,
+  // Pressable,
   View,
   Text,
-  Icon,
-  MaterialIcons,
-  Box,
+  // Icon,
+  // MaterialIcons,
+  // Box,
 } from "native-base";
 import React from "react";
-import { useState } from "react";
-import { screenWidth } from "./layout";
-import Category from "../components/list/Category"
-import Storage from "../components/list/Storage"
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+// import { useState } from "react";
+// import { screenWidth } from "./layout";
+import Category from "../components/list/Category";
+import Storage from "../components/list/Storage";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-function Feed() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Feed!</Text>
-    </View>
-  );
-}
+import MyShelff from "../components/MyShelff";
 
-function List({navigation}) {
+// function Feed() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+//       <Text>Feed!</Text>
+//     </View>
+//   );
+// }
+
+function List({ navigation }) {
   const Tab = createMaterialTopTabNavigator();
 
   return (
     <Tab.Navigator
-    initialRouteName='Category'
-    screenOptions={{
-        tabBarLabelStyle: { fontSize: 15, textTransform: 'none'},
-        tabBarActiveTintColor: '#2c3e50',
-        tabBarIndicatorStyle: {backgroundColor: '#2c3e50'},
-        lazy: true
-    }}
+      initialRouteName="Category"
+      screenOptions={{
+        tabBarLabelStyle: { fontSize: 15, textTransform: "none" },
+        tabBarActiveTintColor: "#2c3e50",
+        tabBarIndicatorStyle: { backgroundColor: "#2c3e50" },
+        lazy: true,
+      }}
     >
-      <Tab.Screen name='Category' component={Category} navigation={navigation}/>
-      <Tab.Screen name='Storage' component={Storage} navigation={navigation}/>
-
+      <Tab.Screen
+        name="Category"
+        component={Category}
+        navigation={navigation}
+      />
+      <Tab.Screen name="Storage" component={Storage} navigation={navigation} />
     </Tab.Navigator>
   );
 }
@@ -80,7 +85,7 @@ const Footer = () => {
     >
       <Tab.Screen
         name="MyShelff"
-        component={Feed}
+        component={MyShelff}
         options={{
           tabBarLabel: "My Shelff",
           tabBarIcon: ({ color, size }) => (
@@ -101,7 +106,7 @@ const Footer = () => {
       />
       <Tab.Screen
         name="center"
-        component={Feed}
+        component={MyShelff}
         options={{
           tabBarItemStyle: { height: 0 },
         }}
