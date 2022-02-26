@@ -5,12 +5,16 @@ import { screenWidth } from "./layout";
 
 import Footer from "./Footer";
 
-const VerticalMenu = () => {
+const VerticalMenu = ({ navigation }) => {
   const [state, setState] = React.useState({ open: false });
 
   const onStateChange = ({ open }) => setState({ open });
 
   const { open } = state;
+
+  const handleBarcodeScan = () => {
+    navigation.push("AddItemBarcode");
+  };
 
   return (
     <>
@@ -33,14 +37,14 @@ const VerticalMenu = () => {
                 style: {
                   marginRight: screenWidth / 2 - 42,
                 },
-                icon: "plus",
+                icon: "card-outline",
                 onPress: () => console.log("Pressed add"),
               },
               {
                 style: {
                   marginRight: screenWidth / 2 - 42,
                 },
-                icon: "star",
+                icon: "heart",
                 // label: "Star",
                 onPress: () => alert("Pressed star"),
               },
@@ -48,9 +52,9 @@ const VerticalMenu = () => {
                 style: {
                   marginRight: screenWidth / 2 - 42,
                 },
-                icon: "email",
+                icon: "barcode-scan",
                 // label: "Email",
-                onPress: () => alert("email"),
+                onPress: handleBarcodeScan,
               },
             ]}
             onStateChange={onStateChange}

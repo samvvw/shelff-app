@@ -5,6 +5,7 @@ import { onboardingStyle } from "./onboardingStyle";
 import { getStartedStyle } from "./getStartedStyle";
 import { listStyle } from "./listStyle";
 import { myShelffStyle } from "./myShelfStyle";
+import { newItemStyle } from "./newItemStyle";
 
 export const signStyles = signStyle;
 export const signUpStyles = signUpStyle;
@@ -13,3 +14,4 @@ export const getStartedStyles = getStartedStyle;
 export const loginInStyles = loginInStyle;
 export const listStyles = listStyle;
 export const myShelffStyles = myShelffStyle;
+export const newItemStyles = newItemStyle;

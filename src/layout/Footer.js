@@ -9,8 +9,7 @@ import {
   // Box,
 } from "native-base";
 import React from "react";
-// import { useState } from "react";
-// import { screenWidth } from "./layout";
+
 import Category from "../components/list/Category";
 import Storage from "../components/list/Storage";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -18,14 +17,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import MyShelff from "../components/MyShelff";
-
-// function Feed() {
-//   return (
-//     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//       <Text>Feed!</Text>
-//     </View>
-//   );
-// }
 
 function List({ navigation }) {
   const Tab = createMaterialTopTabNavigator();
