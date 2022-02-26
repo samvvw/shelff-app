@@ -1,4 +1,4 @@
-import { screenWidth, screenHeight } from "../layout/layout";
+import { screenWidth, screenHeight } from "../../layout/layout";
 import { StyleSheet } from "react-native";
 
 export const myShelffStyle = StyleSheet.create({
