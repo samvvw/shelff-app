@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
-
+import {Platform} from 'react-native'
 
 export const singleChartStyle = StyleSheet.create({
     container: {
-        marginVertical: 80,
+        marginVertical: 100,
         height: '50%',
         transform: [{ rotate: '180deg'}] //to start from the bottom 
     },
@@ -13,8 +13,8 @@ export const singleChartStyle = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
-        width: 80,
-        height: 80,
+        width: Platform.OS === 'ios' ? 70 : 60,
+        height: Platform.OS === 'ios' ? 70 : 60,
         borderRadius: 20,
     },
     numOfItem: {

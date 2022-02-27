@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {View, Text, Image} from 'react-native'
+import {View, Text, Image, Platform} from 'react-native'
 import { singleChartStyles } from "../../styles/styles"
 import { CircularProgressWithChild } from 'react-native-circular-progress-indicator'
 //using 'WithChild' as it accept any child, which I need texts and image here inside of chart
@@ -14,7 +14,7 @@ const Fresh = (props) => {
             <CircularProgressWithChild
                 value={numOfItems}
                 maxValue={totalItems}
-                radius={155}
+                radius={Platform.OS === 'ios' ? 150 : 140}
                 activeStrokeColor={status=='Fresh' ? 'green' : status=='Expiring' ? 'orange' : 'red'}
                 inActiveStrokeColor={status=='Fresh' ? 'green' : status=='Expiring' ? 'orange' : 'red'}
                 activeStrokeWidth={25}
