@@ -17,7 +17,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import MyShelff from "../components/MyShelff";
+import MyShelff from "../components/myShelff/MyShelff";
 
 // function Feed() {
 //   return (
@@ -40,11 +40,7 @@ function List({ navigation }) {
         lazy: true,
       }}
     >
-      <Tab.Screen
-        name="Category"
-        component={Category}
-        navigation={navigation}
-      />
+      <Tab.Screen name="Category" component={Category} navigation={navigation} />
       <Tab.Screen name="Storage" component={Storage} navigation={navigation} />
     </Tab.Navigator>
   );
