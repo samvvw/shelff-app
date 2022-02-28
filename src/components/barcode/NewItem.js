@@ -14,6 +14,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useState } from "react";
 import { newItemStyles } from "../../styles/styles";
+import { Platform } from "react-native";
 const NewItem = (props) => {
   /*Date picker*/
   const [date, setDate] = useState(new Date(1598051730000));
@@ -35,10 +36,6 @@ const NewItem = (props) => {
     showMode("date");
   };
 
-  //   const showTimepicker = () => {
-  //     showMode("time");
-  //   };
-  /****************************** */
   const [counter, setCounter] = useState(0);
 
   const handleCounter = (value) => {
@@ -73,47 +70,38 @@ const NewItem = (props) => {
           <Text style={newItemStyles.title}>{props.productName}</Text>
 
           <Box style={newItemStyles.labelBox}>
-            <HStack style={newItemStyles.counterHBar}>
-              <Box>
-                <HStack>
+            <HStack style={newItemStyles.counterHBarDate}>
+              <Box style={newItemStyles.dateBox}>
+                <HStack style={newItemStyles.category}>
                   <Icon color={"gray"} size={16} name="shapes" />
-                  <Text>Dairy</Text>
+                  <Text style={newItemStyles.CategoryText}>Dairy</Text>
                 </HStack>
               </Box>
               <Box>
                 <HStack
                   style={{
                     alignItems: "center",
-                    alignContent: "center",
-                    justifyContent: "",
-                    backgroundColor: "pink",
                   }}
                 >
-                  <View
-                    style={{
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Button
-                      backgroundColor={"transparent"}
-                      w={0}
-                      h={0}
-                      onPress={showDatepicker}
-                    />
-
-                    <DateTimePicker
-                      borderRadius={50}
-                      testID="dateTimePicker"
-                      value={date}
-                      mode={"date"}
-                      is24Hour={true}
-                      display="default"
-                      onChange={onChange}
-                    />
+                  <View>
+                    <View>
+                      <Button
+                        backgroundColor={"transparent"}
+                        onPress={showDatepicker}
+                      />
+                    </View>
+                    {show && (
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        is24Hour={true}
+                        display="default"
+                        onChange={onChange}
+                      />
+                    )}
                   </View>
-
-                  <Text>
+                  <Text style={{ marginTop: 15, marginLeft: 8 }}>
                     Expiration Date<Text>*</Text>
                   </Text>
                 </HStack>

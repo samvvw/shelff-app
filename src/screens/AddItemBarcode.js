@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { View, Box } from "native-base";
 import React from "react";
 import Barcode from "../components/barcode/Barcode";
 import NewItem from "../components/barcode/NewItem";
@@ -25,15 +25,17 @@ const AddItemBarcode = () => {
   };
   return (
     <>
-      {/* {!scanned && ( */}
-      <Barcode
-        cameraHeight={cameraHeight}
-        setBarCodeNumber={setBarCodeNumber}
-        setScanned={setScanned}
-        scanned={scanned}
-        setcameraHeight={setcameraHeight}
-      />
-      {/* )} */}
+      {scanned ? (
+        <Background />
+      ) : (
+        <Barcode
+          cameraHeight={cameraHeight}
+          setBarCodeNumber={setBarCodeNumber}
+          setScanned={setScanned}
+          scanned={scanned}
+          setcameraHeight={setcameraHeight}
+        />
+      )}
       <View>
         {scanned && (
           <NewItem
@@ -55,3 +57,11 @@ const AddItemBarcode = () => {
 };
 
 export default AddItemBarcode;
+
+const Background = () => {
+  return (
+    <Box
+      style={{ backgroundColor: "black", width: "100%", height: "10%" }}
+    ></Box>
+  );
+};

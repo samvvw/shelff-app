@@ -6,7 +6,7 @@ export const newItemStyle = StyleSheet.create({
     fontSize: 28,
     marginTop: 30,
     paddingTop: 10,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   labels: {
     fontSize: 17,
@@ -27,12 +27,24 @@ export const newItemStyle = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
+  category: {
+    marginRight: 30,
+  },
   counterHBar: {
     width: "100%",
 
     alignContent: "space-between",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  counterHBarDate: {
+    // backgroundColor: "green",
+    width: "100%",
+    alignItems: "flex-start",
+  },
+  dateBox: {
+    alignSelf: "flex-end",
+    marginBottom: 10,
   },
   counterButtonsHStack: {
     alignItems: "center",
@@ -63,5 +75,9 @@ export const newItemStyle = StyleSheet.create({
     backgroundColor: "white",
     borderWidth: 1,
     borderColor: "rgba(0, 122, 255, 1)",
+  },
+  CategoryText: {
+    paddingLeft: 15,
+    fontSize: 14,
   },
 });
