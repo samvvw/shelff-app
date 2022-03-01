@@ -7,8 +7,9 @@ import GetStartedScreen from "../screens/getStarted/GetStartedScreen";
 import Sign from "../screens/Sign";
 import SignUp from "../screens/SignUp";
 import LogIn from "../screens/logIn/LogIn";
-import Footer from "../layout/Footer";
+// import Footer from "../layout/Footer";
 import VerticalMenu from "../layout/VerticalMenu";
+import AddItemBarcode from "../screens/AddItemBarcode";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,11 @@ const AppStack = () => {
           name="VerticalMenu"
           component={VerticalMenu}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AddItemBarcode"
+          component={AddItemBarcode}
+          option={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
