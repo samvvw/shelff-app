@@ -9,8 +9,6 @@ import { myShelffStyle } from "./myshelff/myShelfStyle";
 import { allChartsStyle } from "./myshelff/allChartsStyle";
 import { singleChartStyle } from "./myshelff/singleChartStyle";
 
-
-
 export const signStyles = signStyle;
 export const signUpStyles = signUpStyle;
 export const onboardingStyles = onboardingStyle;
