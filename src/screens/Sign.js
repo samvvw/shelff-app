@@ -1,13 +1,17 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { Text, Box, Button, VStack, Center, View, Heading } from 'native-base'
 import { signStyles } from '../styles/styles'
 import { UserContext } from '../context/UserContext'
 
 const Sign = ({ navigation }) => {
-    const { googlePromptAsync, googleRequest } = useContext(UserContext)
+    const { googlePromptAsync, googleRequest, user } = useContext(UserContext)
     const onSignUp = () => {
         navigation.push('SignUp')
     }
+
+    useEffect(() => {
+        if (user?.token) navigation.replace('VerticalMenu')
+    }, [user])
 
     return (
         <View style={signStyles.screenContanier}>
