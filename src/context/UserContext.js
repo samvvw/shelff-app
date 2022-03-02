@@ -49,6 +49,10 @@ export const UserProvider = ({ children }) => {
                         auth,
                         credential
                     )
+                    await AsyncStorage.setItem(
+                        'token',
+                        user.stsTokenManager.accessToken
+                    )
 
                     dispatch({
                         type: 'GOOGLE_AUTH',
