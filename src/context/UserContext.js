@@ -8,6 +8,7 @@ import {
     GoogleAuthProvider,
     signInWithCredential,
     getIdToken,
+    createUserWithEmailAndPassword,
 } from 'firebase/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -18,13 +19,14 @@ const initialState = {
 }
 
 export const UserContext = createContext(initialState)
+
 initializeApp({
-    apiKey: 'AIzaSyCj4DrILek-uQskmQBN-PDBvJQgtjFKnu4',
-    authDomain: 'portfolio-contact-85baf.firebaseapp.com',
-    projectId: 'portfolio-contact-85baf',
-    storageBucket: 'portfolio-contact-85baf.appspot.com',
-    messagingSenderId: '766972105703',
-    appId: '1:766972105703:web:2ad0fc1918978b92d5a342',
+    apiKey: 'AIzaSyAzBtxl4VZQUjaZ4mztEgMctppJJdtNagQ',
+    authDomain: 'shelff-726d8.firebaseapp.com',
+    projectId: 'shelff-726d8',
+    storageBucket: 'shelff-726d8.appspot.com',
+    messagingSenderId: '209418730913',
+    appId: '1:209418730913:web:310dc50872d54ae495dfe0',
 })
 
 WebBrowser.maybeCompleteAuthSession()
@@ -33,7 +35,7 @@ export const UserProvider = ({ children }) => {
     const [googleRequest, googleResponse, googlePromptAsync] =
         Google.useIdTokenAuthRequest({
             clientId:
-                '766972105703-pp07er7id65r1c4eubdv071v92h9j50v.apps.googleusercontent.com',
+                '209418730913-5hr4d615qbo0556u6ob7u36r37fg1fe4.apps.googleusercontent.com',
         })
 
     useEffect(() => {
@@ -70,6 +72,37 @@ export const UserProvider = ({ children }) => {
         }
     }, [googleResponse])
 
+    const signUpWithEmailAndPassword = async (email, password) => {
+        try {
+            dispatch({ type: 'LOADING_TRUE' })
+
+            const auth = getAuth()
+
+            const { user } = await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            )
+
+            await AsyncStorage.setItem(
+                'token',
+                user.stsTokenManager.accessToken
+            )
+
+            dispatch({
+                type: 'GOOGLE_AUTH',
+                payload: {
+                    user,
+                    auth,
+                },
+            })
+        } catch (error) {
+            dispatch({ type: 'ERROR', payload: { error } })
+        } finally {
+            dispatch({ type: 'LOADING_FALSE' })
+        }
+    }
+
     const refreshIdToken = async () => {
         try {
             const currentUser = state.user.auth.currentUser
@@ -88,6 +121,7 @@ export const UserProvider = ({ children }) => {
             value={{
                 googlePromptAsync,
                 refreshIdToken,
+                signUpWithEmailAndPassword,
                 googleRequest,
                 user: state.user,
                 loading: state.loading,
