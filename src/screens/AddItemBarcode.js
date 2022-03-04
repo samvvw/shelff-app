@@ -13,6 +13,8 @@ const AddItemBarcode = () => {
   const [cameraHeight, setcameraHeight] = useState("50%");
   const [barCodeNumber, setBarCodeNumber] = useState();
   const [scanned, setScanned] = useState(false);
+  const [itemListChange, setItemListChange] = useState(true);
+  // const [isModalVisible, setModalVisible] = useState(false);
 
   const handleArrowButton = () => {
     if (arrowButton == "arrow-up") {
@@ -37,18 +39,23 @@ const AddItemBarcode = () => {
         />
       )}
       <View>
-        {scanned && (
-          <NewItem
-            barCodeNumber={barCodeNumber}
-            setScanned={setScanned}
-            setcameraHeight={setcameraHeight}
-            productName="Dairyland Milk"
-          />
-        )}
+        {/* {scanned && ( */}
+        <NewItem
+          setModalVisible={setScanned}
+          scanned={scanned}
+          barCodeNumber={barCodeNumber}
+          setScanned={setScanned}
+          setcameraHeight={setcameraHeight}
+          productName="Soy Milk"
+          setItemListChange={setItemListChange}
+          itemListChange={itemListChange}
+        />
+        {/* )} */}
         {!scanned && (
           <ItemsList
             handleArrowButton={handleArrowButton}
             arrowButton={arrowButton}
+            itemListChange={itemListChange}
           />
         )}
       </View>

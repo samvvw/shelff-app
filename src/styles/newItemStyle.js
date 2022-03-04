@@ -2,14 +2,23 @@ import { StyleSheet } from "react-native";
 
 export const newItemStyle = StyleSheet.create({
   mainStack: { paddingLeft: 10, paddingRight: 10 },
-  title: {
-    fontSize: 28,
-    marginTop: 30,
-    paddingTop: 10,
-    // marginBottom: 10,
+  modal: {
+    marginTop: 90,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    width: 320,
+    marginLeft: 0,
+    marginBottom: 0,
+    backgroundColor: "white",
   },
+
   labels: {
     fontSize: 17,
+  },
+  labelBoxDate: {
+    borderBottomColor: "lightgray",
+    borderBottomWidth: 1,
+    paddingBottom: 10,
   },
   labelBox: {
     borderBottomColor: "lightgray",
@@ -28,7 +37,10 @@ export const newItemStyle = StyleSheet.create({
     marginRight: 5,
   },
   category: {
-    marginRight: 30,
+    marginRight: 20,
+
+    alignContent: "center",
+    alignItems: "center",
   },
   counterHBar: {
     width: "100%",
@@ -38,9 +50,8 @@ export const newItemStyle = StyleSheet.create({
     alignItems: "center",
   },
   counterHBarDate: {
-    // backgroundColor: "green",
     width: "100%",
-    alignItems: "flex-start",
+    alignItems: "flex-end",
   },
   dateBox: {
     alignSelf: "flex-end",
@@ -51,11 +62,13 @@ export const newItemStyle = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: "transparent",
-
     width: 80,
   },
   cancelButtonText: {
     color: "blue",
+    textAlign: "left",
+    width: 80,
+    paddingLeft: 10,
   },
   codeNumberText: {
     textAlign: "center",
