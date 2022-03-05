@@ -1,16 +1,18 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Center} from 'native-base'
-import {View, Text, Image, Platform } from 'react-native'
+import {View, Text, Image, Platform, FlatList } from 'react-native'
 import { CircularProgressWithChild } from 'react-native-circular-progress-indicator'
 import { allChartsStyles } from "../../styles/styles"
+import SwipableList from './SwipableList'
 
 const All = (props) => {
 
-    const {navigation, freshItems, expiringItems, expiredItems, totalItems} = props
+    const {navigation, allItems, freshItems, expiringItems, expiredItems, totalItems, setShelfItems} = props
 
 
-    return (
-        <Center>
+    const ChartAll = () => {
+        return (
+        <View style={allChartsStyles.outer}>
             <View style={allChartsStyles.container}>
                 <CircularProgressWithChild
                 value={freshItems.length}
@@ -49,10 +51,7 @@ const All = (props) => {
                                     style={allChartsStyles.image}    
                                 />
                                 <Text style={allChartsStyles.text}>
-                                    {expiringItems.length} items
-                                </Text>
-                                <Text style={allChartsStyles.message}>
-                                    will expire in 7days
+                                    {allItems.length} items
                                 </Text>
                             </View>
                         </CircularProgressWithChild>
@@ -71,10 +70,17 @@ const All = (props) => {
                     {freshItems.length} Fresh
                 </Text>
             </View>
+        </View>
+        )
+    }
 
-            <View>
-                <Text>Food Inventory - Here to put swiperble Lists</Text>
-            </View>
+    return (
+        <Center>
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={<ChartAll />}
+                ListFooterComponent={<SwipableList items={allItems} setShelfItems={setShelfItems}/>}
+            />
         </Center>
     )
 }

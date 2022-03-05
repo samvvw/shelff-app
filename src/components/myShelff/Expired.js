@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
+import {FlatList} from 'react-native'
 import {Center} from 'native-base'
-import {View, Text} from 'react-native'
 import Chart from './Chart'
+import SwipableList from './SwipableList'
 
 const Expired = (props) => {
 
@@ -12,10 +13,11 @@ const Expired = (props) => {
 
     return (
         <Center>
-            <Chart numOfItems={numOfItems} totalItems={totalItems} status={status}/>
-            <View>
-                <Text>Food Inventory - Here to put swiperble Lists</Text>
-            </View>
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={<Chart numOfItems={numOfItems} totalItems={totalItems} status={status}/>}
+                ListFooterComponent={<SwipableList items={expiredItems} status={status} nestedScrollEnabled={true}/>}
+            />
         </Center>
     )
 }
