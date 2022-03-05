@@ -22,14 +22,21 @@ const SignUpForm = () => {
         passwordConfirm: '',
     })
 
-    const { signUpWithEmailAndPassword } = useContext(UserContext)
+    const { signUpWithEmailAndPassword, error } = useContext(UserContext)
 
     const onSubmit = () => {
-        signUpWithEmailAndPassword(signUpState.email, signUpState.password)
+        signUpWithEmailAndPassword(
+            signUpState.email,
+            signUpState.password,
+            signUpState.fullName
+        )
     }
 
     return (
         <VStack style={signUpStyles.formStackContainer}>
+            {error?.code === 'auth/email-already-in-use' ? (
+                <Text>{`Error: user with email ${signUpState.email} already exists`}</Text>
+            ) : null}
             <Box style={signUpStyles.box}>
                 <FormControl isRequired>
                     <FormControl.Label>Full Name</FormControl.Label>

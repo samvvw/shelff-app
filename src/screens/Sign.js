@@ -4,14 +4,14 @@ import { signStyles } from '../styles/styles'
 import { UserContext } from '../context/UserContext'
 
 const Sign = ({ navigation }) => {
-    const { googlePromptAsync, googleRequest, user } = useContext(UserContext)
+    const { googlePromptAsync, googleRequest, token } = useContext(UserContext)
     const onSignUp = () => {
         navigation.push('SignUp')
     }
 
     useEffect(() => {
-        if (user?.token) navigation.replace('VerticalMenu')
-    }, [user])
+        if (token) navigation.replace('VerticalMenu')
+    }, [token])
 
     return (
         <View style={signStyles.screenContanier}>
