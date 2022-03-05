@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@apollo/client": "3.4",
     "@react-aria/ssr": "^3.1.1",
     "@react-native-async-storage/async-storage": "^1.16.1",
     "@react-native-community/datetimepicker": "4.0.0",
@@ -27,6 +28,7 @@
     "expo-random": "^12.1.2",
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.7",
+    "graphql": "^16.3.0",
     "native": "^0.3.3",
     "native-base": "^3.3.6",
     "react": "17.0.1",

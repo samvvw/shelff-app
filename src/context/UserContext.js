@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from 'react'
+import { createContext, useState, useReducer, useEffect, useRef } from 'react'
 import { UserReducer } from './UserReducer'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
@@ -11,10 +11,14 @@ import {
     createUserWithEmailAndPassword,
 } from 'firebase/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useMutation } from '@apollo/client'
+import { ADD_USER } from '../queries/queries'
 
 const initialState = {
     user: {},
     error: {},
+    auth: {},
+    token: '',
     loading: true,
 }
 
@@ -32,6 +36,9 @@ initializeApp({
 WebBrowser.maybeCompleteAuthSession()
 export const UserProvider = ({ children }) => {
     const [state, dispatch] = useReducer(UserReducer, initialState)
+    // const [userTemp, setUserTemp] = useState(null)
+    const userTemp = useRef
+    const [addUser, { error, loading, data }] = useMutation(ADD_USER)
     const [googleRequest, googleResponse, googlePromptAsync] =
         Google.useIdTokenAuthRequest({
             clientId:
@@ -55,14 +62,18 @@ export const UserProvider = ({ children }) => {
                         'token',
                         user.stsTokenManager.accessToken
                     )
-
-                    dispatch({
-                        type: 'GOOGLE_AUTH',
-                        payload: {
-                            user,
-                            auth,
+                    addUser({
+                        variables: {
+                            userId: user.uid,
+                            email: user.email,
+                            fullName: user.displayName,
                         },
                     })
+                    userTemp.current = {
+                        user,
+                        auth,
+                        dispatch: 'GOOGLE_AUTH',
+                    }
                 } catch (error) {
                     dispatch({ type: 'ERROR', payload: { error } })
                 } finally {
@@ -72,7 +83,7 @@ export const UserProvider = ({ children }) => {
         }
     }, [googleResponse])
 
-    const signUpWithEmailAndPassword = async (email, password) => {
+    const signUpWithEmailAndPassword = async (email, password, fullName) => {
         try {
             dispatch({ type: 'LOADING_TRUE' })
 
@@ -89,19 +100,48 @@ export const UserProvider = ({ children }) => {
                 user.stsTokenManager.accessToken
             )
 
-            dispatch({
-                type: 'GOOGLE_AUTH',
-                payload: {
-                    user,
-                    auth,
+            addUser({
+                variables: {
+                    userId: user.uid,
+                    email: user.email,
+                    fullName: fullName,
                 },
             })
+            userTemp.current = {
+                user,
+                auth,
+                fullName,
+                dispatch: 'FIREBASE_AUTH',
+            }
         } catch (error) {
             dispatch({ type: 'ERROR', payload: { error } })
         } finally {
             dispatch({ type: 'LOADING_FALSE' })
         }
     }
+
+    useEffect(() => {
+        if (error) console.log('error', error.message)
+        if (loading) {
+            dispatch({ type: 'LOADING_TRUE' })
+        }
+        if (data && !error && userTemp.current) {
+            if (userTemp.current.dispatch === 'FIREBASE_AUTH') {
+                dispatch({
+                    type: 'FIREBASE_AUTH',
+                    payload: userTemp.current,
+                })
+            }
+
+            if (userTemp.current.dispatch === 'GOOGLE_AUTH') {
+                dispatch({
+                    type: 'GOOGLE_AUTH',
+                    payload: userTemp.current,
+                })
+            }
+            dispatch({ type: 'LOADING_FALSE' })
+        }
+    }, [data, error, loading])
 
     const refreshIdToken = async () => {
         try {
@@ -126,6 +166,7 @@ export const UserProvider = ({ children }) => {
                 user: state.user,
                 loading: state.loading,
                 error: state.error,
+                token: state.token,
             }}
         >
             {children}

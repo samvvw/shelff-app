@@ -1,9 +1,12 @@
+import { useContext } from 'react'
 import { NativeBaseProvider, extendTheme } from 'native-base'
 import AppStack from './src/stacks/AppStack'
 import AppLoading from 'expo-app-loading'
 // import * as Font from 'expo-font'
 import { useFonts } from 'expo-font'
 import { UserProvider } from './src/context/UserContext'
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { UserContext } from './src/context/UserContext'
 //with function
 // const fetchFonts = () => {
 //   return Font.loadAsync({
@@ -46,8 +49,13 @@ const theme = extendTheme({
 const App = () => {
     //with function
     // const [fontsLoaded, setFontsLoaded] = useState(false);
+    const { token } = useContext
 
     //with hook
+    const client = new ApolloClient({
+        uri: 'http://10.0.0.226:8080/graphql',
+        cache: new InMemoryCache(),
+    })
     const [fontsLoaded] = useFonts({
         'GoogleSans-Regular': require('./assets/fonts/GoogleSans-Regular.ttf'),
         'GoogleSans-Italic': require('./assets/fonts/GoogleSans-Italic.ttf'),
@@ -72,11 +80,13 @@ const App = () => {
     }
 
     return (
-        <UserProvider>
-            <NativeBaseProvider theme={theme}>
-                <AppStack />
-            </NativeBaseProvider>
-        </UserProvider>
+        <ApolloProvider client={client}>
+            <UserProvider>
+                <NativeBaseProvider theme={theme}>
+                    <AppStack />
+                </NativeBaseProvider>
+            </UserProvider>
+        </ApolloProvider>
     )
 }
 
