@@ -101,21 +101,27 @@ function MyShelff({ navigation }) {
         children={()=><Fresh 
           navigation={navigation} 
           freshItems={freshItems} 
-          totalItems={totalItems}/>}
+          totalItems={totalItems}
+          allItems={allItems}
+          setShelfItems={setShelfItems}/>}
       />
       <Tab.Screen 
         name="Expiring" 
         children={()=><Expiring 
           navigation={navigation} 
           expiringItems={expiringItems} 
-          totalItems={totalItems}/>}
+          totalItems={totalItems}
+          allItems={allItems}
+          setShelfItems={setShelfItems}/>}
       />
       <Tab.Screen 
         name="Expired" 
         children={()=><Expired 
           navigation={navigation} 
           expiredItems={expiredItems} 
-          totalItems={totalItems}/>}
+          totalItems={totalItems}
+          allItems={allItems}
+          setShelfItems={setShelfItems}/>}
       />
     </Tab.Navigator>    
   );

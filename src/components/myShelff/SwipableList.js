@@ -8,12 +8,12 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 const SwipableList = (props)=> {
 
-    const {items, setShelfItems} = props
+    const {items, allItems, setShelfItems} = props
 
     // console.log(items)
 
     const actionItem = (rowMap, rowKey, actionTaken) => {
-        const newData = [...items];
+        const newData = [...allItems];
         const index = findIndex(newData, item => {
             return item.id === rowKey
         })

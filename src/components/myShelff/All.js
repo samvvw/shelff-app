@@ -1,6 +1,6 @@
 import React from 'react'
 import {Center} from 'native-base'
-import {View, Text, Image, Platform, FlatList } from 'react-native'
+import {View, Text, Image, Platform, FlatList, SafeAreaView} from 'react-native'
 import { CircularProgressWithChild } from 'react-native-circular-progress-indicator'
 import { allChartsStyles } from "../../styles/styles"
 import SwipableList from './SwipableList'
@@ -75,13 +75,13 @@ const All = (props) => {
     }
 
     return (
-        <Center>
+        <SafeAreaView>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={<ChartAll />}
-                ListFooterComponent={<SwipableList items={allItems} setShelfItems={setShelfItems}/>}
+                ListFooterComponent={<SwipableList items={allItems} allItems={allItems} setShelfItems={setShelfItems}/>}
             />
-        </Center>
+        </SafeAreaView>
     )
 }
 
