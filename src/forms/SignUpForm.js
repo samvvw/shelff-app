@@ -7,8 +7,6 @@ import {
     Text,
     Box,
     Checkbox,
-    Container,
-    View,
 } from 'native-base'
 import { UserContext } from '../context/UserContext'
 
@@ -21,24 +19,95 @@ const SignUpForm = () => {
         password: '',
         passwordConfirm: '',
     })
+    const [formErrors, setFormErrors] = useState({
+        nameError: '',
+        emailError: '',
+        passwordLengthError: '',
+        passwordConfirmError: '',
+    })
 
-    const { signUpWithEmailAndPassword, error } = useContext(UserContext)
+    const { signUpWithEmailAndPassword, error, apolloError } =
+        useContext(UserContext)
 
     const onSubmit = () => {
-        signUpWithEmailAndPassword(
-            signUpState.email,
-            signUpState.password,
-            signUpState.fullName
-        )
+        // name length validation
+        if (signUpState.fullName.length < 3) {
+            setFormErrors((prev) => ({
+                ...prev,
+                nameError: 'Name must be at least 3 characters long',
+            }))
+        } else {
+            setFormErrors((prev) => ({
+                ...prev,
+                nameError: '',
+            }))
+        }
+
+        // email format validation
+        if (!signUpState.email.match(/...*@...*\...+/)) {
+            setFormErrors((prev) => ({
+                ...prev,
+                emailError: 'Please enter a valir Email address.',
+            }))
+        } else {
+            setFormErrors((prev) => ({
+                ...prev,
+                emailError: '',
+            }))
+        }
+
+        // password length validation
+        if (signUpState.password.length < 6) {
+            setFormErrors((prev) => ({
+                ...prev,
+                passwordLengthError:
+                    'Password must be at least 6 characters long.',
+            }))
+        } else {
+            setFormErrors((prev) => ({
+                ...prev,
+                passwordLengthError: '',
+            }))
+        }
+
+        // password confirm validation
+        if (signUpState.password !== signUpState.passwordConfirm) {
+            setFormErrors((prev) => ({
+                ...prev,
+                passwordConfirmError: "Confirmation Password doesn't match.",
+            }))
+        } else {
+            setFormErrors((prev) => ({
+                ...prev,
+                passwordConfirmError: '',
+            }))
+        }
+
+        if (
+            !formErrors.emailError ||
+            !formErrors.nameError ||
+            !formErrors.passwordConfirmError ||
+            !formErrors.passwordLengthError
+        ) {
+            signUpWithEmailAndPassword(
+                signUpState.email,
+                signUpState.password,
+                signUpState.fullName
+            )
+        }
     }
 
     return (
         <VStack style={signUpStyles.formStackContainer}>
-            {error?.code === 'auth/email-already-in-use' ? (
+            {error?.code === 'auth/email-already-in-use' && (
                 <Text>{`Error: user with email ${signUpState.email} already exists`}</Text>
-            ) : null}
+            )}
+            {apolloError && <Text>{JSON.stringify(apolloError, null, 2)}</Text>}
             <Box style={signUpStyles.box}>
-                <FormControl isRequired>
+                <FormControl
+                    isRequired
+                    isInvalid={formErrors.nameError ? true : false}
+                >
                     <FormControl.Label>Full Name</FormControl.Label>
                     <Input
                         placeholder="i.e. James Jhonson"
@@ -52,10 +121,18 @@ const SignUpForm = () => {
                             }))
                         }
                     />
+                    {formErrors.nameError && (
+                        <FormControl.ErrorMessage>
+                            {formErrors.nameError}
+                        </FormControl.ErrorMessage>
+                    )}
                 </FormControl>
             </Box>
             <Box style={signUpStyles.box}>
-                <FormControl isRequired>
+                <FormControl
+                    isRequired
+                    isInvalid={formErrors.emailError ? true : false}
+                >
                     <FormControl.Label>Email</FormControl.Label>
                     <Input
                         placeholder="Email Address"
@@ -69,14 +146,23 @@ const SignUpForm = () => {
                             }))
                         }
                     />
+                    {formErrors.emailError && (
+                        <FormControl.ErrorMessage>
+                            {formErrors.emailError}
+                        </FormControl.ErrorMessage>
+                    )}
                 </FormControl>
             </Box>
             <Box style={signUpStyles.box}>
-                <FormControl isRequired>
+                <FormControl
+                    isRequired
+                    isInvalid={formErrors.passwordLengthError ? true : false}
+                >
                     <FormControl.Label>Password</FormControl.Label>
                     <Input
                         placeholder="Your Password"
                         variant="outline"
+                        type="password"
                         h={35}
                         value={signUpState.password}
                         onChangeText={(value) =>
@@ -86,14 +172,23 @@ const SignUpForm = () => {
                             }))
                         }
                     />
+                    {formErrors.passwordLengthError && (
+                        <FormControl.ErrorMessage>
+                            {formErrors.passwordLengthError}
+                        </FormControl.ErrorMessage>
+                    )}
                 </FormControl>
             </Box>
             <Box style={signUpStyles.box}>
-                <FormControl isRequired>
+                <FormControl
+                    isRequired
+                    isInvalid={formErrors.passwordConfirmError ? true : false}
+                >
                     <FormControl.Label>Confirm Password</FormControl.Label>
                     <Input
                         placeholder="Your Password"
                         variant="outline"
+                        type="password"
                         h={35}
                         value={signUpState.passwordConfirm}
                         onChangeText={(value) =>
@@ -103,6 +198,11 @@ const SignUpForm = () => {
                             }))
                         }
                     />
+                    {formErrors.passwordConfirmError && (
+                        <FormControl.ErrorMessage>
+                            {formErrors.passwordConfirmError}
+                        </FormControl.ErrorMessage>
+                    )}
                 </FormControl>
             </Box>
             <Box style={signUpStyles.box}>

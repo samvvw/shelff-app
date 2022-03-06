@@ -4,7 +4,8 @@ import { signStyles } from '../styles/styles'
 import { UserContext } from '../context/UserContext'
 
 const Sign = ({ navigation }) => {
-    const { googlePromptAsync, googleRequest, token } = useContext(UserContext)
+    const { googlePromptAsync, googleRequest, token, error, apolloError } =
+        useContext(UserContext)
     const onSignUp = () => {
         navigation.push('SignUp')
     }
@@ -21,10 +22,13 @@ const Sign = ({ navigation }) => {
                         <Text style={signStyles.headingText}>Shelff</Text>
                     </Heading>
                 </Center>
-                <Text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing dolor sit
-                    amet elit.
-                </Text>
+                {error?.code && <Text>{JSON.stringify(error, null, 2)}</Text>}
+                {apolloError && (
+                    <Text>
+                        Apollo error: {JSON.stringify(apolloError, null, 2)}
+                    </Text>
+                )}
+
                 <Box style={signStyles.buttonBox}>
                     <Button
                         style={signStyles.button}

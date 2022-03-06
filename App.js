@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { NativeBaseProvider, extendTheme } from 'native-base'
+import { NativeBaseProvider, extendTheme, StatusBar } from 'native-base'
 import AppStack from './src/stacks/AppStack'
 import AppLoading from 'expo-app-loading'
 // import * as Font from 'expo-font'
@@ -53,7 +53,7 @@ const App = () => {
 
     //with hook
     const client = new ApolloClient({
-        uri: 'http://10.0.0.226:8080/graphql',
+        uri: 'http://10.0.0.224:8080/graphql',
         cache: new InMemoryCache(),
     })
     const [fontsLoaded] = useFonts({
@@ -83,6 +83,7 @@ const App = () => {
         <ApolloProvider client={client}>
             <UserProvider>
                 <NativeBaseProvider theme={theme}>
+                    <StatusBar barStyle={'dark-content'} />
                     <AppStack />
                 </NativeBaseProvider>
             </UserProvider>
