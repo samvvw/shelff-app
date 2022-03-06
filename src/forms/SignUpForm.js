@@ -47,7 +47,7 @@ const SignUpForm = () => {
         if (!signUpState.email.match(/...*@...*\...+/)) {
             setFormErrors((prev) => ({
                 ...prev,
-                emailError: 'Please enter a valir Email address.',
+                emailError: 'Please enter a valid Email address.',
             }))
         } else {
             setFormErrors((prev) => ({
@@ -84,9 +84,9 @@ const SignUpForm = () => {
         }
 
         if (
-            !formErrors.emailError ||
-            !formErrors.nameError ||
-            !formErrors.passwordConfirmError ||
+            !formErrors.emailError &&
+            !formErrors.nameError &&
+            !formErrors.passwordConfirmError &&
             !formErrors.passwordLengthError
         ) {
             signUpWithEmailAndPassword(
