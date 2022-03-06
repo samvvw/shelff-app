@@ -1,10 +1,13 @@
+import { screenWidth } from "../../layout/layout";
 import { StyleSheet } from "react-native";
 import {Platform} from 'react-native'
 
 export const singleChartStyle = StyleSheet.create({
     container: {
-        marginVertical: 100,
-        height: '50%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 30,
         transform: [{ rotate: '180deg'}] //to start from the bottom 
     },
     innerWrapper: {
