@@ -34,6 +34,7 @@ initializeApp({
 })
 
 WebBrowser.maybeCompleteAuthSession()
+
 export const UserProvider = ({ children }) => {
     const [state, dispatch] = useReducer(UserReducer, initialState)
     // const [userTemp, setUserTemp] = useState(null)
@@ -45,6 +46,7 @@ export const UserProvider = ({ children }) => {
                 '209418730913-5hr4d615qbo0556u6ob7u36r37fg1fe4.apps.googleusercontent.com',
         })
 
+    // Sign Up and Login Using GOOGLE
     useEffect(() => {
         if (googleResponse?.type === 'success') {
             dispatch({ type: 'LOADING_TRUE' })
@@ -62,19 +64,25 @@ export const UserProvider = ({ children }) => {
                         'token',
                         user.stsTokenManager.accessToken
                     )
-                    addUser({
+                    await addUser({
                         variables: {
                             userId: user.uid,
                             email: user.email,
                             fullName: user.displayName,
                         },
                     })
+
                     userTemp.current = {
                         user,
                         auth,
                         dispatch: 'GOOGLE_AUTH',
                     }
                 } catch (error) {
+                    try {
+                        await AsyncStorage.removeItem('token')
+                    } catch (error) {
+                        dispatch({ type: 'ERROR', payload: { error } })
+                    }
                     dispatch({ type: 'ERROR', payload: { error } })
                 } finally {
                     dispatch({ type: 'LOADING_FALSE' })
@@ -83,6 +91,7 @@ export const UserProvider = ({ children }) => {
         }
     }, [googleResponse])
 
+    // Sign Up Using EMAIL and PASSWORD
     const signUpWithEmailAndPassword = async (email, password, fullName) => {
         try {
             dispatch({ type: 'LOADING_TRUE' })
@@ -94,19 +103,18 @@ export const UserProvider = ({ children }) => {
                 email,
                 password
             )
-
             await AsyncStorage.setItem(
                 'token',
                 user.stsTokenManager.accessToken
             )
-
-            addUser({
+            await addUser({
                 variables: {
                     userId: user.uid,
                     email: user.email,
                     fullName: fullName,
                 },
             })
+
             userTemp.current = {
                 user,
                 auth,
@@ -114,12 +122,18 @@ export const UserProvider = ({ children }) => {
                 dispatch: 'FIREBASE_AUTH',
             }
         } catch (error) {
+            try {
+                await AsyncStorage.removeItem('token')
+            } catch (error) {
+                dispatch({ type: 'ERROR', payload: { error } })
+            }
             dispatch({ type: 'ERROR', payload: { error } })
         } finally {
             dispatch({ type: 'LOADING_FALSE' })
         }
     }
 
+    // Context State dispatch for Authentication
     useEffect(() => {
         if (error) console.log('error', error.message)
         if (loading) {
@@ -143,6 +157,7 @@ export const UserProvider = ({ children }) => {
         }
     }, [data, error, loading])
 
+    // Refresh User Token
     const refreshIdToken = async () => {
         try {
             const currentUser = state.user.auth.currentUser
@@ -166,6 +181,7 @@ export const UserProvider = ({ children }) => {
                 user: state.user,
                 loading: state.loading,
                 error: state.error,
+                apolloError: error,
                 token: state.token,
             }}
         >
