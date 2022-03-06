@@ -1,17 +1,23 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import { FAB, Portal, Provider } from 'react-native-paper'
 import { useState } from 'react'
 import { screenWidth } from './layout'
 import { Text } from 'react-native'
+import { UserContext } from '../context/UserContext'
 
 import Footer from './Footer'
 
 const VerticalMenu = ({ navigation }) => {
+    const { error } = useContext(UserContext)
     const [state, setState] = React.useState({ open: false })
 
     const onStateChange = ({ open }) => setState({ open })
 
     const { open } = state
+
+    useEffect(() => {
+        if (error?.message) console.log('error', error)
+    }, [error])
 
     const handleBarcodeScan = () => {
         navigation.push('AddItemBarcode')

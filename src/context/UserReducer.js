@@ -14,11 +14,23 @@ export const UserReducer = (state, action) => {
                 error: {},
                 user: {
                     uid: action.payload.user.uid,
-                    displayName: action.payload.user.displayName,
+                    fullName: action.payload.user.displayName,
                     email: action.payload.user.email,
-                    token: action.payload.user.stsTokenManager.accessToken,
-                    auth: action.payload.auth,
                 },
+                token: action.payload.user.stsTokenManager.accessToken,
+                auth: action.payload.auth,
+            }
+        case 'FIREBASE_AUTH':
+            return {
+                ...state,
+                error: {},
+                user: {
+                    uid: action.payload.user.uid,
+                    fullName: action.payload.fullName,
+                    email: action.payload.user.email,
+                },
+                token: action.payload.user.stsTokenManager.accessToken,
+                auth: action.payload.auth,
             }
     }
 }
