@@ -124,7 +124,7 @@ const NewItem = (props) => {
     const db = openDatabase();
     let markAsEssential = 0;
     if (essential) markAsEssential = 1;
-    createTables(db);
+    // createTables(db);
 
     console.log("itemName", itemName);
 

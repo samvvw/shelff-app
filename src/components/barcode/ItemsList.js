@@ -19,13 +19,8 @@ const ItemsList = (props) => {
 
   useEffect(() => {
     const db = openDatabase();
-    const query = executeTransaction("select * from tmpItems", db);
-
-    // console.log("resultados de select", JSON.stringify(res1));
-    // console.log("query", query);
-    setItems(query);
-    console.log("res sin JSON . array", query);
-    // { rows: { _array } }) => setItems(_array)
+    const sql = "select * from items";
+    const query = executeTransaction(sql, db, setItems);
   }, [props.itemListChange]);
 
   return (

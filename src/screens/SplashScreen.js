@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Center } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { openDatabase, createTables } from "../services/sqllite";
 const SplashScreen = ({ navigation }) => {
   const checkFirstLaunch = async () => {
     //AsyncStorage.clear() //to check onboarding
@@ -13,6 +13,11 @@ const SplashScreen = ({ navigation }) => {
       return false;
     }
   };
+
+  useEffect(() => {
+    const db = openDatabase();
+    createTables(db);
+  }, []);
 
   useEffect(() => {
     (async () => {

@@ -6,7 +6,7 @@ export const newItemStyle = StyleSheet.create({
     marginTop: 90,
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
-    width: 320,
+    width: "100%",
     marginLeft: 0,
     marginBottom: 0,
     backgroundColor: "white",
