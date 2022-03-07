@@ -9,13 +9,16 @@ const Sign = ({ navigation }) => {
     const onSignUp = () => {
         navigation.push('SignUp')
     }
+    const toLogin = () => {
+        navigation.push('LogIn')
+    }
 
     useEffect(() => {
         if (token) navigation.replace('VerticalMenu')
     }, [token])
 
     return (
-        <View style={signStyles.screenContanier}>
+        <View style={signStyles.screenContainer}>
             <VStack style={signStyles.stack}>
                 <Center>
                     <Heading style={signStyles.heading}>
@@ -36,22 +39,25 @@ const Sign = ({ navigation }) => {
                     >
                         Create your Account
                     </Button>
+                    <Text textAlign={'center'}>OR</Text>
                     <Button
-                        style={signStyles.button}
+                        style={signStyles.buttonOutline}
                         disabled={!googleRequest}
                         onPress={() => googlePromptAsync()}
+                        variant="outline"
+                        colorScheme="primary"
                     >
                         Continue with Google
                     </Button>
                 </Box>
 
                 <Box style={signStyles.loginButtonBox}>
-                    <Button style={signStyles.buttonLink}>
-                        <Center>
-                            <Text style={signStyles.buttonLinkText}>
-                                Log In &gt;
-                            </Text>
-                        </Center>
+                    <Button
+                        onPress={toLogin}
+                        style={signStyles.buttonLink}
+                        variant="ghost"
+                    >
+                        Log In &gt;
                     </Button>
                 </Box>
             </VStack>
