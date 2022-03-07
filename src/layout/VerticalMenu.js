@@ -45,7 +45,7 @@ const VerticalMenu = ({ navigation }) => {
                   marginRight: screenWidth / 2 - 42,
                 },
                 icon: "heart",
-                // label: "Star",
+
                 onPress: () => alert("Pressed star"),
               },
               {
@@ -53,7 +53,7 @@ const VerticalMenu = ({ navigation }) => {
                   marginRight: screenWidth / 2 - 42,
                 },
                 icon: "barcode-scan",
-                // label: "Email",
+
                 onPress: handleBarcodeScan,
               },
             ]}

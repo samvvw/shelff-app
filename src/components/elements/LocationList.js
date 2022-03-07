@@ -9,7 +9,7 @@ const LocationList = (props) => {
       placeholderTextColor="blue"
       borderRadius={15}
       placeholder="select location"
-      // selectedValue={"1"}
+      selectedValue={"1"}
       accessibilityLabel="select location"
       onValueChange={(itemValue) => props.setLocation(itemValue)}
     >

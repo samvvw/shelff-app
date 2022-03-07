@@ -1,33 +1,22 @@
 import react from "react";
-import {
-  View,
-  VStack,
-  Text,
-  Box,
-  HStack,
-  Button,
-  ScrollView,
-  Select,
-  Input,
-  Switch,
-  FormControl,
-} from "native-base";
+import { View, VStack, Text, Box, HStack, Button, Switch } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useState, useEffect } from "react";
 import { newItemStyles } from "../../styles/styles";
-import { Platform } from "react-native";
 import Modal from "react-native-modal";
+import { TextInput } from "react-native";
+
+//Toast to send messages validations
+import Toast from "react-native-root-toast";
+//RootSiblingParent to show toast on top of modal
+import { RootSiblingParent } from "react-native-root-siblings";
 
 //dropdownlists
 import CategoryList from "../elements/CategoryList";
 import LocationList from "../elements/LocationList";
 //************ */
-import {
-  openDatabase,
-  createTables,
-  executeTransaction,
-} from "../../services/sqllite";
+import { openDatabase, executeTransaction } from "../../services/sqllite";
 
 //create id
 import uuid from "react-native-uuid";
@@ -61,10 +50,9 @@ const NewItem = (props) => {
   const [show, setShow] = useState(false);
 
   //this handle when the item name change
-  const handleItemNameChanged = (e) => {
-    console.log(e.target.value);
-    setItemName(e.target.value);
-  };
+  //const handleItemNameChanged = (event) => {
+  // setItemName(event.target.value);
+  //};
 
   //this handle if the item is marked as essential or not
   const handleEssential = () => {
@@ -119,23 +107,49 @@ const NewItem = (props) => {
     props.setScanned(false);
   };
 
+  const handleValidation = () => {
+    let toast;
+    let msg = "";
+
+    if (!itemName) {
+      msg = "Missing item's name";
+    }
+    if (!date) {
+      console.log("Missing ED");
+      msg += " Missing expiration date";
+    } else {
+      console.log(Date.parse(date));
+      if (!Date.parse(date)) {
+        msg += " Invalid expiration date";
+      }
+    }
+
+    if (msg !== "") {
+      toast = Toast.show(msg, {
+        duration: Toast.durations.LONG,
+      });
+    }
+
+    // setTimeout(function hideToast() {
+    //   Toast.hide(toast);
+    // }, 2000);
+
+    if (msg === "") {
+      handleSaveItem();
+    }
+  };
+
   const handleSaveItem = () => {
-    const id = uuid.v4();
-    const db = openDatabase();
     let markAsEssential = 0;
     if (essential) markAsEssential = 1;
-    // createTables(db);
 
     console.log("itemName", itemName);
 
-    const sql = `insert into tmpItems  (idItem, cItemName, iQuantity, dexpirationdate, idCategory, idLocation, idShelff,essential) values ("${id}","${props.productName}","${counter}","${date}", "${category}", "${location}",1,"${markAsEssential}")`;
-
-    // console.log(sql);
+    const id = uuid.v4();
+    const db = openDatabase();
+    const sql = `insert into items  (idItem, cItemName, iQuantity, dexpirationdate, idCategory, idLocation, idShelff,essential,permanent) values ("${id}","${itemName}","${counter}","${date}", "${category}", "${location}",1,"${markAsEssential}",0)`;
 
     executeTransaction(sql, db);
-
-    // const query = executeTransaction("select * from tmpItems", db);
-    // console.log("res ", query);
 
     //this variable allows to update the list of items
     props.setItemListChange(!props.itemListChange);
@@ -153,129 +167,125 @@ const NewItem = (props) => {
         deviceHeight={70}
         style={newItemStyles.modal}
       >
-        <View>
-          <Box>
-            <Button onPress={handleCancel} style={newItemStyles.cancelButton}>
-              <Text style={newItemStyles.cancelButtonText}>Cancel</Text>
-            </Button>
-          </Box>
-
-          <VStack style={newItemStyles.mainStack}>
-            <Box style={newItemStyles.codeNumberBox}>
-              <Text style={newItemStyles.codeNumberText}>
-                {props.barCodeNumber}
-                {}
-              </Text>
+        <RootSiblingParent>
+          <View>
+            <Box>
+              <Button onPress={handleCancel} style={newItemStyles.cancelButton}>
+                <Text style={newItemStyles.cancelButtonText}>Cancel</Text>
+              </Button>
             </Box>
 
-            {/* <FormControl isRequired > */}
-            <Input
-              size={"xl"}
-              paddingBottom={3}
-              mb={5}
-              mt={5}
-              fontSize={24}
-              onChange={(e) => handleItemNameChanged(e)}
-              defaultValue={props.productName}
-              value={itemName}
-              // value={itemName}
-            />
-            {/* <FormControl.ErrorMessage>
-                Item's name is required
-              </FormControl.ErrorMessage>
-            </FormControl> */}
-            <Box style={newItemStyles.labelBoxDate}>
-              <HStack style={newItemStyles.counterHBarDate}>
-                <HStack style={newItemStyles.category}>
-                  <Icon
-                    color={"gray"}
-                    size={16}
-                    name="shapes"
-                    style={{ marginRight: 15 }}
-                  />
-
-                  <CategoryList setCategory={setCategory} />
-                </HStack>
-
-                <HStack
-                  style={{
-                    alignItems: "center",
-                  }}
-                >
-                  <View>
-                    <View>
-                      <Button
-                        backgroundColor={"transparent"}
-                        onPress={showDatepicker}
-                      />
-                    </View>
-                    {show && (
-                      <DateTimePicker
-                        testID="dateTimePicker"
-                        value={currentDate}
-                        mode={"date"}
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChange}
-                        minimumDate={today}
-                      />
-                    )}
-                  </View>
-                  <Text style={{ marginTop: 15, marginLeft: 8 }}>
-                    {date || "Expiration Date"}
-                    {!date && <Text>*</Text>}
-                  </Text>
-                </HStack>
-              </HStack>
-            </Box>
-
-            <Box style={newItemStyles.labelBox}>
-              <HStack style={newItemStyles.counterHBar}>
-                <Text style={newItemStyles.labels}>
-                  Storage Location<Text>*</Text>
+            <VStack style={newItemStyles.mainStack}>
+              <Box style={newItemStyles.codeNumberBox}>
+                <Text style={newItemStyles.codeNumberText}>
+                  {props.barCodeNumber}
+                  {}
                 </Text>
-                <LocationList setLocation={setLocation} />
-              </HStack>
-            </Box>
-            <Box style={newItemStyles.labelBox}>
-              <HStack style={newItemStyles.counterHBar}>
-                <Text style={newItemStyles.labels}>Quantity</Text>
-                <Box>
-                  <HStack style={newItemStyles.counterButtonsHStack}>
-                    <Button
-                      style={newItemStyles.counterButton}
-                      onPress={() => handleCounter(counter - 1)}
-                    >
-                      <Icon color={"gray"} size={16} name="minus" />
-                    </Button>
-                    <Text>{counter}</Text>
-                    <Button
-                      style={newItemStyles.counterButton}
-                      onPress={() => handleCounter(counter + 1)}
-                    >
-                      <Icon color={"gray"} size={16} name="plus" />
-                    </Button>
+              </Box>
+
+              <TextInput
+                size={"xl"}
+                style={{ paddingBottom: 20, paddingTop: 30 }}
+                fontSize={24}
+                onChangeText={setItemName}
+                value={itemName}
+              />
+
+              <Box style={newItemStyles.labelBoxDate}>
+                <HStack style={newItemStyles.counterHBarDate}>
+                  <HStack style={newItemStyles.category}>
+                    <Icon
+                      color={"gray"}
+                      size={16}
+                      name="shapes"
+                      style={{ marginRight: 15 }}
+                    />
+
+                    <CategoryList setCategory={setCategory} />
                   </HStack>
-                </Box>
-              </HStack>
-            </Box>
-            <Box style={newItemStyles.labelBox}>
-              <HStack style={newItemStyles.counterHBar}>
-                <Text style={newItemStyles.labels}>Add to essential Items</Text>
-                <Switch isChecked={essential} onToggle={handleEssential} />
-              </HStack>
-            </Box>
-            <Button
-              style={newItemStyles.saveButton}
-              onPress={() => handleSaveItem()}
-            >
-              <Text>Done</Text>
-            </Button>
-            <Button style={newItemStyles.moreItemsButton}>
-              <Text>Save and keep scanning</Text>
-            </Button>
-          </VStack>
-        </View>
+
+                  <HStack
+                    style={{
+                      alignItems: "center",
+                    }}
+                  >
+                    <View>
+                      <View>
+                        <Button
+                          backgroundColor={"transparent"}
+                          onPress={showDatepicker}
+                        />
+                      </View>
+                      {show && (
+                        <DateTimePicker
+                          testID="dateTimePicker"
+                          value={currentDate}
+                          mode={"date"}
+                          is24Hour={true}
+                          display="default"
+                          onChange={onChange}
+                          minimumDate={today}
+                        />
+                      )}
+                    </View>
+                    <Text style={{ marginTop: 15, marginLeft: 8 }}>
+                      {date || "Expiration Date"}
+                      {!date && <Text>*</Text>}
+                    </Text>
+                  </HStack>
+                </HStack>
+              </Box>
+
+              <Box style={newItemStyles.labelBox}>
+                <HStack style={newItemStyles.counterHBar}>
+                  <Text style={newItemStyles.labels}>
+                    Storage Location<Text>*</Text>
+                  </Text>
+                  <LocationList setLocation={setLocation} />
+                </HStack>
+              </Box>
+              <Box style={newItemStyles.labelBox}>
+                <HStack style={newItemStyles.counterHBar}>
+                  <Text style={newItemStyles.labels}>Quantity</Text>
+                  <Box>
+                    <HStack style={newItemStyles.counterButtonsHStack}>
+                      <Button
+                        style={newItemStyles.counterButton}
+                        onPress={() => handleCounter(counter - 1)}
+                      >
+                        <Icon color={"gray"} size={16} name="minus" />
+                      </Button>
+                      <Text>{counter}</Text>
+                      <Button
+                        style={newItemStyles.counterButton}
+                        onPress={() => handleCounter(counter + 1)}
+                      >
+                        <Icon color={"gray"} size={16} name="plus" />
+                      </Button>
+                    </HStack>
+                  </Box>
+                </HStack>
+              </Box>
+              <Box style={newItemStyles.labelBox}>
+                <HStack style={newItemStyles.counterHBar}>
+                  <Text style={newItemStyles.labels}>
+                    Add to essential Items
+                  </Text>
+                  <Switch isChecked={essential} onToggle={handleEssential} />
+                </HStack>
+              </Box>
+              <Button
+                style={newItemStyles.saveButton}
+                onPress={() => handleValidation()}
+              >
+                <Text>Done</Text>
+              </Button>
+              <Button style={newItemStyles.moreItemsButton}>
+                <Text>Save and keep scanning</Text>
+              </Button>
+            </VStack>
+          </View>
+        </RootSiblingParent>
       </Modal>
     </View>
   );

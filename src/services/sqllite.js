@@ -18,12 +18,13 @@ export const openDatabase = () => {
 };
 
 export const createTables = (db) => {
-  const sqlDrop = `drop table tmpItems`;
+  const sqlDrop = `drop table items`;
   const sql = `create table if not exists items (idItem text primary key not null ,  cItemName text not null, iQuantity int default 0,
     dExpirationDate date NOT NULL,
    dCreatedDate date NOT NULL DEFAULT CURRENT_TIMESTAMP,
    idCategory int not null, idLocation not null, idShelff not null,
-   essential int not null default 0
+   essential int not null default 0,
+   permanent int not null default 0
     );`;
 
   db.transaction((txn) => {

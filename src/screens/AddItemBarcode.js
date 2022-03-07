@@ -8,7 +8,7 @@ import ItemsList from "../components/barcode/ItemsList";
 // import { screenWidth, screenHeight } from "../styles/styleSizes";
 import { useState } from "react";
 
-const AddItemBarcode = () => {
+const AddItemBarcode = ({ navigation }) => {
   const [arrowButton, setArrowButton] = useState("arrow-up");
   const [cameraHeight, setcameraHeight] = useState("50%");
   const [barCodeNumber, setBarCodeNumber] = useState();
@@ -53,6 +53,7 @@ const AddItemBarcode = () => {
         {/* )} */}
         {!scanned && (
           <ItemsList
+            navigation={navigation}
             handleArrowButton={handleArrowButton}
             arrowButton={arrowButton}
             itemListChange={itemListChange}

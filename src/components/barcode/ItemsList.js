@@ -6,38 +6,44 @@ import { openDatabase, executeTransaction } from "../../services/sqllite";
 import List from "./List";
 import { useState, useEffect } from "react";
 
-const Notems = () => {
-  return (
-    <Text style={addItemBarcodeStyle.noItemsText}>
-      You have "0" items ready to add
-    </Text>
-  );
+const NoItems = ({ textNoItems }) => {
+  return <Text style={addItemBarcodeStyle.noItemsText}>{textNoItems}</Text>;
 };
 
-const ItemsList = (props) => {
+const ItemsList = ({
+  navigation,
+  handleArrowButton,
+  arrowButton,
+  itemListChange,
+}) => {
   const [items, setItems] = useState();
 
   useEffect(() => {
     const db = openDatabase();
-    const sql = "select * from items";
+    const sql = "select * from items where permanent = 0";
     const query = executeTransaction(sql, db, setItems);
-  }, [props.itemListChange]);
+    console.log(items);
+  }, [itemListChange]);
 
   return (
     <>
       <VStack>
         <HStack style={addItemBarcodeStyle.boxItems}>
-          {!items && <Notems />}
+          {!items?.length ? (
+            <NoItems textNoItems={"You have '0' items ready to add"} />
+          ) : (
+            <NoItems textNoItems={""} />
+          )}
 
           <Button
             style={addItemBarcodeStyle.buttonArrow}
-            onPress={props.handleArrowButton}
+            onPress={handleArrowButton}
           >
-            <Icon size={18} name={props.arrowButton} />
+            <Icon size={18} name={arrowButton} />
           </Button>
         </HStack>
 
-        <List items={items} />
+        <List items={items} navigation={navigation} />
       </VStack>
     </>
   );

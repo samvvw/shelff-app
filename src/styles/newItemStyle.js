@@ -69,6 +69,7 @@ export const newItemStyle = StyleSheet.create({
     textAlign: "left",
     width: 80,
     paddingLeft: 10,
+    fontSize: 20,
   },
   codeNumberText: {
     textAlign: "center",
