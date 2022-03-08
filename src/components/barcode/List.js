@@ -10,7 +10,6 @@ import {
   VStack,
   Button,
   Center,
-  ScrollView,
 } from "native-base";
 const List = ({ navigation, items }) => {
   const handleSetPermanentItems = () => {
@@ -61,7 +60,6 @@ const List = ({ navigation, items }) => {
           </HStack>
         </Box>
       )}
-      keyExtractor={(item) => item.id}
       ListFooterComponent={
         items?.length && (
           <Center>
