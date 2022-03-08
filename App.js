@@ -37,6 +37,18 @@ const theme = extendTheme({
                 normal: 'GoogleSans-Bold',
                 italic: 'GoogleSans-BoldItalic',
             },
+            700: {
+                normal: 'GoogleSans-Bold',
+                italic: 'GoogleSans-BoldItalic',
+            },
+            600: {
+                normal: 'GoogleSans-Medium',
+                italic: 'GoogleSans-MediumItalic',
+            },
+            500: {
+                normal: 'GoogleSans-Medium',
+                italic: 'GoogleSans-MediumItalic',
+            },
         },
     },
     fonts: {
@@ -49,6 +61,20 @@ const theme = extendTheme({
             300: '#007AFF',
             400: '#007AFF',
             500: '#007AFF',
+        },
+    },
+    components: {
+        Checkbox: {
+            baseStyle: {
+                borderRadius: 50,
+                borderColor: 'primary.500',
+                borderWidth: 1,
+            },
+        },
+        FormControlLabel: {
+            baseStyle: {
+                astrickColor: 'primary.500',
+            },
         },
     },
 })
