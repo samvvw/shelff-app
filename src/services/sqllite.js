@@ -19,22 +19,22 @@ export const openDatabase = () => {
 
 export const createTables = (db) => {
     const sqlDrop = `drop table items`
-    const sql = `create table if not exists items (idItem text primary key not null ,  cItemName text not null, iQuantity int default 0,
-    dExpirationDate date NOT NULL,
-   dCreatedDate date NOT NULL DEFAULT CURRENT_TIMESTAMP,
-   idCategory int not null, idLocation not null, idShelff not null,
-   essential int not null default 0
+    const sql = `create table if not exists items (itemId text primary key not null ,  itemName text not null, quantity int default 0,
+    expirationDate date NOT NULL,
+   creationDate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   categoryId int not null, locationId not null, shelfId not null,
+   isEssential boolean not null default 0
     );`
 
     db.transaction((txn) => {
-        txn.executeSql(
-            sqlDrop,
-            [],
-            () => console.log('table droped'),
-            (error) => {
-                console.log('Error dropping table ')
-            },
-        )
+        // txn.executeSql(
+        //     sqlDrop,
+        //     [],
+        //     () => console.log('table droped'),
+        //     (error) => {
+        //         console.log('Error dropping table ')
+        //     },
+        // )
         txn.executeSql(
             sql,
             [],
