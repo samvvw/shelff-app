@@ -27,10 +27,10 @@ const AddItemBarcode = ({ navigation }) => {
         }
     }
 
-    useEffect(() => {
-        //look for barcode in database
-        setItemNameFromDB(findBarcodeinLocalDB(barCodeNumber))
-    }, [])
+    //useEffect(() => {
+    //look for barcode in database
+    //setItemNameFromDB(findBarcodeinLocalDB(barCodeNumber))
+    //}, [])
 
     return (
         <>

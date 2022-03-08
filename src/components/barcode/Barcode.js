@@ -47,9 +47,7 @@ const Barcode = ({
     return (
         <View style={styles().container}>
             <BarCodeScanner
-                onBarCodeScanned={
-                    props.scanned ? undefined : handleBarCodeScanned
-                }
+                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                 style={StyleSheet.absoluteFillObject}
             />
             {scanned && (
