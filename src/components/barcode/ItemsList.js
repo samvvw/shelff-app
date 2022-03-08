@@ -2,9 +2,7 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { addItemBarcodeStyle } from '../../styles/addItemBarcode'
 import { Text, HStack, Button, VStack, Box } from 'native-base'
-import { openDatabase, executeTransaction } from '../../services/sqllite'
 import List from './List'
-import { useState, useEffect } from 'react'
 
 const NoItems = ({ textNoItems }) => {
     return <Text style={addItemBarcodeStyle.noItemsText}>{textNoItems}</Text>
@@ -14,7 +12,6 @@ const ItemsList = ({
     navigation,
     handleArrowButton,
     arrowButton,
-    itemListChange,
     arrItems,
     setArrItems,
 }) => {

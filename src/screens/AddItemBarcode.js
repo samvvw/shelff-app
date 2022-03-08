@@ -2,18 +2,18 @@ import { View, Box } from 'native-base'
 import React from 'react'
 import Barcode from '../components/barcode/Barcode'
 import NewItem from '../components/barcode/NewItem'
-import { addItemBarcodeStyle } from '../styles/addItemBarcode'
-
 import ItemsList from '../components/barcode/ItemsList'
-// import { screenWidth, screenHeight } from "../styles/styleSizes";
-import { useState } from 'react'
+import { useState, useeffect } from 'react'
+import { useEffect } from 'react/cjs/react.production.min'
+import { findBarcodeinLocalDB } from '../components/barcode/saveItems'
 
 const AddItemBarcode = ({ navigation }) => {
     const [arrowButton, setArrowButton] = useState('arrow-up')
     const [cameraHeight, setcameraHeight] = useState('50%')
     const [barCodeNumber, setBarCodeNumber] = useState()
     const [scanned, setScanned] = useState(false)
-    const [itemListChange, setItemListChange] = useState(true)
+    const [itemNameFromDB, setItemNameFromDB] = useState('')
+
     //Array to save items temporarily
     const [arrItems, setArrItems] = useState([])
 
@@ -26,6 +26,12 @@ const AddItemBarcode = ({ navigation }) => {
             setcameraHeight('50%')
         }
     }
+
+    useEffect(() => {
+        //look for barcode in database
+        setItemNameFromDB(findBarcodeinLocalDB(barCodeNumber))
+    }, [])
+
     return (
         <>
             {scanned ? (
@@ -46,7 +52,7 @@ const AddItemBarcode = ({ navigation }) => {
                         barCodeNumber={barCodeNumber}
                         setScanned={setScanned}
                         setcameraHeight={setcameraHeight}
-                        productName="Soy Milk"
+                        productName={itemNameFromDB}
                         setArrItems={setArrItems}
                         arrItems={arrItems}
                         navigation={navigation}
@@ -57,7 +63,6 @@ const AddItemBarcode = ({ navigation }) => {
                         navigation={navigation}
                         handleArrowButton={handleArrowButton}
                         arrowButton={arrowButton}
-                        itemListChange={itemListChange}
                         arrItems={arrItems}
                         setArrItems={setArrItems}
                     />
