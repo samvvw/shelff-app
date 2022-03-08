@@ -24,6 +24,7 @@ const List = ({ navigation, items }) => {
     <FlatList
       paddingBottom={20}
       data={items}
+      keyExtractor={(item) => item.idItem}
       renderItem={({ item }) => (
         <Box
           borderBottomWidth="1"

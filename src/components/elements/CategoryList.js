@@ -1,5 +1,6 @@
 import react from "react";
-import { Select } from "native-base";
+import { Select, Icon } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
 
 const CategoryList = (props) => {
   return (
@@ -11,6 +12,9 @@ const CategoryList = (props) => {
       selectedValue={"1"}
       accessibilityLabel="select category"
       onValueChange={(itemValue) => props.setCategory(itemValue)}
+      dropdownIcon={
+        <Icon as={Ionicons} size="5" color={"gray.500"} name="chevron-down" />
+      }
     >
       <Select.Item label="Fruits" value="1" />
       <Select.Item label="Vegetables" value="2" />

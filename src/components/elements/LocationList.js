@@ -1,6 +1,6 @@
 import react from "react";
-import { Select } from "native-base";
-import { Picker } from "react-native";
+import { Select, Icon } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
 
 const LocationList = (props) => {
   return (
@@ -12,6 +12,9 @@ const LocationList = (props) => {
       selectedValue={"1"}
       accessibilityLabel="select location"
       onValueChange={(itemValue) => props.setLocation(itemValue)}
+      dropdownIcon={
+        <Icon as={Ionicons} size="5" color={"gray.500"} name="chevron-down" />
+      }
     >
       <Select.Item label="Fridge" value="1" />
       <Select.Item label="Frezzer" value="2" />

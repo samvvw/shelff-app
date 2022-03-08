@@ -8,6 +8,7 @@ import { newItemStyle } from "./newItemStyle";
 import { myShelffStyle } from "./myshelff/myShelfStyle";
 import { allChartsStyle } from "./myshelff/allChartsStyle";
 import { singleChartStyle } from "./myshelff/singleChartStyle";
+import { swipableListStyle } from "./myshelff/swipableListStyle";
 
 export const signStyles = signStyle;
 export const signUpStyles = signUpStyle;
@@ -19,3 +20,4 @@ export const myShelffStyles = myShelffStyle;
 export const newItemStyles = newItemStyle;
 export const allChartsStyles = allChartsStyle;
 export const singleChartStyles = singleChartStyle;
+export const swipableListStyles = swipableListStyle;

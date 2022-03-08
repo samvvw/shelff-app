@@ -26,11 +26,14 @@ const SplashScreen = ({ navigation }) => {
       if (isFirst) {
         setTimeout(() => {
           navigation.replace("Onboarding");
-        }, 5000);
+        }, 1000);
       } else {
-        setTimeout(() => {
-          navigation.replace("VerticalMenu");
-        }, 5000);
+        const token = await AsyncStorage.getItem("token");
+        if (token) {
+          navigation.navigate("VerticalMenu");
+        } else {
+          navigation.replace("GetStarted");
+        }
       }
     })();
   }, []);
