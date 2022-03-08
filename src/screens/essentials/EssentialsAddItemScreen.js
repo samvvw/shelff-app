@@ -9,7 +9,6 @@ import { Spinner } from 'native-base'
 import EssentialsModal from '../../components/essentials/EssentialsModal'
 
 const EssentialsAddItemScreen = ({ navigation }) => {
-    const [visible, setVisible] = useState(false)
     const [items, setItems] = useState()
     const { user } = useContext(UserContext)
     const { data } = useQuery(GET_ESSENTIALS, {
@@ -31,11 +30,7 @@ const EssentialsAddItemScreen = ({ navigation }) => {
             {!items && <Spinner />}
             {items?.length ? (
                 <View style={styles.listContainer}>
-                    <EssentialsList
-                        data={items}
-                        isAdd={true}
-                        setVisible={setVisible}
-                    />
+                    <EssentialsList data={items} isAdd={true} />
                 </View>
             ) : (
                 <View style={styles.container}>
@@ -48,7 +43,6 @@ const EssentialsAddItemScreen = ({ navigation }) => {
                     </Text>
                 </View>
             )}
-            <EssentialsModal visible={visible} setVisible={setVisible} />
         </>
     )
 }

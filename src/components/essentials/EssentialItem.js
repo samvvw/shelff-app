@@ -1,36 +1,46 @@
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { useState } from 'react'
+import EssentialsModal from './EssentialsModal'
 
-const EssentialItem = ({ item, isAdd = false, setVisible }) => {
+const EssentialItem = ({ item, isAdd = false }) => {
+    const [visible, setVisible] = useState(false)
     const navigation = useNavigation()
 
     return (
-        <View style={styles.container}>
-            <View style={styles.imageContainer}></View>
-            <View style={styles.row}>
-                <View style={styles.content}>
-                    <Text style={styles.title}>{item?.itemName}</Text>
-                    {!isAdd && (
-                        <Text style={styles.subtitle}>
-                            <Text style={styles.highlight}>
-                                Added to my shelff
+        <>
+            <View style={styles.container}>
+                <View style={styles.imageContainer}></View>
+                <View style={styles.row}>
+                    <View style={styles.content}>
+                        <Text style={styles.title}>{item?.itemName}</Text>
+                        {!isAdd && (
+                            <Text style={styles.subtitle}>
+                                <Text style={styles.highlight}>
+                                    Added to my shelff
+                                </Text>
+                                : {item?.creationDate}
                             </Text>
-                            : {item?.creationDate}
-                        </Text>
+                        )}
+                    </View>
+                    {isAdd && (
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => setVisible(true)}
+                        >
+                            <View>
+                                <Text style={styles.subtitle}>Add</Text>
+                            </View>
+                        </TouchableOpacity>
                     )}
                 </View>
-                {isAdd && (
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => setVisible(true)}
-                    >
-                        <View>
-                            <Text style={styles.subtitle}>Add</Text>
-                        </View>
-                    </TouchableOpacity>
-                )}
             </View>
-        </View>
+            <EssentialsModal
+                visible={visible}
+                setVisible={setVisible}
+                item={item}
+            />
+        </>
     )
 }
 

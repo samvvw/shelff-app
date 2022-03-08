@@ -1,7 +1,14 @@
+import { Switch } from 'native-base'
 import { useState } from 'react'
 import { Modal, StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import LocationList from '../elements/LocationList'
+import QuantityCounter from './QuantityCounter'
 
-const EssentialsModal = ({ visible, setVisible }) => {
+const EssentialsModal = ({ item, visible, setVisible }) => {
+    const [location, setLocation] = useState(item?.locationId)
+    const [quantity, setQuantity] = useState(item?.quantity)
+    const [isEssential, setIsEssential] = useState(true)
+
     return (
         <Modal
             animationType="slide"
@@ -18,10 +25,66 @@ const EssentialsModal = ({ visible, setVisible }) => {
                 }}
             >
                 <View style={styles.modalContainer}>
-                    <Text style={styles.headerText}>This is Half Modal</Text>
-                    <TouchableOpacity onPress={() => setVisible(false)}>
-                        <Text>Close</Text>
-                    </TouchableOpacity>
+                    <View style={styles.itemCodeContainer}>
+                        <Text>{item?.itemId}</Text>
+                    </View>
+                    <View style={styles.itemNameContainer}>
+                        <Text style={styles.itemName}>{item?.itemName}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <View style={styles.pair}>
+                            <View style={styles.icon}></View>
+                            <Text>Dairy</Text>
+                        </View>
+                        <View style={styles.pair}>
+                            <View style={styles.icon}></View>
+                            <Text>
+                                Expiration Date
+                                <Text style={{ color: '#f00' }}>*</Text>
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={styles.formControl}>
+                        <Text style={styles.label}>
+                            Storage Location{' '}
+                            <Text style={{ color: '#f00' }}>*</Text>
+                        </Text>
+                        <LocationList
+                            location={location}
+                            setLocation={setLocation}
+                        />
+                    </View>
+                    <View style={styles.formControl}>
+                        <Text style={styles.label}>Quantity</Text>
+                        <QuantityCounter
+                            quantity={quantity}
+                            setQuantity={setQuantity}
+                        />
+                    </View>
+                    <View style={styles.formControl}>
+                        <Text style={styles.label}>
+                            Add to Essentials Items
+                        </Text>
+                        <Switch
+                            isChecked={isEssential}
+                            onToggle={() => setIsEssential((prev) => !prev)}
+                            size="lg"
+                        />
+                    </View>
+                    <View style={styles.buttonsContainer}>
+                        <TouchableOpacity onPress={() => setVisible(false)}>
+                            <View style={[styles.button, styles.primary]}>
+                                <Text style={{ color: 'white' }}>
+                                    Add to my shelf
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setVisible(false)}>
+                            <View style={styles.button}>
+                                <Text>Cancel</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -29,58 +92,65 @@ const EssentialsModal = ({ visible, setVisible }) => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#98B3B7',
-        justifyContent: 'center',
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    headerText: {
-        color: 'black',
-        fontSize: 18,
-        padding: 26,
-    },
-    noteHeader: {
-        backgroundColor: '#42f5aa',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderTopLeftRadius: 50,
-        borderTopRightRadius: 50,
-    },
     modalContainer: {
         flex: 1,
-        borderRadius: 20,
+        borderRadius: 30,
+        backgroundColor: '#fff',
+        paddingHorizontal: 20,
+    },
+    itemCodeContainer: {
+        borderWidth: 1,
+        width: '50%',
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#ddd',
+        borderColor: '#ccc',
+        alignSelf: 'center',
+        marginVertical: 30,
+        borderRadius: 5,
     },
-    textInput: {
-        alignSelf: 'stretch',
-        color: 'black',
-        padding: 20,
-        backgroundColor: '#ddd',
-        borderTopWidth: 2,
-        borderTopColor: '#ddd',
+    itemName: {
+        fontSize: 26,
+        fontWeight: 'bold',
     },
-    addButton: {
-        position: 'absolute',
-        zIndex: 11,
-        right: 20,
-        bottom: 90,
-        backgroundColor: '#98B3B7',
-        width: 70,
-        height: 70,
-        borderRadius: 35,
+    button: {
         alignItems: 'center',
-        justifyContent: 'center',
-        elevation: 8,
+        marginVertical: 6,
+        padding: 15,
+        borderRadius: 8,
+        backgroundColor: '#e8e8e8',
     },
-    addButtonText: {
+    primary: {
+        backgroundColor: '#307aff',
         color: '#fff',
-        fontSize: 18,
+    },
+    row: {
+        flexDirection: 'row',
+        marginVertical: 20,
+    },
+    pair: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 20,
+    },
+    icon: {
+        width: 30,
+        height: 30,
+        backgroundColor: '#ddda',
+        borderRadius: 5,
+        marginRight: 5,
+    },
+    formControl: {
+        flexDirection: 'row',
+        marginTop: 20,
+        justifyContent: 'space-between',
+        paddingBottom: 20,
+        borderBottomWidth: 2,
+        borderColor: '#eee',
+    },
+    label: {
+        alignSelf: 'center',
+    },
+    buttonsContainer: {
+        marginTop: 20,
     },
 })
 
