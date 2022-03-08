@@ -33,15 +33,17 @@ const ItemsList = ({
                 <HStack style={addItemBarcodeStyle.boxItems}>
                     {!arrItems?.length ? (
                         <NoItems
+                            key="l-header-noitems"
                             textNoItems={"You have '0' items ready to add"}
                         />
                     ) : (
-                        <NoItems textNoItems={''} />
+                        <NoItems key="l-header-noitems" textNoItems={''} />
                     )}
 
                     <Button
                         style={addItemBarcodeStyle.buttonArrow}
                         onPress={handleArrowButton}
+                        key="l-header-button"
                     >
                         <Icon size={18} name={arrowButton} />
                     </Button>
