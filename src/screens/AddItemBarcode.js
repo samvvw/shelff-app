@@ -40,7 +40,7 @@ const AddItemBarcode = ({ navigation }) => {
                 />
             )}
 
-            <View>
+            <View style={{ flex: 1 }}>
                 {scanned && (
                     <NewItem
                         barCodeNumber={barCodeNumber}
