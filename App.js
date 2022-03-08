@@ -1,12 +1,12 @@
-import { useContext } from 'react'
-import { NativeBaseProvider, extendTheme, StatusBar } from 'native-base'
-import AppStack from './src/stacks/AppStack'
-import AppLoading from 'expo-app-loading'
+import { useContext } from "react";
+import { NativeBaseProvider, extendTheme, StatusBar } from "native-base";
+import AppStack from "./src/stacks/AppStack";
+import AppLoading from "expo-app-loading";
 // import * as Font from 'expo-font'
-import { useFonts } from 'expo-font'
-import { UserProvider } from './src/context/UserContext'
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
-import { UserContext } from './src/context/UserContext'
+import { useFonts } from "expo-font";
+import { UserProvider } from "./src/context/UserContext";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { UserContext } from "./src/context/UserContext";
 //with function
 // const fetchFonts = () => {
 //   return Font.loadAsync({
@@ -26,44 +26,44 @@ const theme = extendTheme({
   fontConfig: {
     googleSans: {
       regular: {
-        normal: 'GoogleSans-Regular',
-        italic: 'GoogleSans-Italic'
+        normal: "GoogleSans-Regular",
+        italic: "GoogleSans-Italic",
       },
       medium: {
-        normal: 'GoogleSans-Medium',
-        italic: 'GoogleSans-MediumItalic'
+        normal: "GoogleSans-Medium",
+        italic: "GoogleSans-MediumItalic",
       },
       bold: {
-        normal: 'GoogleSans-Bold',
-        italic: 'GoogleSans-BoldItalic'
-      }
-    }
+        normal: "GoogleSans-Bold",
+        italic: "GoogleSans-BoldItalic",
+      },
+    },
   },
   fonts: {
-    heading: 'googleSans',
-    body: 'googleSans',
-    mono: 'googleSans'
-  }
-})
+    heading: "googleSans",
+    body: "googleSans",
+    mono: "googleSans",
+  },
+});
 
 const App = () => {
   //with function
   // const [fontsLoaded, setFontsLoaded] = useState(false);
-  const { token } = useContext
+  const { token } = useContext;
 
   //with hook
   const client = new ApolloClient({
-    uri: 'http://10.0.0.233:8080/graphql',
-    cache: new InMemoryCache()
-  })
+    uri: "http://192.168.1.92:8080/graphql",
+    cache: new InMemoryCache(),
+  });
   const [fontsLoaded] = useFonts({
-    'GoogleSans-Regular': require('./assets/fonts/GoogleSans-Regular.ttf'),
-    'GoogleSans-Italic': require('./assets/fonts/GoogleSans-Italic.ttf'),
-    'GoogleSans-Medium': require('./assets/fonts/GoogleSans-Medium.ttf'),
-    'GoogleSans-MediumItalic': require('./assets/fonts/GoogleSans-MediumItalic.ttf'),
-    'GoogleSans-Bold': require('./assets/fonts/GoogleSans-Bold.ttf'),
-    'GoogleSans-BoldItalic': require('./assets/fonts/GoogleSans-BoldItalic.ttf')
-  })
+    "GoogleSans-Regular": require("./assets/fonts/GoogleSans-Regular.ttf"),
+    "GoogleSans-Italic": require("./assets/fonts/GoogleSans-Italic.ttf"),
+    "GoogleSans-Medium": require("./assets/fonts/GoogleSans-Medium.ttf"),
+    "GoogleSans-MediumItalic": require("./assets/fonts/GoogleSans-MediumItalic.ttf"),
+    "GoogleSans-Bold": require("./assets/fonts/GoogleSans-Bold.ttf"),
+    "GoogleSans-BoldItalic": require("./assets/fonts/GoogleSans-BoldItalic.ttf"),
+  });
 
   if (!fontsLoaded) {
     return (
@@ -76,19 +76,19 @@ const App = () => {
 
       //with hook
       <AppLoading />
-    )
+    );
   }
 
   return (
     <ApolloProvider client={client}>
       <UserProvider>
         <NativeBaseProvider theme={theme}>
-          <StatusBar barStyle={'dark-content'} />
+          <StatusBar barStyle={"dark-content"} />
           <AppStack />
         </NativeBaseProvider>
       </UserProvider>
     </ApolloProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;
