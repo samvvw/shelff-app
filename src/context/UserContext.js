@@ -9,6 +9,8 @@ import {
     signInWithCredential,
     getIdToken,
     createUserWithEmailAndPassword,
+    updateProfile,
+    signInWithEmailAndPassword,
 } from 'firebase/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useMutation } from '@apollo/client'
@@ -103,22 +105,70 @@ export const UserProvider = ({ children }) => {
                 email,
                 password
             )
+
+            await updateProfile(auth.currentUser, {
+                displayName: fullName,
+            })
+
             await AsyncStorage.setItem(
                 'token',
                 user.stsTokenManager.accessToken
             )
             await addUser({
                 variables: {
-                    userId: user.uid,
-                    email: user.email,
-                    fullName: fullName,
+                    userId: auth.currentUser.uid,
+                    email: auth.currentUser.email,
+                    fullName: auth.currentUser.displayName,
                 },
             })
 
             userTemp.current = {
                 user,
                 auth,
-                fullName,
+                fullName: auth.currentUser.displayName,
+                dispatch: 'FIREBASE_AUTH',
+            }
+        } catch (error) {
+            try {
+                await AsyncStorage.removeItem('token')
+            } catch (error) {
+                dispatch({ type: 'ERROR', payload: { error } })
+            }
+            dispatch({ type: 'ERROR', payload: { error } })
+        } finally {
+            dispatch({ type: 'LOADING_FALSE' })
+        }
+    }
+
+    const loginWithEmailAndPassword = async (email, password) => {
+        try {
+            dispatch({ type: 'LOADING_TRUE' })
+
+            const auth = getAuth()
+
+            const { user } = await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            )
+
+            await AsyncStorage.setItem(
+                'token',
+                user.stsTokenManager.accessToken
+            )
+
+            await addUser({
+                variables: {
+                    userId: auth.currentUser.uid,
+                    email: auth.currentUser.email,
+                    fullName: auth.currentUser.displayName,
+                },
+            })
+
+            userTemp.current = {
+                user,
+                auth,
+                fullName: auth.currentUser.displayName,
                 dispatch: 'FIREBASE_AUTH',
             }
         } catch (error) {
@@ -177,6 +227,7 @@ export const UserProvider = ({ children }) => {
                 googlePromptAsync,
                 refreshIdToken,
                 signUpWithEmailAndPassword,
+                loginWithEmailAndPassword,
                 googleRequest,
                 user: state.user,
                 loading: state.loading,

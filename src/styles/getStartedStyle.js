@@ -1,9 +1,8 @@
-import { screenWidth, screenHeight } from "../layout/layout";
-import { StyleSheet } from "react-native";
-
+import { screenWidth, screenHeight } from '../layout/layout'
+import { StyleSheet } from 'react-native'
 
 export const getStartedStyle = StyleSheet.create({
-    screenContanier: {
+    screenContainer: {
         height: screenHeight,
         width: screenWidth,
         flex: 1,
@@ -14,7 +13,7 @@ export const getStartedStyle = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 30,
         marginTop: 40,
-        marginBottom: 30    
+        marginBottom: 30,
     },
     indicator: {
         width: '100%',
@@ -25,24 +24,24 @@ export const getStartedStyle = StyleSheet.create({
     indicatorOne: {
         width: '50%',
         height: '5%',
-        backgroundColor: '#007AFF'
+        backgroundColor: '#007AFF',
     },
     indicatorTwo: {
         width: '50%',
         height: '5%',
-        backgroundColor: '#E5E5EA'
+        backgroundColor: '#E5E5EA',
     },
     indicatorDone: {
         width: '50%',
         height: '5%',
-        backgroundColor: '#007AFF'
+        backgroundColor: '#007AFF',
     },
     textWrapper: {
         width: '100%',
         height: '50%',
         justifyContent: 'flex-start',
-        alignItems:  'flex-start',
-        marginBottom: 20 
+        alignItems: 'flex-start',
+        marginBottom: 20,
     },
     heading: {
         fontSize: 24,
@@ -56,51 +55,51 @@ export const getStartedStyle = StyleSheet.create({
     },
     timeSelectorLabel: {
         fontSize: 18,
-        color: '#007AFF'
+        color: '#007AFF',
     },
     buttonWrapper: {
         width: '100%',
         height: '20%',
         justifyContent: 'space-between',
-        alignItems:  'center',
-        marginBottom: 40
+        alignItems: 'center',
+        marginBottom: 40,
     },
     buttonWrapperBottom: {
         width: '100%',
         height: '20%',
         justifyContent: 'flex-end',
-        alignItems:  'center',
-        marginBottom: 40
+        alignItems: 'center',
+        marginBottom: 40,
     },
     whiteButton: {
         flex: 0,
-        alignItems:  'center',
+        alignItems: 'center',
         width: '100%',
         padding: 15,
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: "#007AFF",
+        borderColor: '#007AFF',
     },
     blueText: {
-        color: '#007AFF'
+        color: '#007AFF',
     },
     blueButton: {
         flex: 0,
-        alignItems:  'center',
-        backgroundColor:'#007AFF',
+        alignItems: 'center',
+        backgroundColor: '#007AFF',
         width: '100%',
         padding: 15,
-        borderRadius: 10
+        borderRadius: 10,
     },
     grayButton: {
         flex: 0,
-        alignItems:  'center',
-        backgroundColor:'#C4C4C4',
+        alignItems: 'center',
+        backgroundColor: '#C4C4C4',
         width: '100%',
         padding: 15,
-        borderRadius: 10
+        borderRadius: 10,
     },
     whiteText: {
-        color: 'white'
+        color: 'white',
     },
-});
+})
