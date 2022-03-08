@@ -13,7 +13,7 @@ import {
 
 import { saveItemsToLocalStorage } from './saveItems'
 
-const List = ({ navigation, arrItems, setArrItems }) => {
+const List = ({ navigation, arrItems, setArrItems, header }) => {
     const saveItems = () => {
         saveItemsToLocalStorage(arrItems)
         setArrItems([])
@@ -31,7 +31,8 @@ const List = ({ navigation, arrItems, setArrItems }) => {
 
     return (
         <FlatList
-            paddingBottom={20}
+            style={{ height: '100%' }}
+            ListHeaderComponent={header}
             data={arrItems}
             keyExtractor={(item) => item.idItem}
             renderItem={({ item }) => (
@@ -62,7 +63,7 @@ const List = ({ navigation, arrItems, setArrItems }) => {
                                     color: 'warmGray.200',
                                 }}
                             >
-                                {item.dExpirationDate}
+                                {item.dexpirationdate}
                             </Text>
                         </VStack>
                         <Spacer />
@@ -76,7 +77,11 @@ const List = ({ navigation, arrItems, setArrItems }) => {
                 arrItems?.length && (
                     <Center>
                         <Button
-                            style={{ width: '70%', marginTop: 20 }}
+                            style={{
+                                width: '70%',
+                                marginTop: 20,
+                                marginBottom: 20,
+                            }}
                             onPress={saveItems}
                         >
                             <Text>Done</Text>

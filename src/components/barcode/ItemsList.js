@@ -28,8 +28,8 @@ const ItemsList = ({
     // }, [itemListChange]);
 
     return (
-        <>
-            <VStack>
+        <List
+            header={
                 <HStack style={addItemBarcodeStyle.boxItems}>
                     {!arrItems?.length ? (
                         <NoItems
@@ -46,14 +46,11 @@ const ItemsList = ({
                         <Icon size={18} name={arrowButton} />
                     </Button>
                 </HStack>
-
-                <List
-                    arrItems={arrItems}
-                    setArrItems={setArrItems}
-                    navigation={navigation}
-                />
-            </VStack>
-        </>
+            }
+            arrItems={arrItems}
+            setArrItems={setArrItems}
+            navigation={navigation}
+        />
     )
 }
 
