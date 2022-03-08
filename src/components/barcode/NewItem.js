@@ -1,170 +1,292 @@
 import react from "react";
-import {
-  View,
-  VStack,
-  Text,
-  Box,
-  Select,
-  HStack,
-  Button,
-  ScrollView,
-  Switch,
-} from "native-base";
+import { View, VStack, Text, Box, HStack, Button, Switch } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { newItemStyles } from "../../styles/styles";
-import { Platform } from "react-native";
+import Modal from "react-native-modal";
+import { TextInput } from "react-native";
+
+//Toast to send messages validations
+import Toast from "react-native-root-toast";
+//RootSiblingParent to show toast on top of modal
+import { RootSiblingParent } from "react-native-root-siblings";
+
+//dropdownlists
+import CategoryList from "../elements/CategoryList";
+import LocationList from "../elements/LocationList";
+//************ */
+import { openDatabase, executeTransaction } from "../../services/sqllite";
+
+//create id
+import uuid from "react-native-uuid";
+
 const NewItem = (props) => {
+  /*states to save data from user*/
+
+  const [itemName, setItemName] = useState(props.productName);
+  const [category, setCategory] = useState("fruits");
+  const [location, setLocation] = useState("Fridge");
+  const [counter, setCounter] = useState(1);
+  const [essential, setEssential] = useState(false);
+  /****************************** */
   /*Date picker*/
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState("date");
+
+  //todayDate is to set minimum date in calendar
+  const todayDate = new Date();
+  const [today, setToday] = useState(
+    new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate())
+  );
+
+  //Current date is initialized as today's date and changes when user select a date, is used inside the
+  //calendar component
+  const [currentDate, setCurrentDate] = useState(today);
+
+  //date is used to be displayed in the label "Expiration date" after the user selected a date
+  //formate is different from the used in the calendar component
+  const [date, setDate] = useState("");
+
+  const [mode, setMode] = useState(date);
   const [show, setShow] = useState(false);
 
+  //this handle when the item name change
+  //const handleItemNameChanged = (event) => {
+  // setItemName(event.target.value);
+  //};
+
+  //this handle if the item is marked as essential or not
+  const handleEssential = () => {
+    setEssential(!essential);
+  };
+
+  //this handles the event when the user select a date from calendar
+  function padTo2Digits(num) {
+    return num.toString().padStart(2, "0");
+  }
+
+  function formatDate(dateToFormat) {
+    return [
+      padTo2Digits(dateToFormat.getMonth() + 1),
+      padTo2Digits(dateToFormat.getDate()),
+      dateToFormat.getFullYear(),
+    ].join("/");
+  }
+
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
+    setDate(formatDate(selectedDate));
+
+    setCurrentDate(
+      new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate()
+      )
+    );
+
+    // setShow(false);
   };
 
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
+  //this shows the calendar
   const showDatepicker = () => {
-    showMode("date");
+    // showMode(date);
+    setShow(true);
   };
 
-  const [counter, setCounter] = useState(0);
-
+  //this handles the quantity
   const handleCounter = (value) => {
-    if (value < 0) {
-      setCounter(0);
+    if (value < 1) {
+      setCounter(1);
     } else {
       setCounter(value);
     }
   };
 
+  //this close modal of scanned item
   const handleCancel = () => {
     props.setcameraHeight("50%");
     props.setScanned(false);
   };
 
+  const handleValidation = () => {
+    let toast;
+    let msg = "";
+
+    if (!itemName) {
+      msg = "Missing item's name";
+    }
+    if (!date) {
+      console.log("Missing ED");
+      msg += " Missing expiration date";
+    } else {
+      console.log(Date.parse(date));
+      if (!Date.parse(date)) {
+        msg += " Invalid expiration date";
+      }
+    }
+
+    if (msg !== "") {
+      toast = Toast.show(msg, {
+        duration: Toast.durations.LONG,
+      });
+    }
+
+    // setTimeout(function hideToast() {
+    //   Toast.hide(toast);
+    // }, 2000);
+
+    if (msg === "") {
+      handleSaveItem();
+    }
+  };
+
+  const handleSaveItem = () => {
+    let markAsEssential = 0;
+    if (essential) markAsEssential = 1;
+
+    console.log("itemName", itemName);
+
+    const id = uuid.v4();
+    const db = openDatabase();
+    const sql = `insert into items  (idItem, cItemName, iQuantity, dexpirationdate, idCategory, idLocation, idShelff,essential,permanent) values ("${id}","${itemName}","${counter}","${date}", "${category}", "${location}",1,"${markAsEssential}",0)`;
+
+    executeTransaction(sql, db);
+
+    //this variable allows to update the list of items
+    props.setItemListChange(!props.itemListChange);
+
+    handleCancel();
+  };
+
   return (
     <View>
-      <ScrollView>
-        <Box>
-          <Button onPress={handleCancel} style={newItemStyles.cancelButton}>
-            <Text style={newItemStyles.cancelButtonText}>Cancel</Text>
-          </Button>
-        </Box>
+      <Modal
+        isVisible={props.scanned}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        coverScreen={true}
+        deviceHeight={70}
+        style={newItemStyles.modal}
+      >
+        <RootSiblingParent>
+          <View>
+            <Box>
+              <Button onPress={handleCancel} style={newItemStyles.cancelButton}>
+                <Text style={newItemStyles.cancelButtonText}>Cancel</Text>
+              </Button>
+            </Box>
 
-        <VStack style={newItemStyles.mainStack}>
-          <Box style={newItemStyles.codeNumberBox}>
-            <Text style={newItemStyles.codeNumberText}>
-              {props.barCodeNumber}{" "}
-            </Text>
-          </Box>
-
-          <Text style={newItemStyles.title}>{props.productName}</Text>
-
-          <Box style={newItemStyles.labelBox}>
-            <HStack style={newItemStyles.counterHBarDate}>
-              <Box style={newItemStyles.dateBox}>
-                <HStack style={newItemStyles.category}>
-                  <Icon color={"gray"} size={16} name="shapes" />
-                  <Text style={newItemStyles.CategoryText}>Dairy</Text>
-                </HStack>
+            <VStack style={newItemStyles.mainStack}>
+              <Box style={newItemStyles.codeNumberBox}>
+                <Text style={newItemStyles.codeNumberText}>
+                  {props.barCodeNumber}
+                  {}
+                </Text>
               </Box>
-              <Box>
-                <HStack
-                  style={{
-                    alignItems: "center",
-                  }}
-                >
-                  <View>
+
+              <TextInput
+                size={"xl"}
+                style={{ paddingBottom: 20, paddingTop: 30 }}
+                fontSize={24}
+                onChangeText={setItemName}
+                value={itemName}
+              />
+
+              <Box style={newItemStyles.labelBoxDate}>
+                <HStack style={newItemStyles.counterHBarDate}>
+                  <HStack style={newItemStyles.category}>
+                    <Icon
+                      color={"gray"}
+                      size={16}
+                      name="shapes"
+                      style={{ marginRight: 15 }}
+                    />
+
+                    <CategoryList setCategory={setCategory} />
+                  </HStack>
+
+                  <HStack
+                    style={{
+                      alignItems: "center",
+                    }}
+                  >
                     <View>
-                      <Button
-                        backgroundColor={"transparent"}
-                        onPress={showDatepicker}
-                      />
+                      <View>
+                        <Button
+                          backgroundColor={"transparent"}
+                          onPress={showDatepicker}
+                        />
+                      </View>
+                      {show && (
+                        <DateTimePicker
+                          testID="dateTimePicker"
+                          value={currentDate}
+                          mode={"date"}
+                          is24Hour={true}
+                          display="default"
+                          onChange={onChange}
+                          minimumDate={today}
+                        />
+                      )}
                     </View>
-                    {show && (
-                      <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={mode}
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChange}
-                      />
-                    )}
-                  </View>
-                  <Text style={{ marginTop: 15, marginLeft: 8 }}>
-                    Expiration Date<Text>*</Text>
-                  </Text>
+                    <Text style={{ marginTop: 15, marginLeft: 8 }}>
+                      {date || "Expiration Date"}
+                      {!date && <Text>*</Text>}
+                    </Text>
+                  </HStack>
                 </HStack>
               </Box>
-            </HStack>
-          </Box>
 
-          <Box style={newItemStyles.labelBox}>
-            <HStack style={newItemStyles.counterHBar}>
-              <Text style={newItemStyles.labels}>
-                Storage Location<Text>*</Text>
-              </Text>
-              <Select
-                w={"140"}
-                placeholderTextColor="blue"
-                borderRadius={15}
-                placeholder="select location"
-                // selectedValue={service}
-                accessibilityLabel="select location"
-                // onValueChange={(itemValue) => setService(itemValue)}
-              >
-                <Select.Item label="Fridge" value="Fridge" />
-                <Select.Item label="Freezer" value="Freezer" />
-                <Select.Item label="Pantry" value="Pantry" />
-              </Select>
-            </HStack>
-          </Box>
-          <Box style={newItemStyles.labelBox}>
-            <HStack style={newItemStyles.counterHBar}>
-              <Text style={newItemStyles.labels}>Quantity</Text>
-              <Box>
-                <HStack style={newItemStyles.counterButtonsHStack}>
-                  <Button
-                    style={newItemStyles.counterButton}
-                    onPress={() => handleCounter(counter - 1)}
-                  >
-                    <Icon color={"gray"} size={16} name="minus" />
-                  </Button>
-                  <Text>{counter}</Text>
-                  <Button
-                    style={newItemStyles.counterButton}
-                    onPress={() => handleCounter(counter + 1)}
-                  >
-                    <Icon color={"gray"} size={16} name="plus" />
-                  </Button>
+              <Box style={newItemStyles.labelBox}>
+                <HStack style={newItemStyles.counterHBar}>
+                  <Text style={newItemStyles.labels}>
+                    Storage Location<Text>*</Text>
+                  </Text>
+                  <LocationList setLocation={setLocation} />
                 </HStack>
               </Box>
-            </HStack>
-          </Box>
-          <Box style={newItemStyles.labelBox}>
-            <HStack style={newItemStyles.counterHBar}>
-              <Text style={newItemStyles.labels}>Add to essential Items</Text>
-              <Switch />
-            </HStack>
-          </Box>
-          <Button style={newItemStyles.saveButton}>
-            <Text>Save</Text>
-          </Button>
-          <Button style={newItemStyles.moreItemsButton}>
-            <Text>Add more items</Text>
-          </Button>
-        </VStack>
-      </ScrollView>
+              <Box style={newItemStyles.labelBox}>
+                <HStack style={newItemStyles.counterHBar}>
+                  <Text style={newItemStyles.labels}>Quantity</Text>
+                  <Box>
+                    <HStack style={newItemStyles.counterButtonsHStack}>
+                      <Button
+                        style={newItemStyles.counterButton}
+                        onPress={() => handleCounter(counter - 1)}
+                      >
+                        <Icon color={"gray"} size={16} name="minus" />
+                      </Button>
+                      <Text>{counter}</Text>
+                      <Button
+                        style={newItemStyles.counterButton}
+                        onPress={() => handleCounter(counter + 1)}
+                      >
+                        <Icon color={"gray"} size={16} name="plus" />
+                      </Button>
+                    </HStack>
+                  </Box>
+                </HStack>
+              </Box>
+              <Box style={newItemStyles.labelBox}>
+                <HStack style={newItemStyles.counterHBar}>
+                  <Text style={newItemStyles.labels}>
+                    Add to essential Items
+                  </Text>
+                  <Switch isChecked={essential} onToggle={handleEssential} />
+                </HStack>
+              </Box>
+              <Button
+                style={newItemStyles.saveButton}
+                onPress={() => handleValidation()}
+              >
+                <Text>Done</Text>
+              </Button>
+              <Button style={newItemStyles.moreItemsButton}>
+                <Text>Save and keep scanning</Text>
+              </Button>
+            </VStack>
+          </View>
+        </RootSiblingParent>
+      </Modal>
     </View>
   );
 };
