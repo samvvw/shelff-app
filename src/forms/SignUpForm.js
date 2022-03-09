@@ -11,6 +11,7 @@ import {
 import { UserContext } from '../context/UserContext'
 
 import { signUpStyles } from '../styles/styles'
+import { signUpStyle } from '../styles/signUpStyle'
 
 const SignUpForm = () => {
     const [signUpState, setSignupState] = useState({
@@ -92,7 +93,7 @@ const SignUpForm = () => {
             signUpWithEmailAndPassword(
                 signUpState.email,
                 signUpState.password,
-                signUpState.fullName
+                signUpState.fullName,
             )
         }
     }
@@ -110,7 +111,7 @@ const SignUpForm = () => {
                 >
                     <FormControl.Label>Full Name</FormControl.Label>
                     <Input
-                        placeholder="i.e. James Jhonson"
+                        placeholder="Full Name"
                         variant="outline"
                         h={35}
                         value={signUpState.fullName}
@@ -135,7 +136,7 @@ const SignUpForm = () => {
                 >
                     <FormControl.Label>Email</FormControl.Label>
                     <Input
-                        placeholder="Email Address"
+                        placeholder="Email"
                         variant="outline"
                         h={35}
                         value={signUpState.email}
@@ -160,7 +161,7 @@ const SignUpForm = () => {
                 >
                     <FormControl.Label>Password</FormControl.Label>
                     <Input
-                        placeholder="Your Password"
+                        placeholder="Password"
                         variant="outline"
                         type="password"
                         h={35}
@@ -186,7 +187,7 @@ const SignUpForm = () => {
                 >
                     <FormControl.Label>Confirm Password</FormControl.Label>
                     <Input
-                        placeholder="Your Password"
+                        placeholder="Confirm Password"
                         variant="outline"
                         type="password"
                         h={35}
@@ -212,12 +213,17 @@ const SignUpForm = () => {
                 </Text>
             </Box>
 
-            <Box style={signUpStyles.box}>
-                <Checkbox style={signUpStyles.checkbox}>
-                    <Text style={signUpStyles.checkboxText}>
-                        I have read and agree to Shelff’s Terms of Service
-                    </Text>
+            <Box
+                style={signUpStyles.checkbox}
+                alignItems={'flex-start'}
+                paddingLeft={10}
+            >
+                <Checkbox>
+                    <Text> I have read and agree to Shelff’s </Text>
                 </Checkbox>
+                <Text color={'primary.500'} style={signUpStyles.termsOfService}>
+                    Terms of Service
+                </Text>
             </Box>
 
             <Button style={signUpStyles.button} onPress={onSubmit}>

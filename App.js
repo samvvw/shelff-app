@@ -37,6 +37,18 @@ const theme = extendTheme({
                 normal: 'GoogleSans-Bold',
                 italic: 'GoogleSans-BoldItalic',
             },
+            700: {
+                normal: 'GoogleSans-Bold',
+                italic: 'GoogleSans-BoldItalic',
+            },
+            600: {
+                normal: 'GoogleSans-Medium',
+                italic: 'GoogleSans-MediumItalic',
+            },
+            500: {
+                normal: 'GoogleSans-Medium',
+                italic: 'GoogleSans-MediumItalic',
+            },
         },
     },
     fonts: {
@@ -51,6 +63,20 @@ const theme = extendTheme({
             500: '#007AFF',
         },
     },
+    components: {
+        Checkbox: {
+            baseStyle: {
+                borderRadius: 50,
+                borderColor: 'primary.500',
+                borderWidth: 1,
+            },
+        },
+        FormControlLabel: {
+            baseStyle: {
+                astrickColor: 'primary.500',
+            },
+        },
+    },
 })
 
 const App = () => {
@@ -60,7 +86,7 @@ const App = () => {
 
     //with hook
     const client = new ApolloClient({
-        uri: 'http://10.128.192.119:8080/graphql',
+        uri: 'http://10.0.0.233:8080/graphql',
         cache: new InMemoryCache(),
     })
     const [fontsLoaded] = useFonts({

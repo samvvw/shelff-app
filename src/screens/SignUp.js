@@ -19,8 +19,12 @@ const SignUp = ({ navigation }) => {
     return (
         <ScrollView>
             <Box style={signUpStyles.heading}>
-                <Heading>Create and Account</Heading>
-                <Heading size="sm">Welcome to Shelff</Heading>
+                <Heading size="xl" fontWeight={'medium'}>
+                    Create and Account
+                </Heading>
+                <Heading size="sm" fontWeight={'medium'}>
+                    Welcome to Shelff
+                </Heading>
             </Box>
 
             <SignUpForm />
@@ -31,7 +35,12 @@ const SignUp = ({ navigation }) => {
                         onPress={handleLogIn}
                         style={signUpStyles.buttonLogin}
                     >
-                        <Text style={signUpStyles.buttonLogin}>Login</Text>
+                        <Text
+                            style={signUpStyles.buttonLogin}
+                            color="primary.500"
+                        >
+                            Login
+                        </Text>
                     </Button>
                 </HStack>
             </Center>

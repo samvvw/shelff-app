@@ -5,41 +5,47 @@ import { styleFonts } from './styleFonts'
 
 export const signStyle = StyleSheet.create({
     screenContainer: {
-        height: screenHeight,
+        // height: screenHeight,
         width: screenWidth,
         padding: 10,
     },
     stack: {
-        height: screenHeight,
+        // height: screenHeight,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
     },
     heading: {
         paddingTop: 100,
     },
     headingText: {
         fontSize: 72,
-        fontFamily: styleFonts.italic.fontFamily,
+        fontFamily: styleFonts.medium.fontFamily,
     },
     buttonBox: {
-        position: 'absolute',
-        bottom: 70,
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
     },
     loginButtonBox: {
-        position: 'absolute',
-        bottom: 30,
-
-        width: screenWidth,
+        marginTop: 20,
+        marginBottom: 30,
     },
     button: {
-        margin: 3,
-        width: screenWidth - 20,
+        margin: 8,
+        height: 46,
+        width: '90%',
         backgroundColor: '#007AFF',
     },
     buttonOutline: {
-        margin: 3,
-        width: screenWidth - 20,
+        margin: 8,
+        height: 46,
+        width: '90%',
     },
     buttonLink: {
-        backgroundColor: 'transparent',
+        // backgroundColor: 'transparent',
     },
     buttonLinkText: {
         color: '#000',
