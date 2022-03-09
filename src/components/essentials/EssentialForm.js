@@ -1,26 +1,78 @@
 import { Switch } from 'native-base'
 import { useState } from 'react'
-import { Modal, StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
 import LocationList from '../elements/LocationList'
 import QuantityCounter from './QuantityCounter'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import { saveItemsToLocalStorage } from '../barcode/saveItems'
+import uuid from 'react-native-uuid'
 
-const EssentialsModal = ({ item, visible, setVisible }) => {
-    const [location, setLocation] = useState(item?.locationId)
-    const [quantity, setQuantity] = useState(item?.quantity)
+const EssentialForm = ({ navigation, route }) => {
+    const todayDate = new Date()
+    const { item } = route.params
+    const [location, setLocation] = useState()
+    const [quantity, setQuantity] = useState(1)
     const [isEssential, setIsEssential] = useState(true)
+    const [showCalendar, setShowCalendar] = useState(false)
+    const [today, setToday] = useState(
+        new Date(
+            todayDate.getFullYear(),
+            todayDate.getMonth(),
+            todayDate.getDate(),
+        ),
+    )
+
+    const [date, setDate] = useState('')
+    const [currentDate, setCurrentDate] = useState(today)
+
+    const onChange = (_, selectedDate) => {
+        setShowCalendar(false)
+        setDate(formatDate(selectedDate))
+
+        setCurrentDate(
+            new Date(
+                selectedDate.getFullYear(),
+                selectedDate.getMonth(),
+                selectedDate.getDate(),
+            ),
+        )
+    }
+
+    function formatDate(dateToFormat) {
+        return [
+            padTo2Digits(dateToFormat.getMonth() + 1),
+            padTo2Digits(dateToFormat.getDate()),
+            dateToFormat.getFullYear(),
+        ].join('/')
+    }
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0')
+    }
+
+    const onSubmit = () => {
+        if (currentDate && location && quantity) {
+            const id = uuid.v4()
+            saveItemsToLocalStorage([
+                {
+                    idItem: id,
+                    cItemName: item.itemName,
+                    iQuantity: quantity,
+                    dexpirationdate: date,
+                    idCategory: item.categoryId,
+                    idLocation: location,
+                    essential: isEssential,
+                },
+            ])
+            navigation.goBack()
+        }
+    }
 
     return (
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={visible}
-            onRequestClose={() => {
-                setVisible(false)
-            }}
-        >
+        <>
             <View
                 style={{
-                    height: '90%',
+                    height: '100%',
                     marginTop: 'auto',
                 }}
             >
@@ -37,9 +89,13 @@ const EssentialsModal = ({ item, visible, setVisible }) => {
                             <Text>Dairy</Text>
                         </View>
                         <View style={styles.pair}>
-                            <View style={styles.icon}></View>
+                            <TouchableOpacity
+                                onPress={() => setShowCalendar(true)}
+                            >
+                                <View style={styles.icon}></View>
+                            </TouchableOpacity>
                             <Text>
-                                Expiration Date
+                                {date || `Expiration Date`}
                                 <Text style={{ color: '#f00' }}>*</Text>
                             </Text>
                         </View>
@@ -72,14 +128,14 @@ const EssentialsModal = ({ item, visible, setVisible }) => {
                         />
                     </View>
                     <View style={styles.buttonsContainer}>
-                        <TouchableOpacity onPress={() => setVisible(false)}>
+                        <TouchableOpacity onPress={() => onSubmit()}>
                             <View style={[styles.button, styles.primary]}>
                                 <Text style={{ color: 'white' }}>
                                     Add to my shelf
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setVisible(false)}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
                             <View style={styles.button}>
                                 <Text>Cancel</Text>
                             </View>
@@ -87,7 +143,18 @@ const EssentialsModal = ({ item, visible, setVisible }) => {
                     </View>
                 </View>
             </View>
-        </Modal>
+            {showCalendar && (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={currentDate}
+                    mode={'date'}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                    minimumDate={today}
+                />
+            )}
+        </>
     )
 }
 
@@ -154,4 +221,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default EssentialsModal
+export default EssentialForm

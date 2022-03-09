@@ -6,7 +6,6 @@ import { GET_ESSENTIALS } from '../../queries/queries'
 import EssentialsList from '../../components/essentials/EssentialsList'
 import { openDatabase, executeTransaction } from '../../services/sqllite'
 import { Spinner } from 'native-base'
-import EssentialsModal from '../../components/essentials/EssentialsModal'
 
 const EssentialsAddItemScreen = ({ navigation }) => {
     const [items, setItems] = useState()

@@ -1,10 +1,7 @@
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { useState } from 'react'
-import EssentialsModal from './EssentialsModal'
 
 const EssentialItem = ({ item, isAdd = false }) => {
-    const [visible, setVisible] = useState(false)
     const navigation = useNavigation()
 
     return (
@@ -26,7 +23,9 @@ const EssentialItem = ({ item, isAdd = false }) => {
                     {isAdd && (
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => setVisible(true)}
+                            onPress={() =>
+                                navigation.navigate('EssentialForm', { item })
+                            }
                         >
                             <View>
                                 <Text style={styles.subtitle}>Add</Text>
@@ -35,11 +34,6 @@ const EssentialItem = ({ item, isAdd = false }) => {
                     )}
                 </View>
             </View>
-            <EssentialsModal
-                visible={visible}
-                setVisible={setVisible}
-                item={item}
-            />
         </>
     )
 }
