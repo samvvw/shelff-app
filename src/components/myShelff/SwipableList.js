@@ -19,7 +19,6 @@ const SwipableList = (props)=> {
         })
         newData[index].action = actionTaken
         setShelfItems(newData)
-        console.log('Action: Item Consumed')
     };
 
     const VisibleItem = (props) => {

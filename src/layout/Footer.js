@@ -22,7 +22,7 @@ import EssentialsScreen from '../screens/essentials/EssentialsScreen'
 function List(props) {
   const Tab = createMaterialTopTabNavigator()
 
-  const { navigation, setShelfItems, allItems} = props
+  const { navigation, shelfItems, setShelfItems, allItems} = props
 
   return (
     <Tab.Navigator
@@ -37,26 +37,41 @@ function List(props) {
     >
       <Tab.Screen 
         name="Category" 
-        // component={Category} 
-        children={()=>
-          <Category 
-            navigation={navigation} 
+        // children={()=>
+        //   <Category 
+        //     navigation={navigation} 
+        //     setShelfItems={setShelfItems}
+        //     allItems={allItems}
+        //   />
+        // }
+      >
+        {(props) => 
+          <Category {...props} 
+            shelfItems={shelfItems}
             setShelfItems={setShelfItems}
             allItems={allItems}
           />
         }
-      />
+      </Tab.Screen>
       <Tab.Screen 
         name="Storage" 
         // component={Storage} 
-        children={()=>
-          <Storage 
-          navigation={navigation} 
-          setShelfItems={setShelfItems}
-          allItems={allItems}
+        // children={()=>
+        //   <Storage 
+        //   navigation={navigation} 
+        //   setShelfItems={setShelfItems}
+        //   allItems={allItems}
+        //   />
+        // }
+      >
+        {(props) => 
+          <Storage {...props} 
+            shelfItems={shelfItems}
+            setShelfItems={setShelfItems}
+            allItems={allItems}
           />
         }
-      />
+      </Tab.Screen>
     </Tab.Navigator>
   )
 }
@@ -179,6 +194,7 @@ const Footer = () => {
       >
         {(props) => 
           <List {...props} 
+          shelfItems={shelfItems}
           setShelfItems={setShelfItems} 
           allItems={allItems}
           />

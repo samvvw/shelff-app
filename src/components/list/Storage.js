@@ -5,7 +5,7 @@ import ListDetails from './ListDetails'
 
 const Storage = (props) => {
 
-    const { setShelfItems, allItems} = props
+    const { shelfItems, setShelfItems, allItems} = props
     const [listDetailsOpen, setListDetailsOpen] = useState(false)
     const [selectedList, setSelectedList] = useState()
 
@@ -24,6 +24,7 @@ const Storage = (props) => {
                 <ListDetails
                     listType='Storage'
                     selectedList={selectedList}
+                    shelfItems={shelfItems}
                     setShelfItems={setShelfItems}
                     allItems={allItems} 
                     setListDetailsOpen={setListDetailsOpen}

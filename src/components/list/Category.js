@@ -5,7 +5,7 @@ import ListDetails from './ListDetails'
 
 const Category = (props) => {
 
-    const { setShelfItems, allItems } = props
+    const { shelfItems, setShelfItems, allItems } = props
     const [listDetailsOpen, setListDetailsOpen] = useState(false)
     const [selectedList, setSelectedList] = useState()
 
@@ -25,6 +25,7 @@ const Category = (props) => {
                 <ListDetails
                     listType='Category'
                     selectedList={selectedList}
+                    shelfItems={shelfItems}
                     setShelfItems={setShelfItems}
                     allItems={allItems} 
                     setListDetailsOpen={setListDetailsOpen}
