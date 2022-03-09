@@ -69,7 +69,7 @@ const AppStack = () => {
                 <Stack.Screen
                     name="AddItemBarcode"
                     component={AddItemBarcode}
-                    option={{ headerShown: false }}
+                    options={{ headerShown: false }}
                 />
             </Stack.Navigator>
         </NavigationContainer>
