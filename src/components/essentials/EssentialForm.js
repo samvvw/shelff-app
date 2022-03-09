@@ -62,6 +62,7 @@ const EssentialForm = ({ navigation, route }) => {
                     idCategory: item.categoryId,
                     idLocation: location,
                     essential: isEssential,
+                    barcode: item.barcode,
                 },
             ])
             navigation.goBack()
@@ -78,7 +79,9 @@ const EssentialForm = ({ navigation, route }) => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.itemCodeContainer}>
-                        <Text>{item?.barcode}</Text>
+                        <Text>
+                            {item?.barcode ? item.barcode : item.itemId}
+                        </Text>
                     </View>
                     <View style={styles.itemNameContainer}>
                         <Text style={styles.itemName}>{item?.itemName}</Text>

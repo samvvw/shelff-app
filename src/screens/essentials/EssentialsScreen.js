@@ -10,7 +10,7 @@ import { Spinner } from 'native-base'
 const EssentialsScreen = () => {
     const [items, setItems] = useState()
     const { user } = useContext(UserContext)
-    const { data } = useQuery(GET_ESSENTIALS, {
+    const { data, loading } = useQuery(GET_ESSENTIALS, {
         variables: { userId: user?.uid },
     })
 
@@ -27,8 +27,12 @@ const EssentialsScreen = () => {
 
     return (
         <>
-            {!items && <Spinner />}
-            {!items?.length ? (
+            {loading && (
+                <View style={styles.spinnerContainer}>
+                    <Spinner size="lg" />
+                </View>
+            )}
+            {!loading && !items?.length && (
                 <View style={styles.container}>
                     <View style={styles.emptyImage}></View>
                     <Text style={styles.emptyTitle}>
@@ -38,7 +42,8 @@ const EssentialsScreen = () => {
                         Start adding products to be able to create your list
                     </Text>
                 </View>
-            ) : (
+            )}
+            {!loading && items?.length && (
                 <>
                     <Text style={styles.title}>Lorem Ipsum</Text>
                     <EssentialsList data={items} />
@@ -55,6 +60,11 @@ const styles = new StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         paddingHorizontal: 50,
+    },
+    spinnerContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     emptyImage: {
         width: 96,
