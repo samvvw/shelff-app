@@ -19,7 +19,8 @@ const EssentialsScreen = () => {
             setItems(data?.essentials)
         } else {
             const db = openDatabase()
-            const sql = 'select * from items where isEssential = "true"'
+            const sql =
+                'select * from items where isEssential = "true" GROUP BY barcode'
             executeTransaction(sql, db, setItems)
         }
     }, [user, data])

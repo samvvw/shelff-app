@@ -78,7 +78,7 @@ const EssentialForm = ({ navigation, route }) => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.itemCodeContainer}>
-                        <Text>{item?.itemId}</Text>
+                        <Text>{item?.barcode}</Text>
                     </View>
                     <View style={styles.itemNameContainer}>
                         <Text style={styles.itemName}>{item?.itemName}</Text>
