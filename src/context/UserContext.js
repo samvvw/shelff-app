@@ -11,6 +11,7 @@ import {
     createUserWithEmailAndPassword,
     updateProfile,
     signInWithEmailAndPassword,
+    onAuthStateChanged,
 } from 'firebase/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useMutation } from '@apollo/client'
@@ -48,6 +49,35 @@ export const UserProvider = ({ children }) => {
                 '209418730913-5hr4d615qbo0556u6ob7u36r37fg1fe4.apps.googleusercontent.com',
         })
 
+    useEffect(() => {
+        const auth = getAuth()
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                ;(async () => {
+                    try {
+                        await AsyncStorage.setItem(
+                            'token',
+                            user.stsTokenManager.accessToken,
+                        )
+                        dispatch({
+                            type: 'STORED_USER',
+                            payload: {
+                                userId: user.uid,
+                                email: user.email,
+                                fullName: user.displayName,
+                            },
+                        })
+                    } catch (error) {
+                        console.log(error)
+                    }
+                })()
+            } else {
+                console.log('userSigned Out')
+            }
+        })
+        return unsubscribe()
+    }, [])
+
     // Sign Up and Login Using GOOGLE
     useEffect(() => {
         if (googleResponse?.type === 'success') {
@@ -60,12 +90,13 @@ export const UserProvider = ({ children }) => {
                     const credential = GoogleAuthProvider.credential(id_token)
                     const { user } = await signInWithCredential(
                         auth,
-                        credential
+                        credential,
                     )
                     await AsyncStorage.setItem(
                         'token',
-                        user.stsTokenManager.accessToken
+                        user.stsTokenManager.accessToken,
                     )
+
                     await addUser({
                         variables: {
                             userId: user.uid,
@@ -103,7 +134,7 @@ export const UserProvider = ({ children }) => {
             const { user } = await createUserWithEmailAndPassword(
                 auth,
                 email,
-                password
+                password,
             )
 
             await updateProfile(auth.currentUser, {
@@ -112,8 +143,9 @@ export const UserProvider = ({ children }) => {
 
             await AsyncStorage.setItem(
                 'token',
-                user.stsTokenManager.accessToken
+                user.stsTokenManager.accessToken,
             )
+
             await addUser({
                 variables: {
                     userId: auth.currentUser.uid,
@@ -149,12 +181,12 @@ export const UserProvider = ({ children }) => {
             const { user } = await signInWithEmailAndPassword(
                 auth,
                 email,
-                password
+                password,
             )
 
             await AsyncStorage.setItem(
                 'token',
-                user.stsTokenManager.accessToken
+                user.stsTokenManager.accessToken,
             )
 
             await addUser({
@@ -210,12 +242,13 @@ export const UserProvider = ({ children }) => {
     // Refresh User Token
     const refreshIdToken = async () => {
         try {
-            const currentUser = state.user.auth.currentUser
+            const currentUser = state.auth.currentUser
 
             const idToken = await getIdToken(currentUser, true)
             if (idToken) {
                 await AsyncStorage.setItem('token', idToken)
             }
+            console.log(idToken)
         } catch (error) {
             console.log(error)
         }
