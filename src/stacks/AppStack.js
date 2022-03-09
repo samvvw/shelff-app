@@ -9,7 +9,9 @@ import LogIn from '../screens/logIn/LogIn'
 import VerticalMenu from '../layout/VerticalMenu'
 // import { UserContext } from '../context/UserContext'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
-import AddItemBarcode from "../screens/AddItemBarcode";
+import AddItemBarcode from '../screens/AddItemBarcode'
+import EssentialsAddItemScreen from '../screens/essentials/EssentialsAddItemScreen'
+import EssentialForm from '../components/essentials/EssentialForm'
 
 const Stack = createNativeStackNavigator()
 
@@ -70,6 +72,16 @@ const AppStack = () => {
                     name="AddItemBarcode"
                     component={AddItemBarcode}
                     options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="AddEssentialsItem"
+                    component={EssentialsAddItemScreen}
+                    options={{ title: 'Your essentials list' }}
+                />
+                <Stack.Screen
+                    name="EssentialForm"
+                    component={EssentialForm}
+                    options={{ title: 'Add your essential item' }}
                 />
             </Stack.Navigator>
         </NavigationContainer>

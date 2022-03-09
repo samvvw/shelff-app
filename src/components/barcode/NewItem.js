@@ -32,7 +32,7 @@ const NewItem = ({
     navigation,
 }) => {
     /*states to save data from user*/
-
+    const barcode = barCodeNumber
     const [itemName, setItemName] = useState(productName)
     const [category, setCategory] = useState('')
     const [location, setLocation] = useState('')
@@ -163,6 +163,7 @@ const NewItem = ({
                 location,
                 1,
                 markAsEssential,
+                barcode,
             )
             saveItemsToLocalStorage([lastItem])
             setArrItems([])
@@ -198,6 +199,7 @@ const NewItem = ({
             location,
             1,
             markAsEssential,
+            barcode,
         )
 
         setArrItems((prev) => [...prev, item])
@@ -222,6 +224,7 @@ const NewItem = ({
             idLocation: idLocation,
             idShelff: 1,
             essential: essential,
+            barcode,
         }
         return item
     }

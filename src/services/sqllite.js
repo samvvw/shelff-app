@@ -23,7 +23,7 @@ export const createTables = (db) => {
     expirationDate date NOT NULL,
    creationDate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
    categoryId int not null, locationId not null, shelfId not null,
-   isEssential boolean not null default 0
+   isEssential boolean not null default 0, barcode text not null
     );`
 
     db.transaction((txn) => {

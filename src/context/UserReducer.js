@@ -32,5 +32,16 @@ export const UserReducer = (state, action) => {
                 token: action.payload.user.stsTokenManager.accessToken,
                 auth: action.payload.auth,
             }
+        case 'STORED_USER':
+            return {
+                ...state,
+                error: {},
+                user: {
+                    uid: action.payload.userId,
+                    fullName: action.payload.fullName,
+                    email: action.payload.email,
+                },
+                token: action.payload.token,
+            }
     }
 }
