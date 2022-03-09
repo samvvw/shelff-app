@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
-import EssentialsList from '../../components/essentials/EssentialsList'
-import { UserContext } from '../../context/UserContext'
 import { useQuery } from '@apollo/client'
+import { useContext, useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { UserContext } from '../../context/UserContext'
 import { GET_ESSENTIALS } from '../../queries/queries'
+import EssentialsList from '../../components/essentials/EssentialsList'
 import { openDatabase, executeTransaction } from '../../services/sqllite'
 import { Spinner } from 'native-base'
 
-const EssentialsScreen = () => {
+const EssentialsAddItemScreen = ({ navigation }) => {
     const [items, setItems] = useState()
     const { user } = useContext(UserContext)
     const { data } = useQuery(GET_ESSENTIALS, {
@@ -20,7 +20,7 @@ const EssentialsScreen = () => {
         } else {
             const db = openDatabase()
             const sql =
-                'select * from items where isEssential = "true" GROUP BY barcode'
+                'select *  from items where isEssential = "true" GROUP BY barcode'
             executeTransaction(sql, db, setItems)
         }
     }, [user, data])
@@ -28,7 +28,11 @@ const EssentialsScreen = () => {
     return (
         <>
             {!items && <Spinner />}
-            {!items?.length ? (
+            {items?.length ? (
+                <View style={styles.listContainer}>
+                    <EssentialsList data={items} isAdd={true} />
+                </View>
+            ) : (
                 <View style={styles.container}>
                     <View style={styles.emptyImage}></View>
                     <Text style={styles.emptyTitle}>
@@ -38,11 +42,6 @@ const EssentialsScreen = () => {
                         Start adding products to be able to create your list
                     </Text>
                 </View>
-            ) : (
-                <>
-                    <Text style={styles.title}>Lorem Ipsum</Text>
-                    <EssentialsList data={items} />
-                </>
             )}
         </>
     )
@@ -55,7 +54,9 @@ const styles = new StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         paddingHorizontal: 50,
+        marginTop: 30,
     },
+    listContainer: {},
     emptyImage: {
         width: 96,
         height: 96,
@@ -74,12 +75,6 @@ const styles = new StyleSheet.create({
         textAlign: 'center',
         marginBottom: 15,
     },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginVertical: 30,
-        textAlign: 'center',
-    },
 })
 
-export default EssentialsScreen
+export default EssentialsAddItemScreen
