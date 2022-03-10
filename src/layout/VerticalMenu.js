@@ -27,6 +27,10 @@ const VerticalMenu = ({ navigation }) => {
         navigation.push('AddEssentialsItem')
     }
 
+    const handleManualEntry = () => {
+        navigation.push('ManualEntryItem')
+    }
+
     return (
         <>
             <Provider>
@@ -49,14 +53,14 @@ const VerticalMenu = ({ navigation }) => {
                                     marginRight: screenWidth / 2 - 42,
                                 },
                                 icon: 'card-outline',
-                                onPress: () => console.log('Pressed add'),
+                                onPress: handleManualEntry,
                             },
                             {
                                 style: {
                                     marginRight: screenWidth / 2 - 42,
                                 },
                                 icon: 'heart',
-                                // label: "Star",
+
                                 onPress: handleEssentialsAddItem,
                             },
                             {
@@ -64,7 +68,7 @@ const VerticalMenu = ({ navigation }) => {
                                     marginRight: screenWidth / 2 - 42,
                                 },
                                 icon: 'barcode-scan',
-                                // label: "Email",
+
                                 onPress: handleBarcodeScan,
                             },
                         ]}
