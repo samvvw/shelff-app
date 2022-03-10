@@ -10,6 +10,7 @@ import VerticalMenu from '../layout/VerticalMenu'
 // import { UserContext } from '../context/UserContext'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 import AddItemBarcode from '../screens/AddItemBarcode'
+import ManualEntryItem from '../components/barcode/ManualEntryItem'
 import EssentialsAddItemScreen from '../screens/essentials/EssentialsAddItemScreen'
 import EssentialForm from '../components/essentials/EssentialForm'
 
@@ -71,7 +72,18 @@ const AppStack = () => {
                 <Stack.Screen
                     name="AddItemBarcode"
                     component={AddItemBarcode}
-                    option={{ headerShown: false }}
+                    options={{
+                        headerShown: true,
+                        title: '',
+                    }}
+                />
+                <Stack.Screen
+                    name="ManualEntryItem"
+                    component={ManualEntryItem}
+                    options={{
+                        headerShown: true,
+                        title: '',
+                    }}
                 />
                 <Stack.Screen
                     name="AddEssentialsItem"
