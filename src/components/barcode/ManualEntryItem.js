@@ -146,7 +146,7 @@ const ManualEntryItem = ({ navigation }) => {
         const id = uuid.v4()
         let barcode = id
         if (barCodeNumber !== '') {
-            barcode = '0' + barCodeNumber
+            barcode = barCodeNumber
         }
         const lastItem = createItemObj(
             id,
@@ -162,7 +162,7 @@ const ManualEntryItem = ({ navigation }) => {
         saveItemsToLocalStorage([lastItem])
 
         //search the barcode after saving it to check if it exists to update all items
-        findBarcodeinLocalDB('0' + barCodeNumber, setItemsToUpdate)
+        findBarcodeinLocalDB(barCodeNumber, setItemsToUpdate)
     }
 
     const handleDone = () => {
@@ -227,7 +227,7 @@ const ManualEntryItem = ({ navigation }) => {
     }
 
     const fetchBarcodeLocalStorage = () => {
-        findBarcodeinLocalDB('0' + barCodeNumber, setItems)
+        findBarcodeinLocalDB(barCodeNumber, setItems)
     }
 
     useEffect(() => {
