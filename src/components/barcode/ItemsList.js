@@ -15,15 +15,6 @@ const ItemsList = ({
     arrItems,
     setArrItems,
 }) => {
-    // const [items, setItems] = useState();
-
-    // useEffect(() => {
-    //   const db = openDatabase();
-    //   const sql = "select * from items where permanent = 0";
-    //   const query = executeTransaction(sql, db, setItems);
-    //   console.log(items);
-    // }, [itemListChange]);
-
     return (
         <List
             header={

@@ -1,19 +1,11 @@
 import react from 'react'
-import {
-    View,
-    VStack,
-    Text,
-    Box,
-    HStack,
-    Button,
-    Switch,
-    Center,
-    ScrollView,
-} from 'native-base'
+import { View, VStack, Text, Box, HStack, Button, Switch } from 'native-base'
+import NewItemBackground from './NewItemBackground'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
+
 import { TextInput } from 'react-native'
 
 //Toast to send messages validations
@@ -30,19 +22,14 @@ import LocationList from '../elements/LocationList'
 import uuid from 'react-native-uuid'
 
 import { saveItemsToLocalStorage } from './saveItems'
+import { findBarcodeinLocalDB, updateItemNameForAll } from './saveItems'
 
-const NewItem = ({
-    barCodeNumber,
-    setScanned,
-    setcameraHeight,
-    productName,
-    setArrItems,
-    arrItems,
-    navigation,
-}) => {
+const ManualEntryItem = ({ navigation }) => {
     /*states to save data from user*/
-    const barcode = barCodeNumber
-    const [itemName, setItemName] = useState(productName)
+    const [items, setItems] = useState([])
+    const [itemsToUpdate, setItemsToUpdate] = useState([])
+    const [barCodeNumber, setBarCodeNumber] = useState('')
+    const [itemName, setItemName] = useState('')
     const [category, setCategory] = useState('')
     const [location, setLocation] = useState('')
     const [counter, setCounter] = useState(1)
@@ -126,8 +113,7 @@ const NewItem = ({
 
     //this close modal of scanned item
     const handleCancel = () => {
-        setcameraHeight('50%')
-        setScanned(false)
+        navigation.push('VerticalMenu')
     }
 
     const handleValidation = () => {
@@ -154,52 +140,15 @@ const NewItem = ({
         return msg
     }
 
-    const handleDoneScanning = () => {
-        const msg = handleValidation()
-        if (msg === '') {
-            //send all item in the array state
-            saveItemsToLocalStorage(arrItems)
-            //send last item created
-            let markAsEssential = 0
-            if (essential) markAsEssential = 1
-            const id = uuid.v4()
-            const lastItem = createItemObj(
-                id,
-                itemName,
-                counter,
-                date,
-                category,
-                location,
-                1,
-                markAsEssential,
-                barcode,
-            )
-            saveItemsToLocalStorage([lastItem])
-            setArrItems([])
-            navigation.push('VerticalMenu')
-        }
-    }
-
-    const handleSaveContinueScanning = () => {
-        //This code is for saving items into table items
-        /*
-        const db = openDatabase()
-        const sql = `insert into items  (idItem, cItemName, iQuantity, dexpirationdate, idCategory, idLocation, idShelff,essential,permanent) values ("${id}","${itemName}","${counter}","${date}", "${category}", "${location}",1,"${markAsEssential}",0)`
-        executeTransaction(sql, db)
-        */
-        const msg = handleValidation()
-        if (msg === '') {
-            saveItemIntoArray()
-            handleCancel()
-        }
-    }
-
-    const saveItemIntoArray = () => {
+    const sendItemtoLocalStorage = () => {
         let markAsEssential = 0
         if (essential) markAsEssential = 1
-
         const id = uuid.v4()
-        const item = createItemObj(
+        let barcode = id
+        if (barCodeNumber !== '') {
+            barcode = '0' + barCodeNumber
+        }
+        const lastItem = createItemObj(
             id,
             itemName,
             counter,
@@ -210,8 +159,42 @@ const NewItem = ({
             markAsEssential,
             barcode,
         )
+        saveItemsToLocalStorage([lastItem])
 
-        setArrItems((prev) => [...prev, item])
+        //search the barcode after saving it to check if it exists to update all items
+        findBarcodeinLocalDB('0' + barCodeNumber, setItemsToUpdate)
+    }
+
+    const handleDone = () => {
+        const msg = handleValidation()
+        if (msg === '') {
+            sendItemtoLocalStorage()
+            navigation.push('VerticalMenu')
+        }
+    }
+
+    const cleanFields = () => {
+        setCounter(1)
+        setCategory('')
+        setLocation('')
+        setDate('Expiration Date')
+        setEssential(false)
+        setItemName('')
+        setBarCodeNumber('')
+        setBarCodeNumber('')
+    }
+
+    const handleSaveContinue = () => {
+        //This code is for saving items into table items
+
+        const msg = handleValidation()
+        if (msg === '') {
+            sendItemtoLocalStorage()
+            cleanFields()
+            let toast = Toast.show('Item saved', {
+                duration: Toast.durations.LONG,
+            })
+        }
     }
 
     const createItemObj = (
@@ -239,8 +222,31 @@ const NewItem = ({
         return item
     }
 
+    const handleFechBarCode = () => {
+        fetchBarcodeLocalStorage()
+    }
+
+    const fetchBarcodeLocalStorage = () => {
+        findBarcodeinLocalDB('0' + barCodeNumber, setItems)
+    }
+
+    useEffect(() => {
+        if (items.length) {
+            setItemName(items[0].itemName)
+            setCategory(items[0].categoryId)
+        }
+    }, [items])
+
+    useEffect(() => {
+        if (itemsToUpdate.length) {
+            updateItemNameForAll(itemsToUpdate[0].barcode, itemName, category)
+        }
+    }, [itemsToUpdate])
+
     return (
-        <ScrollView>
+        <View>
+            <NewItemBackground />
+
             <RootSiblingParent>
                 <View>
                     <Box>
@@ -256,28 +262,24 @@ const NewItem = ({
 
                     <VStack style={newItemStyles.mainStack}>
                         <Box style={newItemStyles.codeNumberBox}>
-                            <Text style={newItemStyles.codeNumberText}>
-                                {barCodeNumber}
-                                {}
-                            </Text>
+                            <TextInput
+                                placeholder="Type Barcode Number"
+                                style={newItemStyles.codeNumberText}
+                                onChangeText={setBarCodeNumber}
+                                value={barCodeNumber}
+                                onBlur={handleFechBarCode}
+                            ></TextInput>
                         </Box>
 
-                        {!productName && <NoBarcode />}
-                        {!productName ? (
-                            <TextInput
-                                size={'xl'}
-                                style={{ paddingBottom: 20, paddingTop: 30 }}
-                                fontSize={24}
-                                onChangeText={setItemName}
-                                // value={itemName}
-                                placeholder="Item name"
-                                autoFocus={true}
-                            />
-                        ) : (
-                            <Text style={newItemStyles.itemNameText}>
-                                {productName}
-                            </Text>
-                        )}
+                        <TextInput
+                            size={'xl'}
+                            style={{ paddingBottom: 20, paddingTop: 30 }}
+                            fontSize={24}
+                            onChangeText={setItemName}
+                            value={itemName}
+                            placeholder="Item name"
+                            autoFocus={true}
+                        />
 
                         <Box style={newItemStyles.labelBoxDate}>
                             <HStack style={newItemStyles.counterHBarDate}>
@@ -406,38 +408,22 @@ const NewItem = ({
                             </HStack>
                         </Box>
                         <Button
-                            onPress={() => handleDoneScanning()}
+                            onPress={() => handleDone()}
                             style={newItemStyles.saveButton}
                         >
                             <Text>Done</Text>
                         </Button>
                         <Button
-                            onPress={() => handleSaveContinueScanning()}
+                            onPress={() => handleSaveContinue()}
                             style={newItemStyles.moreItemsButton}
                         >
-                            <Text>Save and keep scanning</Text>
+                            <Text>Save and add more items</Text>
                         </Button>
                     </VStack>
                 </View>
             </RootSiblingParent>
-        </ScrollView>
+        </View>
     )
 }
 
-const NoBarcode = () => {
-    return (
-        <Center>
-            <Text style={newItemStyles.noBarCode_Text1}>
-                No barcode match was found.
-            </Text>
-            <Text style={newItemStyles.noBarCode_Text2}>
-                Please enter item name and category to
-            </Text>
-            <Text style={newItemStyles.noBarCode_Text2}>
-                update the database
-            </Text>
-        </Center>
-    )
-}
-
-export default NewItem
+export default ManualEntryItem

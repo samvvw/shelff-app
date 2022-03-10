@@ -60,6 +60,7 @@ export const executeTransaction = (sql, db, setItems) => {
             },
 
             (_, rej) => {
+                console.log('aqui')
                 console.log('Error: ' + rej)
             },
         )

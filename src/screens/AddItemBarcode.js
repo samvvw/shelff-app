@@ -3,8 +3,9 @@ import React from 'react'
 import Barcode from '../components/barcode/Barcode'
 import NewItem from '../components/barcode/NewItem'
 import ItemsList from '../components/barcode/ItemsList'
-import { useState, useeffect } from 'react'
-import { useEffect } from 'react/cjs/react.production.min'
+import NewItemBackground from '../components/barcode/NewItemBackground'
+import { useState, useEffect } from 'react'
+
 import { findBarcodeinLocalDB } from '../components/barcode/saveItems'
 
 const AddItemBarcode = ({ navigation }) => {
@@ -12,7 +13,7 @@ const AddItemBarcode = ({ navigation }) => {
     const [cameraHeight, setcameraHeight] = useState('50%')
     const [barCodeNumber, setBarCodeNumber] = useState()
     const [scanned, setScanned] = useState(false)
-    const [itemNameFromDB, setItemNameFromDB] = useState('')
+    const [items, setItems] = useState()
 
     //Array to save items temporarily
     const [arrItems, setArrItems] = useState([])
@@ -27,15 +28,15 @@ const AddItemBarcode = ({ navigation }) => {
         }
     }
 
-    //useEffect(() => {
-    //look for barcode in database
-    //setItemNameFromDB(findBarcodeinLocalDB(barCodeNumber))
-    //}, [])
+    useEffect(() => {
+        //look for barcode in local database
+        findBarcodeinLocalDB(barCodeNumber, setItems)
+    }, [barCodeNumber])
 
     return (
         <>
             {scanned ? (
-                <Background />
+                <NewItemBackground />
             ) : (
                 <Barcode
                     cameraHeight={cameraHeight}
@@ -52,7 +53,7 @@ const AddItemBarcode = ({ navigation }) => {
                         barCodeNumber={barCodeNumber}
                         setScanned={setScanned}
                         setcameraHeight={setcameraHeight}
-                        productName={itemNameFromDB}
+                        productName={items.length ? items[0].itemName : ''}
                         setArrItems={setArrItems}
                         arrItems={arrItems}
                         navigation={navigation}
@@ -74,10 +75,14 @@ const AddItemBarcode = ({ navigation }) => {
 
 export default AddItemBarcode
 
-const Background = () => {
-    return (
-        <Box
-            style={{ backgroundColor: 'black', width: '100%', height: '10%' }}
-        ></Box>
-    )
-}
+// const Background = () => {
+//     return (
+//         <Box
+//             style={{
+//                 backgroundColor: 'rgba(208, 200, 210, 1)',
+//                 width: '100%',
+//                 height: '3%',
+//             }}
+//         ></Box>
+//     )
+// }
