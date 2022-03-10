@@ -8,7 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 const SwipableList = (props)=> {
 
-    const {items, allItems, setShelfItems} = props
+    const {items, allItems, setShelfItems, selectedList} = props
 
     // console.log(items)
 
@@ -19,7 +19,6 @@ const SwipableList = (props)=> {
         })
         newData[index].action = actionTaken
         setShelfItems(newData)
-        console.log('Action: Item Consumed')
     };
 
     const VisibleItem = (props) => {
@@ -259,8 +258,10 @@ const SwipableList = (props)=> {
     
     return (
         <View >
-
-            <Text style={swipableListStyles.header}>Food Inventory</Text>
+            {/* selectedList is for Listing, 'Food Inventory' is for MyShelff */}
+            <Text style={swipableListStyles.header}>
+                {selectedList ? selectedList : 'Food Inventory'}
+            </Text>
             {items.length === 0 ? <Text>No Item</Text> : null}
 
             <SwipeListView
