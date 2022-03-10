@@ -1,15 +1,18 @@
 import { Switch } from 'native-base'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
 import LocationList from '../elements/LocationList'
 import QuantityCounter from './QuantityCounter'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { saveItemsToLocalStorage } from '../barcode/saveItems'
 import uuid from 'react-native-uuid'
+import { useQuery } from '@apollo/client'
+import { GET_CATEGORIES } from '../../queries/queries'
 
 const EssentialForm = ({ navigation, route }) => {
     const todayDate = new Date()
     const { item } = route.params
+    console.log({ item })
     const [location, setLocation] = useState()
     const [quantity, setQuantity] = useState(1)
     const [isEssential, setIsEssential] = useState(true)
@@ -89,7 +92,7 @@ const EssentialForm = ({ navigation, route }) => {
                     <View style={styles.row}>
                         <View style={styles.pair}>
                             <View style={styles.icon}></View>
-                            <Text>Dairy</Text>
+                            <Text>{item?.categoryName}</Text>
                         </View>
                         <View style={styles.pair}>
                             <TouchableOpacity
