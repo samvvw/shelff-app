@@ -9,7 +9,7 @@ const CategoryList = ({ category, setCategory }) => {
             placeholderTextColor="blue"
             borderRadius={15}
             placeholder="Category"
-            selectedValue={category}
+            selectedValue={category.toString()}
             accessibilityLabel="select category"
             onValueChange={(itemValue) => setCategory(itemValue)}
             dropdownIcon={
@@ -26,6 +26,7 @@ const CategoryList = ({ category, setCategory }) => {
             <Select.Item label="Meat" value="3" />
             <Select.Item label="Seafood" value="4" />
             <Select.Item label="Cold cuts" value="5" />
+
             <Select.Item label="Dairy" value="6" />
             <Select.Item label="Bread cake" value="7" />
             <Select.Item label="Canned food" value="8" />

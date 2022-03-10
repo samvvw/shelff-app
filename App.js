@@ -7,17 +7,6 @@ import { useFonts } from 'expo-font'
 import { UserProvider } from './src/context/UserContext'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { UserContext } from './src/context/UserContext'
-//with function
-// const fetchFonts = () => {
-//   return Font.loadAsync({
-//     "GoogleSans-Regular": require("./assets/fonts/GoogleSans-Regular.ttf"),
-//     "GoogleSans-Italic": require("./assets/fonts/GoogleSans-Italic.ttf"),
-//     "GoogleSans-Medium": require("./assets/fonts/GoogleSans-Medium.ttf"),
-//     "GoogleSans-MediumItalic": require("./assets/fonts/GoogleSans-MediumItalic.ttf"),
-//     "GoogleSans-Bold": require("./assets/fonts/GoogleSans-Bold.ttf"),
-//     "GoogleSans-BoldItalic": require("./assets/fonts/GoogleSans-BoldItalic.ttf"),
-//   })
-// }
 
 //for native-base font customization
 //https://docs.nativebase.io/customizing-fonts
@@ -80,8 +69,6 @@ const theme = extendTheme({
 })
 
 const App = () => {
-    //with function
-    // const [fontsLoaded, setFontsLoaded] = useState(false);
     const { token } = useContext
 
     //with hook
@@ -100,13 +87,6 @@ const App = () => {
 
     if (!fontsLoaded) {
         return (
-            //with function
-            // <AppLoading
-            //   startAsync={fetchFonts}
-            //   onFinish={() => {setFontsLoaded(true)}}
-            //   onError={() => console.log("error on font loading")}
-            // />
-
             //with hook
             <AppLoading />
         )
