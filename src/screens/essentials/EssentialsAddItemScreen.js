@@ -8,9 +8,9 @@ import { openDatabase, executeTransaction } from '../../services/sqllite'
 import { Spinner } from 'native-base'
 
 const EssentialsAddItemScreen = ({ navigation }) => {
-    const [items, setItems] = useState()
+    const [items, setItems] = useState([])
     const { user } = useContext(UserContext)
-    const { data } = useQuery(GET_ESSENTIALS, {
+    const { data, loading } = useQuery(GET_ESSENTIALS, {
         variables: { userId: user?.uid },
     })
 
@@ -27,12 +27,13 @@ const EssentialsAddItemScreen = ({ navigation }) => {
 
     return (
         <>
-            {!items && <Spinner />}
-            {items?.length ? (
+            {loading && <Spinner />}
+            {!loading && items?.length && (
                 <View style={styles.listContainer}>
                     <EssentialsList data={items} isAdd={true} />
                 </View>
-            ) : (
+            )}
+            {!loading && !items?.length && (
                 <View style={styles.container}>
                     <View style={styles.emptyImage}></View>
                     <Text style={styles.emptyTitle}>
