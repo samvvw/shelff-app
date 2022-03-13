@@ -1,3 +1,4 @@
+import { useContext, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import SplashScreen from '../screens/SplashScreen'
@@ -13,27 +14,23 @@ import AddItemBarcode from '../screens/AddItemBarcode'
 import ManualEntryItem from '../components/barcode/ManualEntryItem'
 import EssentialsAddItemScreen from '../screens/essentials/EssentialsAddItemScreen'
 import EssentialForm from '../components/essentials/EssentialForm'
+import { ItemsContext } from '../context/ItemsContext'
 
 const Stack = createNativeStackNavigator()
 
 const AppStack = () => {
-    // const { user, refreshIdToken } = useContext(UserContext)
-    // const [hasToken, setHasToken] = useState(false)
+    // const { categories, loading, error, locations, itemFoundDB, findItemInDB } =
+    //     useContext(ItemsContext)
 
     // useEffect(() => {
-    //     if (user?.token) {
-    //         ;(async () => {
-    //             try {
-    //                 await refreshIdToken()
-    //                 const token = await AsyncStorage.getItem('token')
-    //                 if (token) setHasToken(true)
-    //             } catch (error) {
-    //                 console.log(error)
-    //                 setHasToken(false)
-    //             }
-    //         })()
-    //     }
-    // }, [user])
+    //     // console.log('Categories', locations)
+    //     console.log('error', error)
+    //     console.log('loading', loading)
+    //     console.log('itemFound-->', itemFoundDB)
+    // }, [itemFoundDB, loading, error])
+    // useEffect(() => {
+    //     findItemInDB('123456')
+    // }, [])
 
     return (
         <NavigationContainer>
