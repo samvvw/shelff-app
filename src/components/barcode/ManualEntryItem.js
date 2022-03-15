@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
+import * as Notifications from 'expo-notifications';
 
 import { TextInput } from 'react-native'
 
@@ -170,6 +171,7 @@ const ManualEntryItem = ({ navigation }) => {
         if (msg === '') {
             sendItemtoLocalStorage()
             navigation.push('VerticalMenu')
+            setNotification()
         }
     }
 
@@ -242,6 +244,35 @@ const ManualEntryItem = ({ navigation }) => {
             updateItemNameForAll(itemsToUpdate[0].barcode, itemName, category)
         }
     }, [itemsToUpdate])
+
+
+    const setNotification = async () => {
+
+        // clear notification first
+        // Notifications.cancelAllScheduledNotificationsAsync()
+
+        // to show the notification alert 
+        Notifications.setNotificationHandler({
+            handleNotification: async () => ({
+                shouldShowAlert: true,
+                shouldPlaySound: true,
+                shouldSetBadge: false,
+            }),
+        });
+        
+        //Instant Notification
+        Notifications.scheduleNotificationAsync({
+            content: {
+            title: `Hello`,
+            body: `this is body`,
+            },
+            trigger: null
+        });
+    }
+
+
+
+
 
     return (
         <View>
