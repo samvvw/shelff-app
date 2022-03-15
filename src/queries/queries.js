@@ -51,16 +51,8 @@ export const FIND_ITEM = gql`
 `
 
 export const ADD_ITEM = gql`
-    mutation AddItem(
-        $addItemItemId: String
-        $addItemItemName: String
-        $addItemCategoryId: Int
-    ) {
-        addItem(
-            itemId: $addItemItemId
-            itemName: $addItemItemName
-            categoryId: $addItemCategoryId
-        ) {
+    mutation AddItem($itemId: String, $itemName: String, $categoryId: Int) {
+        addItem(itemId: $itemId, itemName: $itemName, categoryId: $categoryId) {
             itemId
             itemName
             creationDate
@@ -70,15 +62,11 @@ export const ADD_ITEM = gql`
 `
 
 export const UPDATE_ITEM = gql`
-    mutation Mutation(
-        $updateItemItemId: String
-        $updateItemItemName: String
-        $updateItemCategoryId: Int
-    ) {
+    mutation Mutation($itemId: String, $itemName: String, $categoryId: Int) {
         updateItem(
-            itemId: $updateItemItemId
-            itemName: $updateItemItemName
-            categoryId: $updateItemCategoryId
+            itemId: $itemId
+            itemName: $itemName
+            categoryId: $categoryId
         ) {
             itemId
             itemName

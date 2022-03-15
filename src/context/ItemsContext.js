@@ -1,5 +1,4 @@
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import { find } from 'lodash'
 import { createContext, useReducer, useEffect } from 'react'
 import {
     ADD_ITEM,
@@ -98,7 +97,7 @@ export const ItemsProvider = ({ children }) => {
 
     // NOT DONE YET NEEDS TO BE TESTED
     const addNewItemToDB = async (itemId, itemName, categoryId) => {
-        await addItem({
+        addItem({
             variables: {
                 itemId,
                 itemName,
@@ -112,7 +111,7 @@ export const ItemsProvider = ({ children }) => {
                     itemName: itemName,
                     creationDate: new Date().getTime(),
                     categoryName: state.categories.filter(
-                        (cat) => cat.categoryId === categoryId,
+                        (cat) => cat.categoryId === +categoryId,
                     )[0].categoryName,
                 },
             },
@@ -136,7 +135,7 @@ export const ItemsProvider = ({ children }) => {
                     __typename: 'Item',
                     itemId: itemId,
                     itemName: itemName,
-                    categoryId: state.categories.filter(
+                    categoryName: state.categories.filter(
                         (cat) => cat.categoryId === categoryId,
                     )[0].categoryName,
                 },
@@ -155,6 +154,8 @@ export const ItemsProvider = ({ children }) => {
                 categories: state.categories,
                 locations: state.locations,
                 findItemInDB,
+                addNewItemToDB,
+                updateItemDB,
             }}
         >
             {children}

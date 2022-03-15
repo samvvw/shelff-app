@@ -1,4 +1,3 @@
-import { useContext, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import SplashScreen from '../screens/SplashScreen'
@@ -8,30 +7,14 @@ import Sign from '../screens/Sign'
 import SignUp from '../screens/SignUp'
 import LogIn from '../screens/logIn/LogIn'
 import VerticalMenu from '../layout/VerticalMenu'
-// import { UserContext } from '../context/UserContext'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
 import AddItemBarcode from '../screens/AddItemBarcode'
 import ManualEntryItem from '../components/barcode/ManualEntryItem'
 import EssentialsAddItemScreen from '../screens/essentials/EssentialsAddItemScreen'
 import EssentialForm from '../components/essentials/EssentialForm'
-import { ItemsContext } from '../context/ItemsContext'
 
 const Stack = createNativeStackNavigator()
 
 const AppStack = () => {
-    // const { categories, loading, error, locations, itemFoundDB, findItemInDB } =
-    //     useContext(ItemsContext)
-
-    // useEffect(() => {
-    //     // console.log('Categories', locations)
-    //     console.log('error', error)
-    //     console.log('loading', loading)
-    //     console.log('itemFound-->', itemFoundDB)
-    // }, [itemFoundDB, loading, error])
-    // useEffect(() => {
-    //     findItemInDB('123456')
-    // }, [])
-
     return (
         <NavigationContainer>
             <Stack.Navigator>
