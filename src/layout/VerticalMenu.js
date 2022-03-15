@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { screenWidth } from './layout'
 import { Text } from 'react-native'
 import { UserContext } from '../context/UserContext'
+import { theme } from '../styles/theme'
 
 import Footer from './Footer'
 
@@ -37,11 +38,14 @@ const VerticalMenu = ({ navigation }) => {
                 <Portal>
                     <FAB.Group
                         fabStyle={{
-                            backgroundColor: 'red',
+                            borderWidth: 2,
+                            borderColor: theme.primaryColour.crimson,
+                            backgroundColor: 'white',
                             marginBottom: 45,
 
                             alignSelf: 'center',
                         }}
+                        color={theme.primaryColour.crimson}
                         style={{
                             backgroundColor: 'transparent',
                         }}
@@ -50,6 +54,8 @@ const VerticalMenu = ({ navigation }) => {
                         actions={[
                             {
                                 style: {
+                                    backgroundColor:
+                                        theme.primaryColour.crimson,
                                     marginRight: screenWidth / 2 - 42,
                                 },
                                 icon: 'card-outline',
@@ -57,6 +63,8 @@ const VerticalMenu = ({ navigation }) => {
                             },
                             {
                                 style: {
+                                    backgroundColor:
+                                        theme.primaryColour.crimson,
                                     marginRight: screenWidth / 2 - 42,
                                 },
                                 icon: 'heart',
@@ -65,6 +73,8 @@ const VerticalMenu = ({ navigation }) => {
                             },
                             {
                                 style: {
+                                    backgroundColor:
+                                        theme.primaryColour.crimson,
                                     marginRight: screenWidth / 2 - 42,
                                 },
                                 icon: 'barcode-scan',

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { theme } from './theme'
 
 export const newItemStyle = StyleSheet.create({
     mainStack: { paddingLeft: 10, paddingRight: 10 },
@@ -30,7 +31,7 @@ export const newItemStyle = StyleSheet.create({
         height: 40,
         width: 40,
         backgroundColor: 'transparent',
-        borderColor: 'lightgray',
+        borderColor: theme.primaryColour.crimson,
         borderWidth: 2,
         borderRadius: 50,
         marginLeft: 5,
@@ -63,9 +64,10 @@ export const newItemStyle = StyleSheet.create({
     cancelButton: {
         backgroundColor: 'transparent',
         width: 80,
+        marginTop: 5,
     },
     cancelButtonText: {
-        color: 'blue',
+        color: theme.primaryColour.crimson,
         textAlign: 'left',
         width: 80,
         paddingLeft: 10,
@@ -83,12 +85,20 @@ export const newItemStyle = StyleSheet.create({
     },
     saveButton: {
         marginBottom: 10,
-        backgroundColor: 'rgba(0, 122, 255, 1)',
+        backgroundColor: theme.primaryColour.crimson,
+        borderRadius: 10,
+    },
+    saveButtonText: {
+        color: 'white',
     },
     moreItemsButton: {
         backgroundColor: 'white',
         borderWidth: 1,
-        borderColor: 'rgba(0, 122, 255, 1)',
+        borderRadius: 10,
+        borderColor: theme.primaryColour.crimson,
+    },
+    moreItemsButtonText: {
+        color: theme.primaryColour.crimson,
     },
     CategoryText: {
         paddingLeft: 15,

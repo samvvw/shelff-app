@@ -15,6 +15,7 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
 import { TextInput } from 'react-native'
+import { theme } from '../../styles/theme'
 
 //Toast to send messages validations
 import Toast from 'react-native-root-toast'
@@ -134,7 +135,7 @@ const NewItem = ({
         let toast
         let msg = ''
 
-        if (!itemName) {
+        if (!itemName && !productName) {
             msg = "Missing item's name"
         } else if (category == '') {
             msg = ' Select category'
@@ -266,7 +267,7 @@ const NewItem = ({
                         {!productName ? (
                             <TextInput
                                 size={'xl'}
-                                style={{ paddingBottom: 20, paddingTop: 30 }}
+                                style={{ paddingBottom: 10, paddingTop: 15 }}
                                 fontSize={24}
                                 onChangeText={setItemName}
                                 // value={itemName}
@@ -314,7 +315,6 @@ const NewItem = ({
                                                     backgroundColor:
                                                         'transparent',
                                                 }}
-                                                backgroundColor={'red'}
                                                 onPress={showDatepicker}
                                             />
                                         </View>
@@ -372,7 +372,9 @@ const NewItem = ({
                                             }
                                         >
                                             <Icon
-                                                color={'gray'}
+                                                color={
+                                                    theme.primaryColour.crimson
+                                                }
                                                 size={16}
                                                 name="minus"
                                             />
@@ -385,7 +387,9 @@ const NewItem = ({
                                             }
                                         >
                                             <Icon
-                                                color={'gray'}
+                                                color={
+                                                    theme.primaryColour.crimson
+                                                }
                                                 size={16}
                                                 name="plus"
                                             />
@@ -402,6 +406,8 @@ const NewItem = ({
                                 <Switch
                                     isChecked={essential}
                                     onToggle={handleEssential}
+                                    offTrackColor={theme.secondaryColour.lilac}
+                                    onTrackColor={theme.primaryColour.crimson}
                                 />
                             </HStack>
                         </Box>
@@ -409,13 +415,17 @@ const NewItem = ({
                             onPress={() => handleDoneScanning()}
                             style={newItemStyles.saveButton}
                         >
-                            <Text>Done</Text>
+                            <Text style={newItemStyles.saveButtonText}>
+                                Done
+                            </Text>
                         </Button>
                         <Button
                             onPress={() => handleSaveContinueScanning()}
                             style={newItemStyles.moreItemsButton}
                         >
-                            <Text>Save and keep scanning</Text>
+                            <Text style={newItemStyles.moreItemsButtonText}>
+                                Save and keep scanning
+                            </Text>
                         </Button>
                     </VStack>
                 </View>

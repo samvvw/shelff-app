@@ -1,4 +1,5 @@
 import react from 'react'
+import { newItemListStyles } from '../../styles/styles'
 
 import {
     Box,
@@ -67,8 +68,13 @@ const List = ({ navigation, arrItems, setArrItems, header }) => {
                             </Text>
                         </VStack>
                         <Spacer />
-                        <Button onPress={() => handleRemoveItem(item.idItem)}>
-                            Remove
+                        <Button
+                            style={newItemListStyles.removeButton}
+                            onPress={() => handleRemoveItem(item.idItem)}
+                        >
+                            <Text style={newItemListStyles.removeButtonText}>
+                                Remove
+                            </Text>
                         </Button>
                     </HStack>
                 </Box>
@@ -77,14 +83,12 @@ const List = ({ navigation, arrItems, setArrItems, header }) => {
                 arrItems?.length && (
                     <Center>
                         <Button
-                            style={{
-                                width: '70%',
-                                marginTop: 20,
-                                marginBottom: 20,
-                            }}
+                            style={newItemListStyles.doneButton}
                             onPress={saveItems}
                         >
-                            <Text>Done</Text>
+                            <Text style={newItemListStyles.doneButtonText}>
+                                Done
+                            </Text>
                         </Button>
                     </Center>
                 )
