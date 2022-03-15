@@ -105,4 +105,17 @@ export const swipableListStyle = StyleSheet.create({
         width: 25,
         marginRight: 7,
     },
+    removeEssential: {
+        backgroundColor: 'red',
+    },
+    rowBackEssential: {
+        alignItems: 'center',
+        backgroundColor: '#DDD',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 15,
+        borderRadius: 5,
+        marginVertical: 5,
+    },
 })

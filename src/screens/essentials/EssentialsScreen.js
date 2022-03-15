@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client'
 import { GET_ESSENTIALS } from '../../queries/queries'
 import { openDatabase, executeTransaction } from '../../services/sqllite'
 import { Spinner } from 'native-base'
+import EssentialSwipeableList from '../../components/essentials/EssentialSwipeableList'
 
 const EssentialsScreen = () => {
     const [items, setItems] = useState()
@@ -15,9 +16,11 @@ const EssentialsScreen = () => {
     })
 
     useEffect(() => {
-        if (user?.uid) {
+        if (user.uid) {
+            console.log(data)
             setItems(data?.essentials)
         } else {
+            console.log('entro')
             const db = openDatabase()
             const sql =
                 'select * from items where isEssential = "true" GROUP BY barcode'
@@ -27,12 +30,8 @@ const EssentialsScreen = () => {
 
     return (
         <>
-            {loading && (
-                <View style={styles.spinnerContainer}>
-                    <Spinner size="lg" />
-                </View>
-            )}
-            {!loading && !items?.length && (
+            {loading && <Spinner size="lg" />}
+            {items?.length === 0 && (
                 <View style={styles.container}>
                     <View style={styles.emptyImage}></View>
                     <Text style={styles.emptyTitle}>
@@ -43,12 +42,7 @@ const EssentialsScreen = () => {
                     </Text>
                 </View>
             )}
-            {!loading && items?.length && (
-                <>
-                    <Text style={styles.title}>Lorem Ipsum</Text>
-                    <EssentialsList data={items} />
-                </>
-            )}
+            {items?.length >= 1 && <EssentialSwipeableList data={items} />}
         </>
     )
 }

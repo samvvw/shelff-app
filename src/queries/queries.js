@@ -30,3 +30,14 @@ export const GET_CATEGORIES = gql`
         }
     }
 `
+
+export const REMOVE_ESSENTIAL_ITEM = gql`
+    mutation RemoveEssentialItem($itemId: String, $userId: String) {
+        removeEssentialItem(itemId: $itemId, userId: $userId) {
+            itemId
+            itemName
+            creationDate
+            categoryName
+        }
+    }
+`

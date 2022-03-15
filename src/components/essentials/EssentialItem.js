@@ -1,57 +1,69 @@
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import {
+    Animated,
+    View,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    TouchableHighlight,
+} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-const EssentialItem = ({ item, isAdd = false }) => {
+const EssentialItem = ({ item: { item }, isAdd = false }) => {
     const navigation = useNavigation()
 
     return (
-        <>
-            <View style={styles.container}>
-                <View style={styles.imageContainer}></View>
-                <View style={styles.row}>
-                    <View style={styles.content}>
-                        <Text style={styles.title}>{item?.itemName}</Text>
-                        {!isAdd && (
-                            <Text style={styles.subtitle}>
-                                <Text style={styles.highlight}>
-                                    Added to my shelff
+        <Animated.View>
+            <TouchableHighlight>
+                <View style={styles.container}>
+                    <View style={styles.imageContainer}></View>
+                    <View style={styles.row}>
+                        <View style={styles.content}>
+                            <Text style={styles.title}>{item?.itemName}</Text>
+                            {!isAdd && (
+                                <Text style={styles.subtitle}>
+                                    <Text style={styles.highlight}>
+                                        Added to my shelff
+                                    </Text>
+                                    : {item?.creationDate}
                                 </Text>
-                                : {item?.creationDate}
-                            </Text>
+                            )}
+                        </View>
+                        {isAdd && (
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() =>
+                                    navigation.navigate('EssentialForm', {
+                                        item,
+                                    })
+                                }
+                            >
+                                <View>
+                                    <Text style={styles.subtitle}>Add</Text>
+                                </View>
+                            </TouchableOpacity>
                         )}
                     </View>
-                    {isAdd && (
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() =>
-                                navigation.navigate('EssentialForm', { item })
-                            }
-                        >
-                            <View>
-                                <Text style={styles.subtitle}>Add</Text>
-                            </View>
-                        </TouchableOpacity>
-                    )}
                 </View>
-            </View>
-        </>
+            </TouchableHighlight>
+        </Animated.View>
     )
 }
 
 const styles = new StyleSheet.create({
     container: {
         width: '100%',
-        borderWidth: 2,
         borderColor: '#e8e8e8',
+        backgroundColor: '#fff',
         flexDirection: 'row',
         paddingVertical: 20,
         paddingLeft: 30,
         alignItems: 'center',
+        marginVertical: 5,
     },
     imageContainer: {
         width: 55,
         height: 55,
-        backgroundColor: '#dfdfdf',
+        backgroundColor: '#0a0',
         borderRadius: 10,
         marginRight: 20,
     },
