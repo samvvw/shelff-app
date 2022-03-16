@@ -27,12 +27,12 @@ const EssentialsAddItemScreen = ({ navigation }) => {
 
     return (
         <>
-            {loading && <Spinner />}
-            {!loading && items?.length && (
+            {/* {loading && <Spinner />} */}
+            {/* {!loading && items?.length && (
                 <View style={styles.listContainer}>
                     <EssentialsList data={items} isAdd={true} />
                 </View>
-            )}
+            )} */}
             {!loading && !items?.length && (
                 <View style={styles.container}>
                     <View style={styles.emptyImage}></View>

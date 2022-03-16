@@ -8,48 +8,12 @@ import { swipableListStyles } from '../../styles/styles'
 import EssentialItem from './EssentialItem'
 import { UserContext } from '../../context/UserContext'
 
-const EssentialSwipeableList = ({ data, isAdd }) => {
+const EssentialSwipeableList = ({ data, isAdd, onLocalRemove }) => {
     const { user } = useContext(UserContext)
 
-    const [removeEssentialItem] = useMutation(REMOVE_ESSENTIAL_ITEM, {
-        update(proxy, { data }) {
-            const { essentials } = proxy.readQuery({
-                query: GET_ESSENTIALS,
-                variables: { userId: user?.uid },
-            })
-            console.log(data)
-            // proxy.writeQuery({
-            //     query: GET_ESSENTIALS,
-            //     data: {
-            //         essentials: essentials.filter(
-            //             (e) => e.itemId !== removeEssentialItem.itemId,
-            //         ),
-            //     },
-            // })
-        },
-    })
-
     const handleRemoveEssentialItem = (item) => {
-        const { itemId, itemName, creationDate, categoryName } = item
-
-        // console.log({ item })
-
-        removeEssentialItem({
-            variables: {
-                itemId,
-                userId: user.userId,
-            },
-            optimisticResponse: {
-                __typename: 'Mutation',
-                removeEssentialItem: {
-                    __typename: 'ItemEssential',
-                    itemId,
-                    itemName,
-                    creationDate,
-                    categoryName,
-                },
-            },
-        })
+        if (!user?.uid) onLocalRemove(item)
+        else console.log('removing  item from server', item)
     }
 
     const renderItem = (item) => {

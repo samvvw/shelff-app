@@ -1,32 +1,34 @@
 import { useContext, useEffect, useState } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-import EssentialsList from '../../components/essentials/EssentialsList'
+// import EssentialsList from '../../components/essentials/EssentialsList'
 import { UserContext } from '../../context/UserContext'
-import { useQuery } from '@apollo/client'
+import { useLazyQuery, useQuery } from '@apollo/client'
 import { GET_ESSENTIALS } from '../../queries/queries'
 import { openDatabase, executeTransaction } from '../../services/sqllite'
 import { Spinner } from 'native-base'
 import EssentialSwipeableList from '../../components/essentials/EssentialSwipeableList'
+import { removeEssentialInLocalDB } from '../../components/barcode/saveItems'
 
 const EssentialsScreen = () => {
     const [items, setItems] = useState()
     const { user } = useContext(UserContext)
-    const { data, loading } = useQuery(GET_ESSENTIALS, {
-        variables: { userId: user?.uid },
-    })
+    const [getEssentials, { data, loading }] = useLazyQuery(GET_ESSENTIALS)
 
     useEffect(() => {
         if (user.uid) {
-            console.log(data)
-            setItems(data?.essentials)
+            getEssentials(user?.uid)
         } else {
-            console.log('entro')
             const db = openDatabase()
             const sql =
-                'select * from items where isEssential = "true" GROUP BY barcode'
+                'select * from items where isEssential = "true" group by barcode'
             executeTransaction(sql, db, setItems)
         }
-    }, [user, data])
+    }, [user])
+
+    const removeFromLocalStorage = (item) => {
+        console.log('removing  item from local storage', item)
+        removeEssentialInLocalDB(item, setItems)
+    }
 
     return (
         <>
@@ -42,7 +44,12 @@ const EssentialsScreen = () => {
                     </Text>
                 </View>
             )}
-            {items?.length >= 1 && <EssentialSwipeableList data={items} />}
+            {items?.length >= 1 && (
+                <EssentialSwipeableList
+                    data={items}
+                    onLocalRemove={removeFromLocalStorage}
+                />
+            )}
         </>
     )
 }
