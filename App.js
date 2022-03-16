@@ -8,6 +8,7 @@ import { UserProvider } from './src/context/UserContext'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { UserContext } from './src/context/UserContext'
 import { ItemsProvider } from './src/context/ItemsContext'
+import { UserItemsProvider } from './src/context/UserItemsContext'
 
 //for native-base font customization
 //https://docs.nativebase.io/customizing-fonts
@@ -93,14 +94,16 @@ const App = () => {
 
     return (
         <ApolloProvider client={client}>
-            <UserProvider>
-                <ItemsProvider>
-                    <NativeBaseProvider theme={theme}>
-                        <StatusBar barStyle={'dark-content'} />
-                        <AppStack />
-                    </NativeBaseProvider>
-                </ItemsProvider>
-            </UserProvider>
+            <ItemsProvider>
+                <UserProvider>
+                    <UserItemsProvider>
+                        <NativeBaseProvider theme={theme}>
+                            <StatusBar barStyle={'dark-content'} />
+                            <AppStack />
+                        </NativeBaseProvider>
+                    </UserItemsProvider>
+                </UserProvider>
+            </ItemsProvider>
         </ApolloProvider>
     )
 }

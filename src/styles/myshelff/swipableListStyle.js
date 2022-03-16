@@ -1,5 +1,5 @@
-import { screenWidth } from "../../layout/layout";
-import { StyleSheet } from "react-native";
+import { screenWidth } from '../../layout/layout'
+import { StyleSheet } from 'react-native'
 
 export const swipableListStyle = StyleSheet.create({
     container: {
@@ -22,11 +22,11 @@ export const swipableListStyle = StyleSheet.create({
         margin: 20,
         marginBottom: 0,
         shadowColor: '#999',
-        shadowOffset: {width: 0, height: 1},
+        shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.8,
         shadowRadius: 2,
         elevation: 5,
-        borderLeftWidth: 10, 
+        borderLeftWidth: 10,
     },
     rowFrontVisible: {
         backgroundColor: '#FFF',
@@ -39,7 +39,7 @@ export const swipableListStyle = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 15
+        padding: 15,
     },
     image: {
         width: Platform.OS === 'ios' ? 70 : 60,
@@ -60,7 +60,7 @@ export const swipableListStyle = StyleSheet.create({
     },
     name: {
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     flexRightChildBottomText: {
         fontSize: 12,
@@ -104,5 +104,18 @@ export const swipableListStyle = StyleSheet.create({
         height: 25,
         width: 25,
         marginRight: 7,
-    }
-});
+    },
+    removeEssential: {
+        backgroundColor: 'red',
+    },
+    rowBackEssential: {
+        alignItems: 'center',
+        backgroundColor: '#DDD',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 15,
+        borderRadius: 5,
+        marginVertical: 5,
+    },
+})

@@ -35,6 +35,8 @@ export const GET_ESSENTIALS = gql`
             itemId
             itemName
             creationDate
+            categoryName
+            categoryId
         }
     }
 `
@@ -70,6 +72,124 @@ export const UPDATE_ITEM = gql`
         ) {
             itemId
             itemName
+            categoryName
+        }
+    }
+`
+export const GET_USER_ITEMS = gql`
+    query UserItems($userId: String) {
+        userItems(userId: $userId) {
+            itemId
+            itemName
+            userId
+            creationDate
+            expirationDate
+            quantity
+            locationName
+            isEssential
+        }
+    }
+`
+
+export const ADD_USER_ITEM = gql`
+    mutation AddUserItem(
+        $itemId: String
+        $userId: String
+        $quantity: Int
+        $expirationDate: String
+        $locationId: Int
+        $shelfId: Int
+        $isEssential: Boolean
+    ) {
+        addUserItem(
+            itemId: $itemId
+            userId: $userId
+            quantity: $quantity
+            expirationDate: $expirationDate
+            locationId: $locationId
+            shelfId: $shelfId
+            isEssential: $isEssential
+        ) {
+            itemId
+            itemName
+            userId
+            creationDate
+            expirationDate
+            quantity
+            locationName
+            shelfName
+            isEssential
+        }
+    }
+`
+
+export const ADD_USER_ITEM_LIST = gql`
+    mutation Mutation($itemList: [UserItemArgs!]!) {
+        addUserItemList(itemList: $itemList) {
+            itemId
+            userId
+            expirationDate
+            quantity
+            locationName
+            shelfName
+            isEssential
+        }
+    }
+`
+
+export const UPDATE_USER_ITEM = gql`
+    mutation UpdateUserItem(
+        $itemId: String
+        $userId: String
+        $creationDate: String
+        $quantity: Int
+        $expirationDate: String
+        $shelfId: Int
+        $locationId: Int
+        $isEssential: Boolean
+    ) {
+        updateUserItem(
+            itemId: $itemId
+            userId: $userId
+            creationDate: $creationDate
+            quantity: $quantity
+            expirationDate: $expirationDate
+            shelfId: $shelfId
+            locationId: $locationId
+            isEssential: $isEssential
+        ) {
+            itemId
+            userId
+            creationDate
+            expirationDate
+            quantity
+            locationName
+            shelfName
+            isEssential
+        }
+    }
+`
+
+export const REMOVE_USER_ITEM = gql`
+    mutation DeleteUserItem(
+        $itemId: String
+        $userId: String
+        $creationDate: String
+    ) {
+        deleteUserItem(
+            itemId: $itemId
+            userId: $userId
+            creationDate: $creationDate
+        )
+    }
+`
+
+export const REMOVE_ESSENTIAL_ITEM = gql`
+    mutation RemoveEssentialItem($itemId: String, $userId: String) {
+        removeEssentialItem(itemId: $itemId, userId: $userId) {
+            itemId
+            itemName
+            creationDate
             categoryName
         }
     }

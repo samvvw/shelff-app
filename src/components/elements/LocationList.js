@@ -1,7 +1,7 @@
 import react from 'react'
 import { Select, Icon } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
-
+import { theme } from '../../styles/theme'
 const LocationList = ({ location, setLocation }) => {
     return (
         <Select
@@ -10,6 +10,7 @@ const LocationList = ({ location, setLocation }) => {
             borderRadius={15}
             placeholder="Location"
             selectedValue={location}
+            color={theme.primaryColour.crimson}
             accessibilityLabel="select location"
             onValueChange={(itemValue) => setLocation(itemValue)}
             dropdownIcon={

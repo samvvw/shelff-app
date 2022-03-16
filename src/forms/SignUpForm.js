@@ -113,7 +113,7 @@ const SignUpForm = () => {
                     <Input
                         placeholder="Full Name"
                         variant="outline"
-                        h={35}
+                        h={44}
                         value={signUpState.fullName}
                         onChangeText={(value) =>
                             setSignupState((prev) => ({
@@ -138,7 +138,7 @@ const SignUpForm = () => {
                     <Input
                         placeholder="Email"
                         variant="outline"
-                        h={35}
+                        h={44}
                         value={signUpState.email}
                         onChangeText={(value) =>
                             setSignupState((prev) => ({
@@ -164,7 +164,7 @@ const SignUpForm = () => {
                         placeholder="Password"
                         variant="outline"
                         type="password"
-                        h={35}
+                        h={44}
                         value={signUpState.password}
                         onChangeText={(value) =>
                             setSignupState((prev) => ({
@@ -190,7 +190,7 @@ const SignUpForm = () => {
                         placeholder="Confirm Password"
                         variant="outline"
                         type="password"
-                        h={35}
+                        h={44}
                         value={signUpState.passwordConfirm}
                         onChangeText={(value) =>
                             setSignupState((prev) => ({
@@ -213,15 +213,11 @@ const SignUpForm = () => {
                 </Text>
             </Box>
 
-            <Box
-                style={signUpStyles.checkbox}
-                alignItems={'flex-start'}
-                paddingLeft={10}
-            >
-                <Checkbox>
+            <Box style={signUpStyles.checkboxBox} alignItems={'flex-start'}>
+                <Checkbox style={signUpStyles.checkbox}>
                     <Text> I have read and agree to Shelff’s </Text>
                 </Checkbox>
-                <Text color={'primary.500'} style={signUpStyles.termsOfService}>
+                <Text style={signUpStyles.termsOfService}>
                     Terms of Service
                 </Text>
             </Box>

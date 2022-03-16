@@ -33,3 +33,13 @@ export const findBarcodeinLocalDB = (barcode, setItems) => {
     // console.log('results in function', results)
     return results
 }
+
+export const removeEssentialInLocalDB = (item, setItems) => {
+    const db = openDatabase()
+
+    const removeEssentialSql = `update items set isEssential = 'false' where itemId = '${item.itemId}'`
+    executeTransaction(removeEssentialSql, db)
+
+    const getEssentialItemsSql = `select * from items where isEssential = 'true' group by barcode`
+    executeTransaction(getEssentialItemsSql, db, setItems)
+}

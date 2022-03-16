@@ -1,9 +1,9 @@
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { addItemBarcodeStyle } from '../../styles/addItemBarcode'
-import { Text, HStack, Button, VStack, Box } from 'native-base'
+import { Text, HStack, Button } from 'native-base'
 import List from './List'
-
+import { theme } from '../../styles/theme'
 const NoItems = ({ textNoItems }) => {
     return <Text style={addItemBarcodeStyle.noItemsText}>{textNoItems}</Text>
 }
@@ -33,7 +33,11 @@ const ItemsList = ({
                         onPress={handleArrowButton}
                         key="l-header-button"
                     >
-                        <Icon size={18} name={arrowButton} />
+                        <Icon
+                            size={18}
+                            name={arrowButton}
+                            color={theme.primaryColour.crimson}
+                        />
                     </Button>
                 </HStack>
             }

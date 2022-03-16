@@ -49,16 +49,11 @@ const LogIn = ({ navigation }) => {
                     <Box style={loginInStyles.box}>
                         <Center>
                             <HStack>
-                                <Text style={loginInStyles.signUpText}>
+                                <Text style={loginInStyles.signUpNotOnShelff}>
                                     Not on Shelff yet?
                                 </Text>
                                 <Link onPress={handleSignUp}>
-                                    <Text
-                                        style={[
-                                            loginInStyles.signUpText,
-                                            loginInStyles.signUptext,
-                                        ]}
-                                    >
+                                    <Text style={[loginInStyles.signUpText]}>
                                         Sign up
                                     </Text>
                                 </Link>

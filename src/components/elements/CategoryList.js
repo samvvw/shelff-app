@@ -1,7 +1,7 @@
 import react from 'react'
 import { Select, Icon } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
-
+import { theme } from '../../styles/theme'
 const CategoryList = ({ category, setCategory }) => {
     return (
         <Select
@@ -12,11 +12,12 @@ const CategoryList = ({ category, setCategory }) => {
             selectedValue={category.toString()}
             accessibilityLabel="select category"
             onValueChange={(itemValue) => setCategory(itemValue)}
+            color={theme.primaryColour.crimson}
             dropdownIcon={
                 <Icon
                     as={Ionicons}
                     size="5"
-                    color={'gray.500'}
+                    color={theme.primaryColour.crimson}
                     name="chevron-down"
                 />
             }
