@@ -1,14 +1,14 @@
 export const theme = {
     primaryColour: {
-        crimson: rgba(237, 64, 116, 1),
-        violetRed: rgba(174, 20, 84, 1),
+        crimson: 'rgba(237, 64, 116, 1)',
+        violetRed: 'rgba(174, 20, 84, 1)',
         primaryGrdient:
             'linear-gradient(360deg, #4C095C -7.72%, #E9205D 79.58%)',
     },
     secondaryColour: {
         lilac: '#B59EBE',
         chip: '#F3F1F4',
-        pastelCrimson: rgba(247, 222, 231, 1),
+        pastelCrimson: 'rgba(247, 222, 231, 1)',
     },
     statusColour: {
         limeGreen: '#51B447',
