@@ -9,9 +9,11 @@ import {
     Heading,
     Icon,
 } from 'native-base'
+import { Image } from 'react-native'
 import { signStyles } from '../styles/styles'
 import { UserContext } from '../context/UserContext'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
+import { theme } from '../styles/theme'
 
 const Sign = ({ navigation }) => {
     const { googlePromptAsync, googleRequest, token, error, apolloError } =
@@ -31,11 +33,16 @@ const Sign = ({ navigation }) => {
         <View style={signStyles.screenContainer}>
             <VStack style={signStyles.stack}>
                 <Center style={{ flexGrow: 2 }}>
+                    <Image
+                        style={signStyles.image}
+                        source={require('../../assets/images/FinalShelff-Logo.png')}
+                    />
                     <Heading style={signStyles.heading}>
                         <Text style={signStyles.headingText}>Shelff</Text>
                     </Heading>
-
-                    <Text fontSize={'md'}>Welcome to Shelff.</Text>
+                    <Text style={signStyles.subheading}>
+                        Welcome to Shelff.
+                    </Text>
                     {error?.code && (
                         <Text>{JSON.stringify(error, null, 2)}</Text>
                     )}
@@ -63,10 +70,17 @@ const Sign = ({ navigation }) => {
                         colorScheme="primary"
                         size={'lg'}
                         leftIcon={
-                            <Icon as={AntDesign} name="google" size={'sm'} />
+                            <Icon
+                                style={signStyles.buttonText}
+                                as={AntDesign}
+                                name="google"
+                                size={'sm'}
+                            />
                         }
                     >
-                        Continue with Google
+                        <Text style={signStyles.buttonText}>
+                            Continue with Google
+                        </Text>
                     </Button>
                     <Box style={signStyles.loginButtonBox}>
                         <Button
@@ -74,10 +88,15 @@ const Sign = ({ navigation }) => {
                             style={signStyles.buttonLink}
                             variant="ghost"
                             endIcon={
-                                <Icon as={AntDesign} name="right" size={'sm'} />
+                                <Icon
+                                    style={signStyles.buttonText}
+                                    as={AntDesign}
+                                    name="right"
+                                    size={'sm'}
+                                />
                             }
                         >
-                            Log In
+                            <Text style={signStyles.buttonText}>Log In</Text>
                         </Button>
                     </Box>
                 </Center>

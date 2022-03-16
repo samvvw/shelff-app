@@ -2,6 +2,7 @@ import { screenWidth, screenHeight } from '../layout/layout'
 import { StyleSheet } from 'react-native'
 import { styleSizes } from './styleSizes'
 import { styleFonts } from './styleFonts'
+import { theme } from './theme'
 
 export const signStyle = StyleSheet.create({
     screenContainer: {
@@ -16,8 +17,15 @@ export const signStyle = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
     },
+    image: {
+        marginTop: 70,
+    },
     heading: {
-        paddingTop: 100,
+        paddingTop: 40,
+    },
+    subheading: {
+        paddingTop: 20,
+        fontSize: 28,
     },
     headingText: {
         fontSize: 72,
@@ -28,6 +36,7 @@ export const signStyle = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
+        marginTop: 100,
     },
     loginButtonBox: {
         marginTop: 20,
@@ -37,12 +46,18 @@ export const signStyle = StyleSheet.create({
         margin: 8,
         height: 46,
         width: '90%',
-        backgroundColor: '#007AFF',
+        backgroundColor: theme.primaryColour.crimson,
+        borderRadius: 10,
     },
     buttonOutline: {
         margin: 8,
         height: 46,
         width: '90%',
+        borderRadius: 10,
+        borderColor: theme.primaryColour.crimson,
+    },
+    buttonText: {
+        color: theme.primaryColour.crimson,
     },
     buttonLink: {
         // backgroundColor: 'transparent',
