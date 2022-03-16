@@ -7,6 +7,7 @@ import { useFonts } from 'expo-font'
 import { UserProvider } from './src/context/UserContext'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { UserContext } from './src/context/UserContext'
+import { ItemsProvider } from './src/context/ItemsContext'
 
 //for native-base font customization
 //https://docs.nativebase.io/customizing-fonts
@@ -69,8 +70,6 @@ const theme = extendTheme({
 })
 
 const App = () => {
-    const { token } = useContext
-
     //with hook
     const client = new ApolloClient({
         uri: 'http://10.0.0.233:8080/graphql',
@@ -95,10 +94,12 @@ const App = () => {
     return (
         <ApolloProvider client={client}>
             <UserProvider>
-                <NativeBaseProvider theme={theme}>
-                    <StatusBar barStyle={'dark-content'} />
-                    <AppStack />
-                </NativeBaseProvider>
+                <ItemsProvider>
+                    <NativeBaseProvider theme={theme}>
+                        <StatusBar barStyle={'dark-content'} />
+                        <AppStack />
+                    </NativeBaseProvider>
+                </ItemsProvider>
             </UserProvider>
         </ApolloProvider>
     )

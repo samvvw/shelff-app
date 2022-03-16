@@ -29,14 +29,14 @@ const Onboarding1 = ({ navigation, handleNext, handleSkip }) => {
                     </Text>
                 </View>
                 <View style={onboardingStyles.buttonWrapper}>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={toNext}
                         style={onboardingStyles.button}
                     >
                         <Text style={onboardingStyles.buttonText}>
                             Continue
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <Text onPress={toGetStarted} style={onboardingStyles.skip}>
                         Skip
                     </Text>

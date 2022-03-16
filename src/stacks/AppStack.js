@@ -7,8 +7,6 @@ import Sign from '../screens/Sign'
 import SignUp from '../screens/SignUp'
 import LogIn from '../screens/logIn/LogIn'
 import VerticalMenu from '../layout/VerticalMenu'
-// import { UserContext } from '../context/UserContext'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
 import AddItemBarcode from '../screens/AddItemBarcode'
 import ManualEntryItem from '../components/barcode/ManualEntryItem'
 import EssentialsAddItemScreen from '../screens/essentials/EssentialsAddItemScreen'
@@ -17,24 +15,6 @@ import EssentialForm from '../components/essentials/EssentialForm'
 const Stack = createNativeStackNavigator()
 
 const AppStack = () => {
-    // const { user, refreshIdToken } = useContext(UserContext)
-    // const [hasToken, setHasToken] = useState(false)
-
-    // useEffect(() => {
-    //     if (user?.token) {
-    //         ;(async () => {
-    //             try {
-    //                 await refreshIdToken()
-    //                 const token = await AsyncStorage.getItem('token')
-    //                 if (token) setHasToken(true)
-    //             } catch (error) {
-    //                 console.log(error)
-    //                 setHasToken(false)
-    //             }
-    //         })()
-    //     }
-    // }, [user])
-
     return (
         <NavigationContainer>
             <Stack.Navigator>
