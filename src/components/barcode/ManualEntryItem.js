@@ -5,7 +5,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
-import * as Notifications from 'expo-notifications';
+import * as Notifications from 'expo-notifications'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { TextInput } from 'react-native'
 
@@ -95,6 +96,7 @@ const ManualEntryItem = ({ navigation }) => {
         )
 
         // setShow(false);
+        handleNotificationDates(selectedDate)
     }
 
     //this shows the calendar
@@ -245,33 +247,130 @@ const ManualEntryItem = ({ navigation }) => {
         }
     }, [itemsToUpdate])
 
+    /*****************************/
+    /**** Nortification Setup ****/
+    /*****************************/
+    const [notificationTimings, setNotificationTimings] = useState([])
 
-    const setNotification = async () => {
+    //When to send Notifications
+    const handleNotificationDates = async (selectedDate) => {
+        //in second
+        const duration = (Date.parse(selectedDate) - Date.parse(today))/1000
 
-        // clear notification first
-        // Notifications.cancelAllScheduledNotificationsAsync()
-
-        // to show the notification alert 
-        Notifications.setNotificationHandler({
-            handleNotification: async () => ({
-                shouldShowAlert: true,
-                shouldPlaySound: true,
-                shouldSetBadge: false,
-            }),
-        });
-        
-        //Instant Notification
-        Notifications.scheduleNotificationAsync({
-            content: {
-            title: `Hello`,
-            body: `this is body`,
-            },
-            trigger: null
-        });
+        //notification date for expiring 
+        if(duration < 3*86400){
+            setNotificationTimings([])
+        } else if (duration >= 3*86400 && duration < 8*86400){
+            const first = duration*0.5
+            const second = duration*0.75
+            const expired = duration
+            setNotificationTimings([first, second, expired])
+        } else if (duration >= 8*86400 && duration < 15*86400){
+            const first = duration*0.5
+            const second = duration*0.75
+            const third = duration - 86400 //expiry-1day
+            const expired = duration
+            setNotificationTimings([first, second, third, expired])
+        } else if (duration >= 15*86400 && duration < 31*86400){
+            const first = duration*0.5
+            const second = duration*0.75
+            const third = duration*0.9
+            const fourth = duration - (3*86400) //expiry-3days
+            const expired = duration
+            setNotificationTimings([first, second, third, fourth, expired])
+        } else if (duration >= 31*86400 && duration < 91*86400){
+            const first = duration*0.75
+            const second = duration*0.8
+            const third = duration*0.9
+            const fourth = duration - (7*86400) //expiry-3days
+            const expired = duration
+            setNotificationTimings([first, second, third, fourth, expired])
+        } else if (duration >= 91*86400){
+            const first = duration*0.75
+            const second = duration*0.8
+            const third = duration*0.9
+            const fourth = duration - (15*86400) //expiry-3days
+            const expired = duration
+            setNotificationTimings([first, second, third, fourth, expired])
+        }
     }
 
 
+    //Setting up Notification
+    const setNotification = async () => {
+        
+        const permission = await AsyncStorage.getItem('permission')
+        // console.log(permission)
+        
+        if (permission == 'granted') {
 
+            //getreminder time
+            AsyncStorage.getItem('reminder')
+            .then((data) => {
+                let reminderTime = JSON.parse(data)
+                
+                const hInSec = reminderTime.hour * 60 * 60
+                const mInSec = reminderTime.minute * 60
+            
+                notificationTimings.map(notificate => { 
+
+                    //Date.parse(today)/1000 returns 1647414000sec which is today's 12AM + whole day in sec 
+                    const dateTime = (Date.parse(today)/1000) + notificate + hInSec + mInSec 
+                    // console.log(dateTime)
+                    // const now = Date.now()
+                    // const trigger = dateTime - (now/1000)
+                    console.log('dateTime', dateTime)
+
+
+                    //To show the notification alert 
+                    Notifications.setNotificationHandler({
+                        handleNotification: async () => ({
+                            shouldShowAlert: true,
+                            shouldPlaySound: true,
+                            shouldSetBadge: false,
+                        }),
+                    });
+
+                    //Cancell All Notification
+                    Notifications.cancelAllScheduledNotificationsAsync();
+
+                    
+                    //Instant Notification
+                    Notifications.scheduleNotificationAsync({
+                        content: {
+                        title: `Instant Notification`,
+                        body: `[${date}] ${itemName} in ${location}`,
+                        },
+                        trigger: null
+                    });
+
+                    //Scheduled Notification (it can be passed with UNIXTIME wich is mmsecond)
+                    Notifications.scheduleNotificationAsync({
+                        content: {
+                        title: "Expiring Alert",
+                        body: `[${date}] ${itemName} in ${location}`,
+                        },
+                        // trigger: {seconds: trigger}
+                        //Scheduled Notification (it can be passed with UNIXTIME wich is mmsecond)
+                        trigger: dateTime * 1000   //a bit gap? 
+                    });
+
+                    //To Check Scheduled Notifications 
+                    Notifications.getAllScheduledNotificationsAsync()
+                    .then((data) => {
+                        console.log(data)
+                    })      
+                    .catch((error) => {
+                        console.log('error', error)
+                    })
+                }) 
+
+            })
+            .catch((error) => {
+                console.log('error', error)
+            })
+        }
+    }
 
 
     return (
