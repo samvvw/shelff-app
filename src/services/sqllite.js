@@ -19,11 +19,11 @@ export const openDatabase = () => {
 
 export const createTables = (db) => {
     const sqlDrop = `drop table items`
-    const sql = `create table if not exists items (itemId text primary key not null ,  itemName text not null, quantity int default 0,
+    const sql = `create table if not exists items (itemId text primary key not null , itemName text not null, quantity int default 0,
     expirationDate date NOT NULL,
    creationDate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
    categoryId int not null, locationId not null, shelfId not null,
-   isEssential boolean not null default 0, barcode text not null
+   isEssential boolean not null default false, barcode text not null
     );`
 
     db.transaction((txn) => {
@@ -60,7 +60,7 @@ export const executeTransaction = (sql, db, setItems) => {
             },
 
             (_, rej) => {
-                console.log('aqui')
+                // console.log('aqui')
                 console.log('Error: ' + rej)
             },
         )

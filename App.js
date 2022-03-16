@@ -72,7 +72,7 @@ const theme = extendTheme({
 const App = () => {
     //with hook
     const client = new ApolloClient({
-        uri: 'http://192.168.0.6:8080/graphql',
+        uri: 'http://10.0.0.233:8080/graphql',
         cache: new InMemoryCache(),
     })
     const [fontsLoaded] = useFonts({

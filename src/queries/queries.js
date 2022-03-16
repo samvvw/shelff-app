@@ -35,6 +35,8 @@ export const GET_ESSENTIALS = gql`
             itemId
             itemName
             creationDate
+            categoryName
+            categoryId
         }
     }
 `
@@ -70,6 +72,17 @@ export const UPDATE_ITEM = gql`
         ) {
             itemId
             itemName
+            categoryName
+        }
+    }
+`
+
+export const REMOVE_ESSENTIAL_ITEM = gql`
+    mutation RemoveEssentialItem($itemId: String, $userId: String) {
+        removeEssentialItem(itemId: $itemId, userId: $userId) {
+            itemId
+            itemName
+            creationDate
             categoryName
         }
     }
