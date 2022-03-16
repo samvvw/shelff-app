@@ -314,13 +314,8 @@ const ManualEntryItem = ({ navigation }) => {
             
                 notificationTimings.map(notificate => { 
 
-                    //Date.parse(today)/1000 returns 1647414000sec which is today's 12AM + whole day in sec 
-                    const dateTime = (Date.parse(today)/1000) + notificate + hInSec + mInSec 
-                    // console.log(dateTime)
-                    // const now = Date.now()
-                    // const trigger = dateTime - (now/1000)
-                    console.log('dateTime', dateTime)
-
+                    const flatNotificate = notificate - (notificate%86400)
+                    const dateTime = flatNotificate + hInSec + mInSec 
 
                     //To show the notification alert 
                     Notifications.setNotificationHandler({
@@ -330,10 +325,6 @@ const ManualEntryItem = ({ navigation }) => {
                             shouldSetBadge: false,
                         }),
                     });
-
-                    //Cancell All Notification
-                    Notifications.cancelAllScheduledNotificationsAsync();
-
                     
                     //Instant Notification
                     Notifications.scheduleNotificationAsync({
@@ -342,6 +333,9 @@ const ManualEntryItem = ({ navigation }) => {
                         body: `[${date}] ${itemName} in ${location}`,
                         },
                         trigger: null
+                    })     
+                    .catch((error) => {
+                        console.log('error', error)
                     });
 
                     //Scheduled Notification (it can be passed with UNIXTIME wich is mmsecond)
@@ -350,9 +344,10 @@ const ManualEntryItem = ({ navigation }) => {
                         title: "Expiring Alert",
                         body: `[${date}] ${itemName} in ${location}`,
                         },
-                        // trigger: {seconds: trigger}
-                        //Scheduled Notification (it can be passed with UNIXTIME wich is mmsecond)
-                        trigger: dateTime * 1000   //a bit gap? 
+                        trigger: {seconds: dateTime}
+                    })    
+                    .catch((error) => {
+                        console.log('error', error)
                     });
 
                     //To Check Scheduled Notifications 
