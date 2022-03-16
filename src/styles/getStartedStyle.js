@@ -1,5 +1,6 @@
 import { screenWidth, screenHeight } from '../layout/layout'
 import { StyleSheet } from 'react-native'
+import { theme } from './theme'
 
 export const getStartedStyle = StyleSheet.create({
     screenContainer: {
@@ -24,7 +25,7 @@ export const getStartedStyle = StyleSheet.create({
     indicatorOne: {
         width: '50%',
         height: '5%',
-        backgroundColor: '#007AFF',
+        backgroundColor: theme.primaryColour.crimson,
     },
     indicatorTwo: {
         width: '50%',
@@ -34,7 +35,7 @@ export const getStartedStyle = StyleSheet.create({
     indicatorDone: {
         width: '50%',
         height: '5%',
-        backgroundColor: '#007AFF',
+        backgroundColor: theme.primaryColour.crimson,
     },
     textWrapper: {
         width: '100%',
@@ -55,7 +56,7 @@ export const getStartedStyle = StyleSheet.create({
     },
     timeSelectorLabel: {
         fontSize: 18,
-        color: '#007AFF',
+        color: theme.primaryColour.crimson,
     },
     buttonWrapper: {
         width: '100%',
@@ -78,15 +79,15 @@ export const getStartedStyle = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: '#007AFF',
+        borderColor: theme.primaryColour.crimson,
     },
     blueText: {
-        color: '#007AFF',
+        color: theme.primaryColour.crimson,
     },
     blueButton: {
         flex: 0,
         alignItems: 'center',
-        backgroundColor: '#007AFF',
+        backgroundColor: theme.primaryColour.crimson,
         width: '100%',
         padding: 15,
         borderRadius: 10,

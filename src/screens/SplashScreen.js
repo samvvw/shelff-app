@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Center } from 'native-base'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { openDatabase, createTables } from '../services/sqllite'
+import { Image } from 'react-native'
+
 const SplashScreen = ({ navigation }) => {
     const checkFirstLaunch = async () => {
-        // AsyncStorage.clear() //to check onboarding
+        AsyncStorage.clear() //to check onboarding
         const firstTimeCheck = await AsyncStorage.getItem('isFirstTimeOpen')
         console.log('firstTimeCheck', firstTimeCheck)
         if (firstTimeCheck == null) {
@@ -26,7 +28,7 @@ const SplashScreen = ({ navigation }) => {
             if (isFirst) {
                 setTimeout(() => {
                     navigation.replace('Onboarding')
-                }, 1000)
+                }, 5000)
             } else {
                 const token = await AsyncStorage.getItem('token')
                 if (token) {
@@ -40,16 +42,10 @@ const SplashScreen = ({ navigation }) => {
 
     return (
         <Center h="100%">
-            <Center
-                bg="primary.400"
-                _text={{
-                    color: 'white',
-                    fontSize: 40,
-                }}
-                h="30%"
-                w="50%"
-            >
-                Shelff
+            <Center>
+                <Image
+                    source={require('../../assets/images/FinalShelff-Logo.png')}
+                />
             </Center>
         </Center>
     )

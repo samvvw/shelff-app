@@ -10,10 +10,12 @@ import {
     Button,
     Center,
     Link,
+    Icon,
 } from 'native-base'
 import { useState } from 'react'
 import { emaillRGEX } from '../../assets/regex'
 import { UserContext } from '../../context/UserContext'
+import { AntDesign } from '@expo/vector-icons'
 
 const LogInForm = ({ navigation }) => {
     const {
@@ -66,7 +68,7 @@ const LogInForm = ({ navigation }) => {
                         onChangeText={handleEmailChange}
                         placeholder="Email"
                         variant="outline"
-                        h={35}
+                        h={44}
                     />
                     <FormControl.ErrorMessage>
                         Please type a valid email
@@ -83,7 +85,7 @@ const LogInForm = ({ navigation }) => {
                         type={show ? 'text' : 'password'}
                         placeholder="Password"
                         variant="outline"
-                        h={35}
+                        h={44}
                     />
                     <FormControl.ErrorMessage>
                         Please type a valid password
@@ -98,7 +100,7 @@ const LogInForm = ({ navigation }) => {
 
             <Box style={loginInStyles.buttonsBox}>
                 <VStack>
-                    <Button onPress={handleLogIn} style={styleSizes.button}>
+                    <Button style={loginInStyles.button} onPress={handleLogIn}>
                         Log In
                     </Button>
                     <Center>
@@ -108,9 +110,19 @@ const LogInForm = ({ navigation }) => {
                     <Button
                         disabled={!googleRequest}
                         onPress={() => googlePromptAsync()}
-                        style={styleSizes.button}
+                        style={loginInStyles.buttonOutline}
+                        leftIcon={
+                            <Icon
+                                style={loginInStyles.buttonText}
+                                as={AntDesign}
+                                name="google"
+                                size={'sm'}
+                            />
+                        }
                     >
-                        Continue with Google
+                        <Text style={loginInStyles.buttonText}>
+                            Continue with Google
+                        </Text>
                     </Button>
                 </VStack>
             </Box>

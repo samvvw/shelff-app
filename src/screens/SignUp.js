@@ -35,12 +35,7 @@ const SignUp = ({ navigation }) => {
                         onPress={handleLogIn}
                         style={signUpStyles.buttonLogin}
                     >
-                        <Text
-                            style={signUpStyles.buttonLogin}
-                            color="primary.500"
-                        >
-                            Login
-                        </Text>
+                        <Text style={signUpStyles.buttonLogin}>Login</Text>
                     </Button>
                 </HStack>
             </Center>
