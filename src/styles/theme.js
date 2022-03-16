@@ -2,6 +2,7 @@ export const theme = {
     primaryColour: {
         crimson: 'rgba(237, 64, 116, 1)',
         violetRed: 'rgba(174, 20, 84, 1)',
+
         primaryGradient:
             'linear-gradient(360deg, #4C095C -7.72%, #E9205D 79.58%)',
     },

@@ -9,6 +9,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import MyShelff from '../components/myShelff/MyShelff'
 import EssentialsScreen from '../screens/essentials/EssentialsScreen'
+import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
+import { theme } from '../styles/theme'
 
 import { theme } from '../styles/theme'
 
@@ -22,21 +24,31 @@ function List(props) {
             initialRouteName="Category"
             screenOptions={{
                 tabBarLabelStyle: { fontSize: 15, textTransform: 'none' },
-                tabBarActiveTintColor: '#2c3e50',
-                tabBarIndicatorStyle: { backgroundColor: '#2c3e50' },
+
+                tabBarStyle: { backgroundColor: theme.secondaryColour.chip },
+                tabBarIndicatorStyle: { backgroundColor: 'transparent' },
+
                 lazy: true,
                 swipeEnabled: false,
             }}
         >
             <Tab.Screen
-                name="Category"
-                // children={()=>
-                //   <Category
-                //     navigation={navigation}
-                //     setShelfItems={setShelfItems}
-                //     allItems={allItems}
-                //   />
-                // }
+
+                name="CATEGORY"
+                options={{
+                    tabBarLabel: ({ focused, color }) => (
+                        <Text
+                            style={{
+                                color: focused
+                                    ? theme.primaryColour.crimson
+                                    : color,
+                            }}
+                        >
+                            CATEGORY
+                        </Text>
+                    ),
+                }}
+
             >
                 {(props) => (
                     <Category
@@ -48,15 +60,22 @@ function List(props) {
                 )}
             </Tab.Screen>
             <Tab.Screen
-                name="Storage"
-                // component={Storage}
-                // children={()=>
-                //   <Storage
-                //   navigation={navigation}
-                //   setShelfItems={setShelfItems}
-                //   allItems={allItems}
-                //   />
-                // }
+
+                name="STORAGE"
+                options={{
+                    tabBarLabel: ({ focused, color }) => (
+                        <Text
+                            style={{
+                                color: focused
+                                    ? theme.primaryColour.crimson
+                                    : color,
+                            }}
+                        >
+                            STORAGE
+                        </Text>
+                    ),
+                }}
+
             >
                 {(props) => (
                     <Storage
@@ -260,8 +279,10 @@ const Footer = () => {
                     backgroundColor: 'white',
                 },
 
+
                 tabBarActiveTintColor: theme.primaryColour.crimson,
                 tabBarInactiveTintColor: theme.textColour.icons,
+
             }}
         >
             <Tab.Screen
