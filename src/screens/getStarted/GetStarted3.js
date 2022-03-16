@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Button } from 'react-native'
 import { getStartedStyles } from '../../styles/styles'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as Notifications from 'expo-notifications'
 
 const GetStarted3 = ({ navigation, handleNext }) => {
     const [dateTime, setDateTime] = useState(new Date())
@@ -28,17 +29,28 @@ const GetStarted3 = ({ navigation, handleNext }) => {
         let time = { hour: hour, minute: minute }
         let reminder = JSON.stringify(time)
 
-        const check = await AsyncStorage.getItem('reminder')
-        console.log('reminderCheck', check)
-
         await AsyncStorage.setItem('reminder', reminder)
+        .then(() => {
+            console.log(`Reminder has been set at ${hour}:${minute}`)
+            handleNext()
+        })
+        .catch((error) => {
+            console.log('error', error)
+        })
+
+        //Notification 
+        Notifications.requestPermissionsAsync()
+        .then((result) => {
+
+            AsyncStorage.setItem('permission', result.status)
             .then(() => {
-                console.log(`Reminder has been set at ${hour}:${minute}`)
-                handleNext()
             })
             .catch((error) => {
                 console.log('error', error)
             })
+        }).catch((error) => {
+            console.log('error', error)
+        })
     }
 
     return (
