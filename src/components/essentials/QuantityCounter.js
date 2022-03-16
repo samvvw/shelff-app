@@ -32,10 +32,12 @@ const styles = StyleSheet.create({
     button: {
         width: 45,
         height: 45,
-        backgroundColor: '#ddd',
+        backgroundColor: '#fff',
         borderRadius: 40,
         justifyContent: 'center',
         alignItems: 'center',
+        borderColor: '#f94f82',
+        borderWidth: 2,
     },
     counter: {
         fontSize: 20,
@@ -43,6 +45,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontSize: 20,
+        color: '#000',
     },
 })
 

@@ -35,6 +35,8 @@ export const GET_ESSENTIALS = gql`
             itemId
             itemName
             creationDate
+            categoryName
+            categoryId
         }
     }
 `
@@ -126,6 +128,17 @@ export const ADD_USER_ITEM_LIST = gql`
             quantity
             locationName
             shelfName
+        }
+    }
+`
+
+export const REMOVE_ESSENTIAL_ITEM = gql`
+    mutation RemoveEssentialItem($itemId: String, $userId: String) {
+        removeEssentialItem(itemId: $itemId, userId: $userId) {
+            itemId
+            itemName
+            creationDate
+            categoryName
         }
     }
 `

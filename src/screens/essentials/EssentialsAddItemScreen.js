@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import { useContext, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { UserContext } from '../../context/UserContext'
@@ -8,31 +8,34 @@ import { openDatabase, executeTransaction } from '../../services/sqllite'
 import { Spinner } from 'native-base'
 
 const EssentialsAddItemScreen = ({ navigation }) => {
-    const [items, setItems] = useState()
+    const [items, setItems] = useState([])
     const { user } = useContext(UserContext)
-    const { data } = useQuery(GET_ESSENTIALS, {
-        variables: { userId: user?.uid },
-    })
+    const [getEssentials, { data, loading }] = useLazyQuery(GET_ESSENTIALS)
 
     useEffect(() => {
         if (user?.uid) {
-            setItems(data?.essentials)
+            getEssentials({ variables: { userId: user?.uid } })
         } else {
             const db = openDatabase()
             const sql =
                 'select *  from items where isEssential = "true" GROUP BY barcode'
             executeTransaction(sql, db, setItems)
         }
-    }, [user, data])
+    }, [user])
+
+    useEffect(() => {
+        if (data) setItems(data?.essentials)
+    }, [data])
 
     return (
         <>
-            {!items && <Spinner />}
-            {items?.length ? (
+            {loading && <Spinner />}
+            {items?.length >= 1 && (
                 <View style={styles.listContainer}>
                     <EssentialsList data={items} isAdd={true} />
                 </View>
-            ) : (
+            )}
+            {items?.length === 0 && (
                 <View style={styles.container}>
                     <View style={styles.emptyImage}></View>
                     <Text style={styles.emptyTitle}>
@@ -60,7 +63,7 @@ const styles = new StyleSheet.create({
     emptyImage: {
         width: 96,
         height: 96,
-        backgroundColor: '#C4C4C4',
+        backgroundColor: '#ed4074',
         borderRadius: 20,
         marginBottom: 20,
     },

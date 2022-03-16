@@ -1,5 +1,6 @@
 import { screenWidth, screenHeight } from '../layout/layout'
 import { StyleSheet } from 'react-native'
+import { theme } from './theme'
 
 export const onboardingStyle = StyleSheet.create({
     screenContainer: {
@@ -41,7 +42,7 @@ export const onboardingStyle = StyleSheet.create({
     button: {
         flex: 0,
         alignItems: 'center',
-        backgroundColor: '#007AFF',
+        backgroundColor: theme.primaryColour.crimson,
         width: '100%',
         padding: 15,
         borderRadius: 10,
@@ -50,6 +51,7 @@ export const onboardingStyle = StyleSheet.create({
         color: 'white',
     },
     skip: {
-        color: '#007AFF',
+        color: theme.primaryColour.crimson,
+        marginTop: 20,
     },
 })
