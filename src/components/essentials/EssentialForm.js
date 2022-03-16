@@ -1,21 +1,16 @@
-import { Switch } from 'native-base'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
 import LocationList from '../elements/LocationList'
 import QuantityCounter from './QuantityCounter'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { saveItemsToLocalStorage } from '../barcode/saveItems'
 import uuid from 'react-native-uuid'
-import { useQuery } from '@apollo/client'
-import { GET_CATEGORIES } from '../../queries/queries'
 
 const EssentialForm = ({ navigation, route }) => {
     const todayDate = new Date()
     const { item } = route.params
-    console.log({ item })
     const [location, setLocation] = useState()
     const [quantity, setQuantity] = useState(1)
-    const [isEssential, setIsEssential] = useState(true)
     const [showCalendar, setShowCalendar] = useState(false)
     const [today, setToday] = useState(
         new Date(
@@ -64,8 +59,8 @@ const EssentialForm = ({ navigation, route }) => {
                     dexpirationdate: date,
                     idCategory: item.categoryId,
                     idLocation: location,
-                    essential: isEssential,
-                    barcode: item.barcode,
+                    essential: item.isEssential,
+                    barcode: item?.barcode ? item.barcode : item.itemId,
                 },
             ])
             navigation.goBack()
@@ -76,7 +71,7 @@ const EssentialForm = ({ navigation, route }) => {
         <>
             <View
                 style={{
-                    height: '100%',
+                    height: '95%',
                     marginTop: 'auto',
                 }}
             >
@@ -90,10 +85,12 @@ const EssentialForm = ({ navigation, route }) => {
                         <Text style={styles.itemName}>{item?.itemName}</Text>
                     </View>
                     <View style={styles.row}>
-                        <View style={styles.pair}>
-                            <View style={styles.icon}></View>
-                            <Text>{item?.categoryName}</Text>
-                        </View>
+                        {item?.categoryName && (
+                            <View style={styles.pair}>
+                                <View style={styles.icon}></View>
+                                <Text>{item?.categoryName}</Text>
+                            </View>
+                        )}
                         <View style={styles.pair}>
                             <TouchableOpacity
                                 onPress={() => setShowCalendar(true)}
@@ -121,16 +118,6 @@ const EssentialForm = ({ navigation, route }) => {
                         <QuantityCounter
                             quantity={quantity}
                             setQuantity={setQuantity}
-                        />
-                    </View>
-                    <View style={styles.formControl}>
-                        <Text style={styles.label}>
-                            Add to Essentials Items
-                        </Text>
-                        <Switch
-                            isChecked={isEssential}
-                            onToggle={() => setIsEssential((prev) => !prev)}
-                            size="lg"
                         />
                     </View>
                     <View style={styles.buttonsContainer}>
@@ -192,7 +179,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#e8e8e8',
     },
     primary: {
-        backgroundColor: '#307aff',
+        backgroundColor: '#ed4074',
         color: '#fff',
     },
     row: {
@@ -207,9 +194,11 @@ const styles = StyleSheet.create({
     icon: {
         width: 30,
         height: 30,
-        backgroundColor: '#ddda',
+        backgroundColor: '#f899b5',
         borderRadius: 5,
         marginRight: 5,
+        borderWidth: 1,
+        borderColor: '#ed4074',
     },
     formControl: {
         flexDirection: 'row',

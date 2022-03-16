@@ -11,7 +11,9 @@ import dayjs from 'dayjs'
 import { UserContext } from '../../context/UserContext'
 import { useContext } from 'react'
 
-const EssentialItem = ({ item: { item }, isAdd = false }) => {
+const EssentialItem = ({ item, isAdd = false }) => {
+    const itemInfo = item?.item ? item?.item : item
+    console.log('itemInfo', itemInfo)
     const navigation = useNavigation()
     const { user } = useContext(UserContext)
 
@@ -36,13 +38,15 @@ const EssentialItem = ({ item: { item }, isAdd = false }) => {
                     <View style={styles.imageContainer}></View>
                     <View style={styles.row}>
                         <View style={styles.content}>
-                            <Text style={styles.title}>{item?.itemName}</Text>
+                            <Text style={styles.title}>
+                                {itemInfo?.itemName}
+                            </Text>
                             {!isAdd && (
                                 <Text style={styles.subtitle}>
                                     <Text style={styles.highlight}>
                                         Added to my shelff
                                     </Text>
-                                    : {diffDates(item?.creationDate)}
+                                    : {diffDates(itemInfo?.creationDate)}
                                 </Text>
                             )}
                         </View>
@@ -51,7 +55,7 @@ const EssentialItem = ({ item: { item }, isAdd = false }) => {
                                 style={styles.button}
                                 onPress={() =>
                                     navigation.navigate('EssentialForm', {
-                                        item,
+                                        item: itemInfo,
                                     })
                                 }
                             >
@@ -86,12 +90,13 @@ const styles = new StyleSheet.create({
         marginRight: 20,
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
     },
     subtitle: {
         fontSize: 12,
         marginTop: 3,
+        color: '#000',
     },
     highlight: {
         fontWeight: 'bold',
@@ -107,7 +112,7 @@ const styles = new StyleSheet.create({
         borderRadius: 60,
         paddingVertical: 13,
         paddingHorizontal: 11,
-        borderColor: '#2763de',
+        borderColor: '#ed4074',
     },
 })
 

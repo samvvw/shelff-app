@@ -36,6 +36,7 @@ export const GET_ESSENTIALS = gql`
             itemName
             creationDate
             categoryName
+            categoryId
         }
     }
 `
