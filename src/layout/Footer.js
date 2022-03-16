@@ -12,8 +12,6 @@ import EssentialsScreen from '../screens/essentials/EssentialsScreen'
 import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 import { theme } from '../styles/theme'
 
-import { theme } from '../styles/theme'
-
 function List(props) {
     const Tab = createMaterialTopTabNavigator()
 
@@ -33,7 +31,6 @@ function List(props) {
             }}
         >
             <Tab.Screen
-
                 name="CATEGORY"
                 options={{
                     tabBarLabel: ({ focused, color }) => (
@@ -48,7 +45,6 @@ function List(props) {
                         </Text>
                     ),
                 }}
-
             >
                 {(props) => (
                     <Category
@@ -60,7 +56,6 @@ function List(props) {
                 )}
             </Tab.Screen>
             <Tab.Screen
-
                 name="STORAGE"
                 options={{
                     tabBarLabel: ({ focused, color }) => (
@@ -75,7 +70,6 @@ function List(props) {
                         </Text>
                     ),
                 }}
-
             >
                 {(props) => (
                     <Storage
@@ -279,10 +273,8 @@ const Footer = () => {
                     backgroundColor: 'white',
                 },
 
-
                 tabBarActiveTintColor: theme.primaryColour.crimson,
                 tabBarInactiveTintColor: theme.textColour.icons,
-
             }}
         >
             <Tab.Screen
