@@ -86,6 +86,7 @@ export const GET_USER_ITEMS = gql`
             expirationDate
             quantity
             locationName
+            isEssential
         }
     }
 `
@@ -98,6 +99,7 @@ export const ADD_USER_ITEM = gql`
         $expirationDate: String
         $locationId: Int
         $shelfId: Int
+        $isEssential: Boolean
     ) {
         addUserItem(
             itemId: $itemId
@@ -106,6 +108,7 @@ export const ADD_USER_ITEM = gql`
             expirationDate: $expirationDate
             locationId: $locationId
             shelfId: $shelfId
+            isEssential: $isEssential
         ) {
             itemId
             itemName
@@ -115,6 +118,7 @@ export const ADD_USER_ITEM = gql`
             quantity
             locationName
             shelfName
+            isEssential
         }
     }
 `
@@ -128,7 +132,55 @@ export const ADD_USER_ITEM_LIST = gql`
             quantity
             locationName
             shelfName
+            isEssential
         }
+    }
+`
+
+export const UPDATE_USER_ITEM = gql`
+    mutation UpdateUserItem(
+        $itemId: String
+        $userId: String
+        $creationDate: String
+        $quantity: Int
+        $expirationDate: String
+        $shelfId: Int
+        $locationId: Int
+        $isEssential: Boolean
+    ) {
+        updateUserItem(
+            itemId: $itemId
+            userId: $userId
+            creationDate: $creationDate
+            quantity: $quantity
+            expirationDate: $expirationDate
+            shelfId: $shelfId
+            locationId: $locationId
+            isEssential: $isEssential
+        ) {
+            itemId
+            userId
+            creationDate
+            expirationDate
+            quantity
+            locationName
+            shelfName
+            isEssential
+        }
+    }
+`
+
+export const REMOVE_USER_ITEM = gql`
+    mutation DeleteUserItem(
+        $itemId: String
+        $userId: String
+        $creationDate: String
+    ) {
+        deleteUserItem(
+            itemId: $itemId
+            userId: $userId
+            creationDate: $creationDate
+        )
     }
 `
 
