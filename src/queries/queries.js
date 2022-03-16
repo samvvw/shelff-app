@@ -74,3 +74,58 @@ export const UPDATE_ITEM = gql`
         }
     }
 `
+export const GET_USER_ITEMS = gql`
+    query UserItems($userId: String) {
+        userItems(userId: $userId) {
+            itemId
+            itemName
+            userId
+            creationDate
+            expirationDate
+            quantity
+            locationName
+        }
+    }
+`
+
+export const ADD_USER_ITEM = gql`
+    mutation AddUserItem(
+        $itemId: String
+        $userId: String
+        $quantity: Int
+        $expirationDate: String
+        $locationId: Int
+        $shelfId: Int
+    ) {
+        addUserItem(
+            itemId: $itemId
+            userId: $userId
+            quantity: $quantity
+            expirationDate: $expirationDate
+            locationId: $locationId
+            shelfId: $shelfId
+        ) {
+            itemId
+            itemName
+            userId
+            creationDate
+            expirationDate
+            quantity
+            locationName
+            shelfName
+        }
+    }
+`
+
+export const ADD_USER_ITEM_LIST = gql`
+    mutation Mutation($itemList: [UserItemArgs!]!) {
+        addUserItemList(itemList: $itemList) {
+            itemId
+            userId
+            expirationDate
+            quantity
+            locationName
+            shelfName
+        }
+    }
+`

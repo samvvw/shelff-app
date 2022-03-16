@@ -15,7 +15,6 @@ const initialState = {
     categories: [],
     locations: [],
     itemFoundDB: null,
-    userItems: [],
     createdItem: null,
 }
 
@@ -95,7 +94,6 @@ export const ItemsProvider = ({ children }) => {
     // Add new Item to database Mutation
     const [addItem] = useMutation(ADD_ITEM)
 
-    // NOT DONE YET NEEDS TO BE TESTED
     const addNewItemToDB = async (itemId, itemName, categoryId) => {
         addItem({
             variables: {
@@ -121,7 +119,6 @@ export const ItemsProvider = ({ children }) => {
     // Update Item for general Items
     const [updateItem] = useMutation(UPDATE_ITEM)
 
-    // NOT DONE YET NEEDS TO BE TESTED
     const updateItemDB = async (itemId, itemName, categoryId) => {
         await updateItem({
             variables: {
@@ -149,7 +146,6 @@ export const ItemsProvider = ({ children }) => {
                 loading: state.loading,
                 error: state.error,
                 itemFoundDB: state.itemFoundDB,
-                userItems: state.userItems,
                 createdItem: state.createdItem,
                 categories: state.categories,
                 locations: state.locations,
