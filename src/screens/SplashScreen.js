@@ -6,7 +6,7 @@ import { Image } from 'react-native'
 
 const SplashScreen = ({ navigation }) => {
     const checkFirstLaunch = async () => {
-        AsyncStorage.clear() //to check onboarding
+        // AsyncStorage.clear() //to check onboarding
         const firstTimeCheck = await AsyncStorage.getItem('isFirstTimeOpen')
         console.log('firstTimeCheck', firstTimeCheck)
         if (firstTimeCheck == null) {

@@ -41,6 +41,5 @@ export const removeEssentialInLocalDB = (item, setItems) => {
     executeTransaction(removeEssentialSql, db)
 
     const getEssentialItemsSql = `select * from items where isEssential = 'true' group by barcode`
-    const results = executeTransaction(getEssentialItemsSql, db, setItems)
-    return results
+    executeTransaction(getEssentialItemsSql, db, setItems)
 }

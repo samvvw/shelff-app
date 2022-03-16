@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-// import EssentialsList from '../../components/essentials/EssentialsList'
 import { UserContext } from '../../context/UserContext'
-import { useLazyQuery, useQuery } from '@apollo/client'
-import { GET_ESSENTIALS } from '../../queries/queries'
+import { useLazyQuery, useMutation } from '@apollo/client'
+import { GET_ESSENTIALS, REMOVE_ESSENTIAL_ITEM } from '../../queries/queries'
 import { openDatabase, executeTransaction } from '../../services/sqllite'
 import { Spinner } from 'native-base'
 import EssentialSwipeableList from '../../components/essentials/EssentialSwipeableList'
@@ -13,10 +12,13 @@ const EssentialsScreen = () => {
     const [items, setItems] = useState()
     const { user } = useContext(UserContext)
     const [getEssentials, { data, loading }] = useLazyQuery(GET_ESSENTIALS)
+    const [removeEssential, { data: removeEssentialData }] = useMutation(
+        REMOVE_ESSENTIAL_ITEM,
+    )
 
     useEffect(() => {
-        if (user.uid) {
-            getEssentials(user?.uid)
+        if (user?.uid) {
+            getEssentials({ variables: { userId: user?.uid } })
         } else {
             const db = openDatabase()
             const sql =
@@ -25,9 +27,23 @@ const EssentialsScreen = () => {
         }
     }, [user])
 
+    useEffect(() => {
+        if (data) setItems(data?.essentials)
+    }, [data])
+
+    useEffect(() => {
+        if (removeEssentialData?.removeEssentialItem)
+            setItems(removeEssentialData?.removeEssentialItem)
+    }, [removeEssentialData])
+
     const removeFromLocalStorage = (item) => {
-        console.log('removing  item from local storage', item)
         removeEssentialInLocalDB(item, setItems)
+    }
+
+    const removeFromServer = (item) => {
+        removeEssential({
+            variables: { itemId: item.itemId, userId: user?.uid },
+        })
     }
 
     return (
@@ -48,6 +64,7 @@ const EssentialsScreen = () => {
                 <EssentialSwipeableList
                     data={items}
                     onLocalRemove={removeFromLocalStorage}
+                    onServerRemove={removeFromServer}
                 />
             )}
         </>

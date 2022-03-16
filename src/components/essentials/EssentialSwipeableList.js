@@ -1,19 +1,22 @@
-import { useMutation } from '@apollo/client'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useContext } from 'react'
 import { Animated, TouchableOpacity } from 'react-native'
 import { SwipeListView } from 'react-native-swipe-list-view'
-import { GET_ESSENTIALS, REMOVE_ESSENTIAL_ITEM } from '../../queries/queries'
 import { swipableListStyles } from '../../styles/styles'
 import EssentialItem from './EssentialItem'
 import { UserContext } from '../../context/UserContext'
 
-const EssentialSwipeableList = ({ data, isAdd, onLocalRemove }) => {
+const EssentialSwipeableList = ({
+    data,
+    isAdd,
+    onLocalRemove,
+    onServerRemove,
+}) => {
     const { user } = useContext(UserContext)
 
     const handleRemoveEssentialItem = (item) => {
         if (!user?.uid) onLocalRemove(item)
-        else console.log('removing  item from server', item)
+        else onServerRemove(item)
     }
 
     const renderItem = (item) => {
