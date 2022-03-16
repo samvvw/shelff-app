@@ -80,6 +80,7 @@ export const getStartedStyle = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: theme.primaryColour.crimson,
+        marginBottom: 10,
     },
     blueText: {
         color: theme.primaryColour.crimson,
