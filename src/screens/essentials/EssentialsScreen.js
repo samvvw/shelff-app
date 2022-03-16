@@ -87,7 +87,7 @@ const styles = new StyleSheet.create({
     emptyImage: {
         width: 96,
         height: 96,
-        backgroundColor: '#C4C4C4',
+        backgroundColor: '#ed4074',
         borderRadius: 20,
         marginBottom: 20,
     },

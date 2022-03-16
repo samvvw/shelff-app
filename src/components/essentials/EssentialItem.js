@@ -7,9 +7,27 @@ import {
     TouchableHighlight,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import dayjs from 'dayjs'
+import { UserContext } from '../../context/UserContext'
+import { useContext } from 'react'
 
 const EssentialItem = ({ item: { item }, isAdd = false }) => {
     const navigation = useNavigation()
+    const { user } = useContext(UserContext)
+
+    const diffDates = (itemDate) => {
+        let dateComing
+        if (user?.uid) {
+            dateComing = dayjs(+itemDate)
+        } else {
+            dateComing = dayjs(itemDate)
+        }
+        const currentDate = dayjs()
+
+        const days = currentDate.diff(dateComing, 'day')
+        if (days > 0) return days.toFixed(0) + ' days ago'
+        else return 'Today'
+    }
 
     return (
         <Animated.View>
@@ -24,7 +42,7 @@ const EssentialItem = ({ item: { item }, isAdd = false }) => {
                                     <Text style={styles.highlight}>
                                         Added to my shelff
                                     </Text>
-                                    : {item?.creationDate}
+                                    : {diffDates(item?.creationDate)}
                                 </Text>
                             )}
                         </View>
@@ -73,6 +91,7 @@ const styles = new StyleSheet.create({
     },
     subtitle: {
         fontSize: 12,
+        marginTop: 3,
     },
     highlight: {
         fontWeight: 'bold',
