@@ -1,4 +1,4 @@
-import react from 'react'
+import react, { useContext } from 'react'
 import { View, VStack, Text, Box, HStack, Button, Switch } from 'native-base'
 import NewItemBackground from './NewItemBackground'
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -25,8 +25,10 @@ import uuid from 'react-native-uuid'
 
 import { saveItemsToLocalStorage } from './saveItems'
 import { findBarcodeinLocalDB, updateItemNameForAll } from './saveItems'
+import { ItemsContext } from '../../context/ItemsContext'
 
 const ManualEntryItem = ({ navigation }) => {
+    const { addNewItemToDB, categories } = useContext(ItemsContext)
     /*states to save data from user*/
     const [items, setItems] = useState([])
     const [itemsToUpdate, setItemsToUpdate] = useState([])
@@ -164,6 +166,12 @@ const ManualEntryItem = ({ navigation }) => {
         )
         saveItemsToLocalStorage([lastItem])
 
+        //save item in server
+        addNewItemToDB(
+            lastItem.barcode,
+            lastItem.cItemName,
+            +lastItem.idCategory,
+        )
         //search the barcode after saving it to check if it exists to update all items
         findBarcodeinLocalDB(barCodeNumber, setItemsToUpdate)
     }
@@ -255,118 +263,110 @@ const ManualEntryItem = ({ navigation }) => {
     //When to send Notifications
     const handleNotificationDates = async (selectedDate) => {
         //in second
-        const duration = (Date.parse(selectedDate) - Date.parse(today))/1000
+        const duration = (Date.parse(selectedDate) - Date.parse(today)) / 1000
 
-        //notification date for expiring 
-        if(duration < 3*86400){
+        //notification date for expiring
+        if (duration < 3 * 86400) {
             setNotificationTimings([])
-        } else if (duration >= 3*86400 && duration < 8*86400){
-            const first = duration*0.5
-            const second = duration*0.75
+        } else if (duration >= 3 * 86400 && duration < 8 * 86400) {
+            const first = duration * 0.5
+            const second = duration * 0.75
             const expired = duration
             setNotificationTimings([first, second, expired])
-        } else if (duration >= 8*86400 && duration < 15*86400){
-            const first = duration*0.5
-            const second = duration*0.75
+        } else if (duration >= 8 * 86400 && duration < 15 * 86400) {
+            const first = duration * 0.5
+            const second = duration * 0.75
             const third = duration - 86400 //expiry-1day
             const expired = duration
             setNotificationTimings([first, second, third, expired])
-        } else if (duration >= 15*86400 && duration < 31*86400){
-            const first = duration*0.5
-            const second = duration*0.75
-            const third = duration*0.9
-            const fourth = duration - (3*86400) //expiry-3days
+        } else if (duration >= 15 * 86400 && duration < 31 * 86400) {
+            const first = duration * 0.5
+            const second = duration * 0.75
+            const third = duration * 0.9
+            const fourth = duration - 3 * 86400 //expiry-3days
             const expired = duration
             setNotificationTimings([first, second, third, fourth, expired])
-        } else if (duration >= 31*86400 && duration < 91*86400){
-            const first = duration*0.75
-            const second = duration*0.8
-            const third = duration*0.9
-            const fourth = duration - (7*86400) //expiry-3days
+        } else if (duration >= 31 * 86400 && duration < 91 * 86400) {
+            const first = duration * 0.75
+            const second = duration * 0.8
+            const third = duration * 0.9
+            const fourth = duration - 7 * 86400 //expiry-3days
             const expired = duration
             setNotificationTimings([first, second, third, fourth, expired])
-        } else if (duration >= 91*86400){
-            const first = duration*0.75
-            const second = duration*0.8
-            const third = duration*0.9
-            const fourth = duration - (15*86400) //expiry-3days
+        } else if (duration >= 91 * 86400) {
+            const first = duration * 0.75
+            const second = duration * 0.8
+            const third = duration * 0.9
+            const fourth = duration - 15 * 86400 //expiry-3days
             const expired = duration
             setNotificationTimings([first, second, third, fourth, expired])
         }
     }
-
 
     //Setting up Notification
     const setNotification = async () => {
-        
         const permission = await AsyncStorage.getItem('permission')
         // console.log(permission)
-        
-        if (permission == 'granted') {
 
+        if (permission == 'granted') {
             //getreminder time
             AsyncStorage.getItem('reminder')
-            .then((data) => {
-                let reminderTime = JSON.parse(data)
-                
-                const hInSec = reminderTime.hour * 60 * 60
-                const mInSec = reminderTime.minute * 60
-            
-                notificationTimings.map(notificate => { 
+                .then((data) => {
+                    let reminderTime = JSON.parse(data)
 
-                    const flatNotificate = notificate - (notificate%86400)
-                    const dateTime = flatNotificate + hInSec + mInSec 
+                    const hInSec = reminderTime.hour * 60 * 60
+                    const mInSec = reminderTime.minute * 60
 
-                    //To show the notification alert 
-                    Notifications.setNotificationHandler({
-                        handleNotification: async () => ({
-                            shouldShowAlert: true,
-                            shouldPlaySound: true,
-                            shouldSetBadge: false,
-                        }),
-                    });
-                    
-                    //Instant Notification
-                    Notifications.scheduleNotificationAsync({
-                        content: {
-                        title: `Instant Notification`,
-                        body: `[${date}] ${itemName} in ${location}`,
-                        },
-                        trigger: null
-                    })     
-                    .catch((error) => {
-                        console.log('error', error)
-                    });
+                    notificationTimings.map((notificate) => {
+                        const flatNotificate = notificate - (notificate % 86400)
+                        const dateTime = flatNotificate + hInSec + mInSec
 
-                    //Scheduled Notification (it can be passed with UNIXTIME wich is mmsecond)
-                    Notifications.scheduleNotificationAsync({
-                        content: {
-                        title: "Expiring Alert",
-                        body: `[${date}] ${itemName} in ${location}`,
-                        },
-                        trigger: {seconds: dateTime}
-                    })    
-                    .catch((error) => {
-                        console.log('error', error)
-                    });
+                        //To show the notification alert
+                        Notifications.setNotificationHandler({
+                            handleNotification: async () => ({
+                                shouldShowAlert: true,
+                                shouldPlaySound: true,
+                                shouldSetBadge: false,
+                            }),
+                        })
 
-                    //To Check Scheduled Notifications 
-                    Notifications.getAllScheduledNotificationsAsync()
-                    .then((data) => {
-                        console.log(data)
-                    })      
-                    .catch((error) => {
-                        console.log('error', error)
+                        //Instant Notification
+                        Notifications.scheduleNotificationAsync({
+                            content: {
+                                title: `Instant Notification`,
+                                body: `[${date}] ${itemName} in ${location}`,
+                            },
+                            trigger: null,
+                        }).catch((error) => {
+                            console.log('error', error)
+                        })
+
+                        //Scheduled Notification (it can be passed with UNIXTIME wich is mmsecond)
+                        Notifications.scheduleNotificationAsync({
+                            content: {
+                                title: 'Expiring Alert',
+                                body: `[${date}] ${itemName} in ${location}`,
+                            },
+                            trigger: { seconds: dateTime },
+                        }).catch((error) => {
+                            console.log('error', error)
+                        })
+
+                        //To Check Scheduled Notifications
+                        Notifications.getAllScheduledNotificationsAsync()
+                            .then((data) => {
+                                console.log(data)
+                            })
+                            .catch((error) => {
+                                console.log('error', error)
+                            })
                     })
-                }) 
-
-            })
-            .catch((error) => {
-                console.log('error', error)
-            })
+                })
+                .catch((error) => {
+                    console.log('error', error)
+                })
         }
     }
-
 
     return (
         <View>

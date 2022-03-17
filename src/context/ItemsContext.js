@@ -109,7 +109,7 @@ export const ItemsProvider = ({ children }) => {
                     itemName: itemName,
                     creationDate: new Date().getTime(),
                     categoryName: state.categories.filter(
-                        (cat) => cat.categoryId === +categoryId,
+                        (cat) => cat.categoryId === categoryId,
                     )[0].categoryName,
                 },
             },
