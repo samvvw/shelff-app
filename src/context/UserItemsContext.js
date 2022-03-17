@@ -1,11 +1,12 @@
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import { getActionFromState } from '@react-navigation/native'
 import { createContext, useReducer, useEffect } from 'react'
 import {
     ADD_USER_ITEM,
     ADD_USER_ITEM_LIST,
     GET_ESSENTIALS,
     GET_USER_ITEMS,
+    REMOVE_USER_ITEM,
+    UPDATE_USER_ITEM,
 } from '../queries/queries'
 import { UserItemsReducer } from './UserItemsReducer'
 
@@ -46,7 +47,7 @@ export const UserItemsProvider = ({ children }) => {
     }, [getUserItemsResult])
 
     // Add User Item
-    const [addUserItemRequest, addUserItemResponse] = useMutation(ADD_USER_ITEM)
+    const [addUserItemRequest] = useMutation(ADD_USER_ITEM)
 
     const addUserItem = (
         itemId,
@@ -54,6 +55,7 @@ export const UserItemsProvider = ({ children }) => {
         quantity,
         expirationDate,
         locationId,
+        isEssential,
         shelfId = '1',
     ) => {
         addUserItemRequest({
@@ -64,20 +66,15 @@ export const UserItemsProvider = ({ children }) => {
                 expirationDate,
                 locationId,
                 shelfId,
+                isEssential,
             },
             refetchQueries: [{ query: GET_USER_ITEMS, variables: { userId } }],
         })
     }
 
-    // useEffect(() => {
-    //     console.log('addUserItemResponse', addUserItemResponse.error)
-    //     console.log('addUserItemResponse', addUserItemResponse.loading)
-    // }, [addUserItemResponse])
-
     // Add User Item List
 
-    const [addUserItemListRequest, addUserItemListResponse] =
-        useMutation(ADD_USER_ITEM_LIST)
+    const [addUserItemListRequest] = useMutation(ADD_USER_ITEM_LIST)
 
     const addUserItemList = (itemList) => {
         addUserItemListRequest({
@@ -92,10 +89,73 @@ export const UserItemsProvider = ({ children }) => {
             ],
         })
     }
-    // useEffect(() => {
-    //     console.log('addUserItemListResponse', addUserItemListResponse.error)
-    //     console.log('addUserItemListResponse', addUserItemListResponse.loading)
-    // }, [addUserItemListResponse])
+
+    // Remove userItem
+    const [removeUserItemRequest] = useMutation(REMOVE_USER_ITEM)
+
+    const removeUserItem = (itemId, userId, creationDate) => {
+        const formattedCreationDate = new Date(+creationDate)
+            .toLocaleString(undefined, {
+                dateStyle: 'short',
+                hour12: false,
+                timeStyle: 'medium',
+            })
+            .replace(/\//g, '-')
+            .replace(',', '')
+        removeUserItemRequest({
+            variables: {
+                itemId,
+                userId,
+                creationDate: formattedCreationDate,
+            },
+            refetchQueries: [{ query: GET_USER_ITEMS, variables: { userId } }],
+        })
+    }
+
+    // Update User Item
+    const [updateUserItemRequest] = useMutation(UPDATE_USER_ITEM)
+
+    const updateUserItem = (
+        itemId,
+        userId,
+        creationDate,
+        quantity,
+        expirationDate,
+        shelfId,
+        locationId,
+        isEssential,
+    ) => {
+        const formattedCreationDate = new Date(+creationDate)
+            .toLocaleString(undefined, {
+                dateStyle: 'short',
+                hour12: false,
+                timeStyle: 'medium',
+            })
+            .replace(/\//g, '-')
+            .replace(',', '')
+
+        const formattedExpirationDate = new Date(+expirationDate)
+            .toLocaleString(undefined, {
+                dateStyle: 'short',
+                hour12: false,
+                timeStyle: 'medium',
+            })
+            .replace(/\//g, '-')
+            .split(',')[0]
+        updateUserItemRequest({
+            variables: {
+                itemId,
+                userId,
+                creationDate: formattedCreationDate,
+                quantity,
+                expirationDate: formattedExpirationDate,
+                shelfId,
+                locationId,
+                isEssential,
+            },
+            refetchQueries: [{ query: GET_USER_ITEMS, variables: { userId } }],
+        })
+    }
 
     // Get Essentials
     const [getEssentialsRequest, getEssentialsResult] =
@@ -132,6 +192,8 @@ export const UserItemsProvider = ({ children }) => {
                 getEssentials,
                 addUserItem,
                 addUserItemList,
+                removeUserItem,
+                updateUserItem,
             }}
         >
             {children}
