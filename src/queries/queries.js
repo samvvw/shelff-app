@@ -87,6 +87,9 @@ export const GET_USER_ITEMS = gql`
             quantity
             locationName
             isEssential
+            locationId
+            shelfName
+            shelfId
         }
     }
 `

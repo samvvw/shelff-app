@@ -9,6 +9,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { UserContext } from './src/context/UserContext'
 import { ItemsProvider } from './src/context/ItemsContext'
 import { UserItemsProvider } from './src/context/UserItemsContext'
+import { LogBox } from 'react-native'
 
 //for native-base font customization
 //https://docs.nativebase.io/customizing-fonts
@@ -72,6 +73,7 @@ const theme = extendTheme({
 
 const App = () => {
     //with hook
+    LogBox.ignoreAllLogs()
     const client = new ApolloClient({
         uri: 'http://10.0.0.224:8080/graphql',
         cache: new InMemoryCache(),
