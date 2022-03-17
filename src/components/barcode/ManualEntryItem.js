@@ -28,7 +28,7 @@ import { findBarcodeinLocalDB, updateItemNameForAll } from './saveItems'
 import { ItemsContext } from '../../context/ItemsContext'
 
 const ManualEntryItem = ({ navigation }) => {
-    const { addNewItemToDB, categories } = useContext(ItemsContext)
+    const { addNewItemToDB } = useContext(ItemsContext)
     /*states to save data from user*/
     const [items, setItems] = useState([])
     const [itemsToUpdate, setItemsToUpdate] = useState([])

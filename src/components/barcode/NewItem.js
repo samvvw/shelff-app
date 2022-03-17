@@ -1,4 +1,4 @@
-import react from 'react'
+import react, { useContext } from 'react'
 import {
     View,
     VStack,
@@ -31,6 +31,7 @@ import LocationList from '../elements/LocationList'
 import uuid from 'react-native-uuid'
 
 import { saveItemsToLocalStorage } from './saveItems'
+import { ItemsContext } from '../../context/ItemsContext'
 
 const NewItem = ({
     barCodeNumber,
@@ -41,6 +42,7 @@ const NewItem = ({
     arrItems,
     navigation,
 }) => {
+    const { addNewItemToDB } = useContext(ItemsContext)
     /*states to save data from user*/
     const barcode = barCodeNumber
     const [itemName, setItemName] = useState(productName)
@@ -160,6 +162,12 @@ const NewItem = ({
         if (msg === '') {
             //send all item in the array state
             saveItemsToLocalStorage(arrItems)
+
+            //save all items in server database
+            arrItems.forEach((item) => {
+                addNewItemToDB(item.barcode, item.cItemName, +item.idCategory)
+            })
+
             //send last item created
             let markAsEssential = 0
             if (essential) markAsEssential = 1
@@ -176,6 +184,13 @@ const NewItem = ({
                 barcode,
             )
             saveItemsToLocalStorage([lastItem])
+
+            //save item to server database
+            addNewItemToDB(
+                lastItem.barcode,
+                lastItem.cItemName,
+                +lastItem.idCategory,
+            )
             setArrItems([])
             navigation.push('VerticalMenu')
         }
