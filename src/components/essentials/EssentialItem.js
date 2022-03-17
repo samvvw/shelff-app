@@ -13,7 +13,7 @@ import { useContext } from 'react'
 
 const EssentialItem = ({ item, isAdd = false }) => {
     const itemInfo = item?.item ? item?.item : item
-    console.log('itemInfo', itemInfo)
+    // console.log('itemInfo', itemInfo)
     const navigation = useNavigation()
     const { user } = useContext(UserContext)
 

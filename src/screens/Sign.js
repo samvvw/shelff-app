@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {
     Text,
     Box,
@@ -14,10 +14,25 @@ import { signStyles } from '../styles/styles'
 import { UserContext } from '../context/UserContext'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { theme } from '../styles/theme'
+import { UserItemsContext } from '../context/UserItemsContext'
+import { openDatabase } from '../services/sqllite'
+import {
+    deleteAllItemsInLocalDB,
+    getAllItemsInLocalDB,
+} from '../components/barcode/saveItems'
 
 const Sign = ({ navigation }) => {
-    const { googlePromptAsync, googleRequest, token, error, apolloError } =
-        useContext(UserContext)
+    const [items, setItems] = useState()
+    const {
+        googlePromptAsync,
+        googleRequest,
+        token,
+        error,
+        apolloError,
+        user,
+    } = useContext(UserContext)
+    const { addUserItemList } = useContext(UserItemsContext)
+
     const onSignUp = () => {
         navigation.push('SignUp')
     }
@@ -26,8 +41,41 @@ const Sign = ({ navigation }) => {
     }
 
     useEffect(() => {
-        if (token) navigation.replace('VerticalMenu')
+        if (token) {
+            // TODO: Send items to database
+            getAllItemsInLocalDB(setItems)
+            // navigation.replace('VerticalMenu')
+        }
     }, [token])
+
+    useEffect(() => {
+        if (items?.length > 0) {
+            // console.log('----user----', user)
+            // console.log('----items----', items)
+            const itemsList = items.map((item) => {
+                const expDateFormatted = new Date(item.expirationDate)
+                    .toISOString()
+                    .split('T')[0]
+
+                return {
+                    itemId: item.barcode,
+                    userId: user.uid,
+                    quantity: item.quantity,
+                    expirationDate: expDateFormatted,
+                    shelfId: item.shelfId,
+                    locationId: +item.locationId,
+                    isEssential: item.isEssential === 'true' ? true : false,
+                }
+            })
+            // console.log('----Items List----', itemsList)
+            addUserItemList(itemsList)
+            // console.log('-----FINISHED ADDING ITEMS TO USER ITEMS LIST-----')
+        }
+        if (items) {
+            deleteAllItemsInLocalDB()
+            navigation.replace('VerticalMenu')
+        }
+    }, [items])
 
     return (
         <View style={signStyles.screenContainer}>
