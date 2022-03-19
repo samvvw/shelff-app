@@ -12,7 +12,7 @@ const Fresh = (props) => {
     const status = 'Fresh'
 
     return (
-        <SafeAreaView>
+        <SafeAreaView backgroundColor={'white'}>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={<Chart numOfItems={numOfItems} totalItems={totalItems} status={status}/>}

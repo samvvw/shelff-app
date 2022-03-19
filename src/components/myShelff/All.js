@@ -3,7 +3,10 @@ import {Center} from 'native-base'
 import {View, Text, Image, Platform, FlatList, SafeAreaView} from 'react-native'
 import { CircularProgressWithChild } from 'react-native-circular-progress-indicator'
 import { allChartsStyles } from "../../styles/styles"
+import { theme } from "../../styles/theme"
 import SwipableList from './SwipableList'
+
+import Logo from '../../../assets/images/FinalShelff-Logo.png'
 
 const All = (props) => {
 
@@ -18,8 +21,8 @@ const All = (props) => {
                 value={freshItems.length}
                 maxValue={totalItems}
                 radius={Platform.OS === 'ios' ? 170 : 160}
-                activeStrokeColor={'green'}
-                inActiveStrokeColor={'green'}
+                activeStrokeColor={theme.statusColour.darkCyan}
+                inActiveStrokeColor={theme.statusColour.darkCyan}
                 activeStrokeWidth={23}
                 inActiveStrokeWidth={23}
                 inActiveStrokeOpacity={0.2}
@@ -28,8 +31,8 @@ const All = (props) => {
                         value={expiringItems.length}
                         maxValue={totalItems}
                         radius={Platform.OS === 'ios' ? 145 : 137}
-                        activeStrokeColor={'orange'}
-                        inActiveStrokeColor={'orange'}
+                        activeStrokeColor={theme.statusColour.orange}
+                        inActiveStrokeColor={theme.statusColour.orange}
                         activeStrokeWidth={25}
                         inActiveStrokeWidth={25}
                         inActiveStrokeOpacity={0.2}
@@ -38,21 +41,18 @@ const All = (props) => {
                         value={expiredItems.length}
                         maxValue={totalItems}
                         radius={Platform.OS === 'ios' ? 120 : 112}
-                        activeStrokeColor={'red'}
-                        inActiveStrokeColor={'red'}
+                        activeStrokeColor={theme.statusColour.firebrickRed}
+                        inActiveStrokeColor={theme.statusColour.firebrickRed}
                         activeStrokeWidth={25}
                         inActiveStrokeWidth={25}
                         inActiveStrokeOpacity={0.2}
                         >
                             <View style={allChartsStyles.innerWrapper}>
                                 <Image 
-                                    source={require('../../../assets/icon.png')} 
-                                    alt={'All'}
+                                    source={Logo} 
+                                    alt="Logo"
                                     style={allChartsStyles.image}    
                                 />
-                                <Text style={allChartsStyles.text}>
-                                    {allItems.length} items
-                                </Text>
                             </View>
                         </CircularProgressWithChild>
                     </CircularProgressWithChild>
@@ -60,7 +60,7 @@ const All = (props) => {
             </View>
 
             <View style={allChartsStyles.details}>
-                <Text style={allChartsStyles.detail}>
+                {/* <Text style={allChartsStyles.detail}>
                     {expiredItems.length} Expired
                 </Text>
                 <Text style={allChartsStyles.detail}>
@@ -68,6 +68,10 @@ const All = (props) => {
                 </Text>
                 <Text style={allChartsStyles.detail}>
                     {freshItems.length} Fresh
+                </Text> */}
+
+                <Text> 
+                    Fresh: {freshItems.length}items ・ Expiring: {expiringItems.length}items ・ Expired: {expiredItems.length}items
                 </Text>
             </View>
         </View>
@@ -75,7 +79,7 @@ const All = (props) => {
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView backgroundColor={'white'}>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={<ChartAll />}

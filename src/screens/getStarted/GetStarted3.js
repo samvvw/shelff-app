@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Button } from 'react-native'
 import { getStartedStyles } from '../../styles/styles'
+import { theme } from "../../styles/theme"
 import DateTimePicker from '@react-native-community/datetimepicker'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Notifications from 'expo-notifications'
@@ -14,7 +15,7 @@ const GetStarted3 = ({ navigation, handleNext }) => {
         const currentDate = value || dateTime
         setShow(Platform.OS === 'ios')
         setDateTime(currentDate)
-        console.log(dateTime.toLocaleString())
+        // console.log(dateTime.toLocaleString())
     }
 
     const showTimepicker = () => {
@@ -78,6 +79,7 @@ const GetStarted3 = ({ navigation, handleNext }) => {
                                 is24Hour={true}
                                 display="spinner"
                                 onChange={onChange}
+                                textColor={theme.primaryColour.crimson}
                             />
                         )}
                     </View>

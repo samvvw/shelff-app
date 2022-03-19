@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Box, Text} from "native-base";
 import { myShelffStyles } from "../../styles/styles";
+import { theme } from "../../styles/theme"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import All from "./All";
 import Fresh from "./Fresh";
@@ -38,10 +39,16 @@ function MyShelff(props) {
       initialRouteName="All"
       screenOptions={{
         tabBarLabelStyle: { fontSize: 15, textTransform: "none" },
-        tabBarActiveTintColor: "#2c3e50",
-        tabBarIndicatorStyle: { backgroundColor: "#2c3e50" },
+        tabBarActiveTintColor: theme.primaryColour.crimson,
+        tabBarInactiveTintColor: theme.textColour.icons,
+        tabBarIndicatorStyle: { backgroundColor: "transparent" },
         lazy: true,
         swipeEnabled: false,
+      }}
+      tabBarOptions={{
+        style: {
+          backgroundColor: theme.components.chip,
+        },
       }}
     >
       <Tab.Screen 

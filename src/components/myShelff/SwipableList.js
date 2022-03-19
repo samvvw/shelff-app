@@ -1,9 +1,13 @@
 import { View, Text, Image, Animated, TouchableHighlight, TouchableOpacity, StatusBar } from 'react-native'
 import { swipableListStyles } from "../../styles/styles"
+import { theme } from "../../styles/theme"
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { findIndex } from 'lodash'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+import ConsumedIcon from '../../../assets/images/icons/Consumed.png'
+import DonatedIcon from '../../../assets/images/icons/Donate.png'
+import BinIcon from '../../../assets/images/icons/Bin.png'
 
 
 const SwipableList = (props)=> {
@@ -31,7 +35,7 @@ const SwipableList = (props)=> {
         } = props;
 
         if (rightActionState) {
-        console.log("SWIPE");
+        // console.log("SWIPE");
         Animated.timing(rowHeightAnimatedValue, {
             toValue: 0,
             duration: 200,
@@ -43,7 +47,7 @@ const SwipableList = (props)=> {
         <Animated.View
             style={[swipableListStyles.rowFront, { 
                 height: rowHeightAnimatedValue,         
-                borderLeftColor: data.item.status=='Fresh' ? 'green' : data.item.status=='Expiring' ? 'orange' : 'red'
+                borderLeftColor: data.item.status=='Fresh' ? theme.statusColour.darkCyan : data.item.status=='Expiring' ? theme.statusColour.orange : theme.statusColour.firebrickRed
             }]}
         >
             <TouchableHighlight style={swipableListStyles.rowFrontVisible}>
@@ -62,7 +66,7 @@ const SwipableList = (props)=> {
                                 <MaterialCommunityIcons
                                     name="cards-heart"
                                     size={25}
-                                    color="red"
+                                    color={theme.primaryColour.crimson}
                                 /> 
                             : null}
                         </View>
@@ -157,10 +161,9 @@ const SwipableList = (props)=> {
                             },
                         ]}
                     >
-                        <MaterialCommunityIcons
-                            name="hand-heart"
-                            size={25}
-                            color="#fff"
+                        <Image
+                            source={DonatedIcon}
+                            alt="Donated"
                         />
                     </Animated.View>
                 </TouchableOpacity>
@@ -198,10 +201,9 @@ const SwipableList = (props)=> {
                             },
                             ]}
                         >
-                            <MaterialCommunityIcons
-                                name="trash-can"
-                                size={25}
-                                color="#fff"
+                            <Image
+                                source={BinIcon}
+                                alt="Bin"
                             />
                         </Animated.View>
                     </TouchableOpacity>
@@ -226,10 +228,9 @@ const SwipableList = (props)=> {
                                 },
                                 ]}
                             >
-                            <MaterialCommunityIcons
-                                name="thumb-up"
-                                size={25}
-                                color="#fff"
+                            <Image
+                                source={ConsumedIcon}
+                                alt="consumed"
                             />
                         </Animated.View>
                     </TouchableOpacity>
@@ -258,9 +259,9 @@ const SwipableList = (props)=> {
     
     return (
         <View >
-            {/* selectedList is for Listing, 'Food Inventory' is for MyShelff */}
+            {/* selectedList is for Listing, '' is for MyShelff */}
             <Text style={swipableListStyles.header}>
-                {selectedList ? selectedList : 'Food Inventory'}
+                {selectedList ? selectedList : ''}
             </Text>
             {items.length === 0 ? <Text>No Item</Text> : null}
 

@@ -13,7 +13,7 @@ const Expiring = (props) => {
     const status = 'Expiring'
 
     return (
-        <SafeAreaView>
+        <SafeAreaView backgroundColor={'white'}>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={<Chart numOfItems={numOfItems} totalItems={totalItems} status={status}/>}

@@ -1,18 +1,19 @@
 import { screenWidth } from "../../layout/layout";
+import { theme } from "../theme"
 import { StyleSheet } from "react-native";
 import {Platform} from 'react-native'
 
 export const allChartsStyle = StyleSheet.create({
     outer: {
         position: 'relative',
-        marginVertical: 30,
+        marginTop: 30,
+        marginBottom: 10
     },
     container: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         transform: [{ rotate: '180deg'}], //to start from the bottom 
-
     },
     innerWrapper: {
         transform: [{ rotate: '180deg'}], 
@@ -20,30 +21,28 @@ export const allChartsStyle = StyleSheet.create({
         alignItems: 'center'
     },
     image: {
-        width: Platform.OS === 'ios' ? 70 : 60,
-        height: Platform.OS === 'ios' ? 70 : 60,
+        width: Platform.OS === 'ios' ? 100 : 90,
+        height: Platform.OS === 'ios' ? 100 : 90,
         borderRadius: 20,
     },
-    text: {
-        fontWeight: 'bold',
-        fontSize: 16,
-        textAlign: 'center',
-        marginVertical: 5
-    },
-    message: {
-        fontSize: 15,
-    },
+    // details: {
+    //     position: 'absolute',
+    //     bottom: 7,
+    //     left: 220,
+    //     height: 80,
+    //     display: 'flex',
+    //     justifyContent: 'space-around'
+    // },
     details: {
-        position: 'absolute',
-        bottom: 7,
-        left: 220,
-        height: 80,
-        display: 'flex',
-        justifyContent: 'space-around'
+        width: '90%',
+        marginHorizontal: '5%',
+        marginTop: 30,
+        paddingBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: theme.textColour.inactiveText
     },
     detail: {
         fontSize: 15,
-        fontWeight: 'bold',
     }
     
 });

@@ -29,18 +29,18 @@ const GetStarted2 = ({ navigation, handleNext, handleMain }) => {
                 </View>
                 <View style={getStartedStyles.buttonWrapper}>
                     <TouchableOpacity
-                        onPress={toMyShelff}
-                        style={getStartedStyles.whiteButton}
-                    >
-                        <Text style={getStartedStyles.blueText}>Not now</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
                         onPress={toNext}
                         style={getStartedStyles.blueButton}
                     >
                         <Text style={getStartedStyles.whiteText}>
                             Yes(Recommended)
                         </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={toMyShelff}
+                        style={getStartedStyles.whiteButton}
+                    >
+                        <Text style={getStartedStyles.blueText}>Not now</Text>
                     </TouchableOpacity>
                 </View>
             </View>
