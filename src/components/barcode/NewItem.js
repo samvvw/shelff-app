@@ -34,6 +34,10 @@ import { saveItemsToLocalStorage } from './saveItems'
 import { ItemsContext } from '../../context/ItemsContext'
 import { UserContext } from '../../context/UserContext'
 import { UserItemsContext } from '../../context/UserItemsContext'
+import {
+    handleNotificationDates,
+    setNotification,
+} from '../../services/notifications'
 
 const NewItem = ({
     barCodeNumber,
@@ -44,7 +48,7 @@ const NewItem = ({
     arrItems,
     navigation,
 }) => {
-    const { addNewItemToDB } = useContext(ItemsContext)
+    const { addNewItemToDB, locations } = useContext(ItemsContext)
     const { addUserItemList } = useContext(UserItemsContext)
 
     const { user } = useContext(UserContext)
@@ -161,12 +165,23 @@ const NewItem = ({
         return msg
     }
 
+    useEffect(() => {
+        console.log('array in use effect', arrItems)
+        if (arrItems.length > 0) {
+            const dateSplit = arrItems[0]?.dexpirationdate?.split('/')
+            const notificationDate = new Date(
+                `${dateSplit[2]}-${dateSplit[0]}-${dateSplit[1]}`,
+            )
+            console.log('newdate', notificationDate)
+        }
+    }, [arrItems])
+
     const handleDoneScanning = async () => {
         const msg = handleValidation()
         if (msg === '') {
             //save all items in server database
             console.log('arrayItems', arrItems)
-            console.log('user in new item', user)
+            // console.log('user in new item', user)
 
             const arrItemsPromise = new Promise((resolve) => {
                 arrItems.forEach(async (item, index) => {
@@ -190,6 +205,18 @@ const NewItem = ({
                         }
                         console.log('userItem', userItem)
                         await addUserItemList([userItem])
+                        const dateSplit = item.dexpirationdate.split('/')
+                        const notificationDate = new Date(
+                            `${dateSplit[2]}-${dateSplit[0]}-${dateSplit[1]}`,
+                        )
+                        setNotification(
+                            item.cItemName,
+                            locations.find(
+                                (l) => +l.locationId === +item.idLocation,
+                            ).locationName,
+                            date,
+                            handleNotificationDates(notificationDate, today),
+                        )
                     } else {
                         //send all item in the array state
                         saveItemsToLocalStorage(arrItems)
@@ -220,7 +247,7 @@ const NewItem = ({
                 markAsEssential,
                 barcode,
             )
-            console.log('lastItem', lastItem)
+            // console.log('lastItem', lastItem)
 
             // save item to server database
             await addNewItemToDB(
@@ -243,8 +270,16 @@ const NewItem = ({
                     shelfId: lastItem.idShelff,
                     isEssential: lastItem.essential ? true : false,
                 }
-                console.log('userItem', userItem)
+                // console.log('userItem', userItem)
                 await addUserItemList([userItem])
+                setNotification(
+                    itemName,
+                    locations.find(
+                        (l) => +l.locationId === +lastItem.idLocation,
+                    ).locationName,
+                    date,
+                    handleNotificationDates(currentDate, today),
+                )
             } else {
                 saveItemsToLocalStorage([lastItem])
             }
@@ -285,14 +320,14 @@ const NewItem = ({
             barcode,
         )
 
-        // console.log('items in done continue scanning', item)
+        console.log('items in done continue scanning', item)
+        console.log(
+            'locations',
+            locations.find((l) => +l.locationId === +location).locationName,
+        )
 
         setArrItems((prev) => [...prev, item])
     }
-
-    // useEffect(() => {
-    //     console.log('array in use effect', arrItems)
-    // }, [arrItems])
 
     const createItemObj = (
         idItem,
