@@ -203,7 +203,7 @@ const NewItem = ({
                             shelfId: item.idShelff,
                             isEssential: item.essential ? true : false,
                         }
-                        console.log('userItem', userItem)
+                        // console.log('userItem', userItem)
                         await addUserItemList([userItem])
                         const dateSplit = item.dexpirationdate.split('/')
                         const notificationDate = new Date(
@@ -220,6 +220,23 @@ const NewItem = ({
                     } else {
                         //send all item in the array state
                         saveItemsToLocalStorage(arrItems)
+                        arrItems.forEach((item) => {
+                            const dateSplit = item.dexpirationdate.split('/')
+                            const notificationDate = new Date(
+                                `${dateSplit[2]}-${dateSplit[0]}-${dateSplit[1]}`,
+                            )
+                            setNotification(
+                                item.cItemName,
+                                locations.find(
+                                    (l) => +l.locationId === +item.idLocation,
+                                ).locationName,
+                                date,
+                                handleNotificationDates(
+                                    notificationDate,
+                                    today,
+                                ),
+                            )
+                        })
                     }
 
                     if (index === arrItems.length - 1) {
@@ -282,6 +299,14 @@ const NewItem = ({
                 )
             } else {
                 saveItemsToLocalStorage([lastItem])
+                setNotification(
+                    itemName,
+                    locations.find(
+                        (l) => +l.locationId === +lastItem.idLocation,
+                    ).locationName,
+                    date,
+                    handleNotificationDates(currentDate, today),
+                )
             }
 
             setArrItems([])
