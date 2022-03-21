@@ -1,10 +1,11 @@
 import { screenWidth } from '../../layout/layout'
 import { StyleSheet } from 'react-native'
+import { theme } from "../theme"
 
 export const swipableListStyle = StyleSheet.create({
     container: {
         width: screenWidth,
-        backgroundColor: '#f4f4f4',
+        backgroundColor: 'white',
     },
     header: {
         fontSize: 25,
@@ -13,10 +14,10 @@ export const swipableListStyle = StyleSheet.create({
         marginBottom: 10,
     },
     backTextWhite: {
-        color: '#FFF',
+        color: 'white',
     },
     rowFront: {
-        backgroundColor: '#FFF',
+        backgroundColor: 'white',
         borderRadius: 5,
         height: 100,
         margin: 20,
@@ -29,7 +30,7 @@ export const swipableListStyle = StyleSheet.create({
         borderLeftWidth: 10,
     },
     rowFrontVisible: {
-        backgroundColor: '#FFF',
+        backgroundColor: 'white',
         borderRadius: 5,
         height: 100,
         marginBottom: 15,
@@ -86,7 +87,7 @@ export const swipableListStyle = StyleSheet.create({
         paddingRight: 17,
     },
     backRightBtnLeft: {
-        backgroundColor: '#f786e1',
+        backgroundColor: theme.primaryColour.violetRed,
         right: 75,
     },
     backRightBtnRight: {
@@ -95,10 +96,10 @@ export const swipableListStyle = StyleSheet.create({
         borderBottomRightRadius: 5,
     },
     consumed: {
-        backgroundColor: '#28b522',
+        backgroundColor: theme.primaryColour.crimson,
     },
     expired: {
-        backgroundColor: 'red',
+        backgroundColor: theme.primaryColour.violetRed,
     },
     trash: {
         height: 25,
@@ -106,7 +107,7 @@ export const swipableListStyle = StyleSheet.create({
         marginRight: 7,
     },
     removeEssential: {
-        backgroundColor: 'red',
+        backgroundColor: theme.primaryColour.crimson,
     },
     rowBackEssential: {
         alignItems: 'center',

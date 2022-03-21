@@ -1,6 +1,7 @@
 import { screenWidth } from "../../layout/layout";
 import { StyleSheet } from "react-native";
-import {Platform} from 'react-native'
+import {Platform} from 'react-native';
+import { theme } from "../theme"
 
 export const singleChartStyle = StyleSheet.create({
     container: {
@@ -16,15 +17,20 @@ export const singleChartStyle = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
-        width: Platform.OS === 'ios' ? 70 : 60,
-        height: Platform.OS === 'ios' ? 70 : 60,
+        width: Platform.OS === 'ios' ? 100 : 90,
+        height: Platform.OS === 'ios' ? 100 : 90,
         borderRadius: 20,
     },
     numOfItem: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        textAlign: 'center',
-        marginVertical: 10
+        width: '90%',
+        display: 'flex',
+        alignItems: 'center',
+        fontSize: 16,
+        marginBottom: 20,
+        transform: [{ rotate: '180deg'}], //to flip the text
+        paddingBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: theme.textColour.inactiveText 
     },
     message: {
         textAlign: 'center',
