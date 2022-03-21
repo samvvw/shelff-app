@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import {
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    Text,
+    Platform,
+} from 'react-native'
 import LocationList from '../elements/LocationList'
 import QuantityCounter from './QuantityCounter'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -11,7 +17,9 @@ const EssentialForm = ({ navigation, route }) => {
     const { item } = route.params
     const [location, setLocation] = useState()
     const [quantity, setQuantity] = useState(1)
-    const [showCalendar, setShowCalendar] = useState(false)
+    const [showCalendar, setShowCalendar] = useState(
+        Platform.OS === 'ios' ? true : false,
+    )
     const [today, setToday] = useState(
         new Date(
             todayDate.getFullYear(),
@@ -24,7 +32,8 @@ const EssentialForm = ({ navigation, route }) => {
     const [currentDate, setCurrentDate] = useState(today)
 
     const onChange = (_, selectedDate) => {
-        setShowCalendar(false)
+        if (Platform.OS === 'android') setShowCalendar(false)
+
         setDate(formatDate(selectedDate))
 
         setCurrentDate(
@@ -91,16 +100,41 @@ const EssentialForm = ({ navigation, route }) => {
                                 <Text>{item?.categoryName}</Text>
                             </View>
                         )}
+
                         <View style={styles.pair}>
                             <TouchableOpacity
                                 onPress={() => setShowCalendar(true)}
                             >
-                                <View style={styles.icon}></View>
+                                {Platform.OS === 'android' && (
+                                    <>
+                                        <View style={styles.icon}></View>
+                                        <Text>
+                                            {date || `Expiration Date`}
+                                            <Text style={{ color: '#f00' }}>
+                                                *
+                                            </Text>
+                                        </Text>
+                                    </>
+                                )}
+                                {showCalendar && (
+                                    <DateTimePicker
+                                        testID="dateTimePicker"
+                                        value={currentDate}
+                                        mode={'date'}
+                                        is24Hour={true}
+                                        display="default"
+                                        onChange={onChange}
+                                        minimumDate={today}
+                                        style={{ width: 150 }}
+                                    />
+                                )}
+                                {Platform.OS === 'ios' && (
+                                    <Text>
+                                        Expiration Date
+                                        <Text style={{ color: '#f00' }}>*</Text>
+                                    </Text>
+                                )}
                             </TouchableOpacity>
-                            <Text>
-                                {date || `Expiration Date`}
-                                <Text style={{ color: '#f00' }}>*</Text>
-                            </Text>
                         </View>
                     </View>
                     <View style={styles.formControl}>
@@ -136,7 +170,7 @@ const EssentialForm = ({ navigation, route }) => {
                     </View>
                 </View>
             </View>
-            {showCalendar && (
+            {/* {showCalendar && (
                 <DateTimePicker
                     testID="dateTimePicker"
                     value={currentDate}
@@ -146,7 +180,7 @@ const EssentialForm = ({ navigation, route }) => {
                     onChange={onChange}
                     minimumDate={today}
                 />
-            )}
+            )} */}
         </>
     )
 }

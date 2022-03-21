@@ -20,7 +20,7 @@ const SignUp = ({ navigation }) => {
         <ScrollView>
             <Box style={signUpStyles.heading}>
                 <Heading size="xl" fontWeight={'medium'}>
-                    Create and Account
+                    Create an account
                 </Heading>
                 <Heading size="sm" fontWeight={'medium'}>
                     Welcome to Shelff

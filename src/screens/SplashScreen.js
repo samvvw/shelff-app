@@ -28,7 +28,7 @@ const SplashScreen = ({ navigation }) => {
             if (isFirst) {
                 setTimeout(() => {
                     navigation.replace('Onboarding')
-                }, 1200)
+                }, 1000)
             } else {
                 const token = await AsyncStorage.getItem('token')
                 if (token) {

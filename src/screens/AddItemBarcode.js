@@ -28,10 +28,10 @@ const AddItemBarcode = ({ navigation }) => {
         }
     }
 
-    useEffect(() => {
-        //look for barcode in local database
-        findBarcodeinLocalDB(barCodeNumber, setItems)
-    }, [barCodeNumber])
+    // useEffect(() => {
+    //     //look for barcode in local database
+    //     // findBarcodeinLocalDB(barCodeNumber, setItems)
+    // }, [barCodeNumber])
 
     return (
         <>
@@ -53,7 +53,7 @@ const AddItemBarcode = ({ navigation }) => {
                         barCodeNumber={barCodeNumber}
                         setScanned={setScanned}
                         setcameraHeight={setcameraHeight}
-                        productName={items.length ? items[0].itemName : ''}
+                        productName={items?.length ? items[0].itemName : ''}
                         setArrItems={setArrItems}
                         arrItems={arrItems}
                         navigation={navigation}

@@ -1,4 +1,4 @@
-import react from 'react'
+import react, { useContext } from 'react'
 import {
     View,
     VStack,
@@ -31,6 +31,9 @@ import LocationList from '../elements/LocationList'
 import uuid from 'react-native-uuid'
 
 import { saveItemsToLocalStorage } from './saveItems'
+import { ItemsContext } from '../../context/ItemsContext'
+import { UserContext } from '../../context/UserContext'
+import { UserItemsContext } from '../../context/UserItemsContext'
 
 const NewItem = ({
     barCodeNumber,
@@ -41,6 +44,10 @@ const NewItem = ({
     arrItems,
     navigation,
 }) => {
+    const { addNewItemToDB } = useContext(ItemsContext)
+    const { addUserItemList } = useContext(UserItemsContext)
+
+    const { user } = useContext(UserContext)
     /*states to save data from user*/
     const barcode = barCodeNumber
     const [itemName, setItemName] = useState(productName)
@@ -97,6 +104,7 @@ const NewItem = ({
     }
 
     const onChange = (event, selectedDate) => {
+        // setShow(false)
         setDate(formatDate(selectedDate))
 
         setCurrentDate(
@@ -106,8 +114,6 @@ const NewItem = ({
                 selectedDate.getDate(),
             ),
         )
-
-        // setShow(false);
     }
 
     //this shows the calendar
@@ -155,11 +161,50 @@ const NewItem = ({
         return msg
     }
 
-    const handleDoneScanning = () => {
+    const handleDoneScanning = async () => {
         const msg = handleValidation()
         if (msg === '') {
-            //send all item in the array state
-            saveItemsToLocalStorage(arrItems)
+            //save all items in server database
+            console.log('arrayItems', arrItems)
+            console.log('user in new item', user)
+
+            const arrItemsPromise = new Promise((resolve) => {
+                arrItems.forEach(async (item, index) => {
+                    await addNewItemToDB(
+                        item.barcode,
+                        item.cItemName,
+                        +item.idCategory,
+                    )
+                    if (user?.uid) {
+                        const expDateFormatted = new Date(item.dexpirationdate)
+                            .toISOString()
+                            .split('T')[0]
+                        const userItem = {
+                            itemId: item.barcode,
+                            userId: user.uid,
+                            quantity: item.iQuantity,
+                            expirationDate: expDateFormatted,
+                            locationId: +item.idLocation,
+                            shelfId: item.idShelff,
+                            isEssential: item.essential ? true : false,
+                        }
+                        console.log('userItem', userItem)
+                        await addUserItemList([userItem])
+                    } else {
+                        //send all item in the array state
+                        saveItemsToLocalStorage(arrItems)
+                    }
+
+                    if (index === arrItems.length - 1) {
+                        resolve()
+                    }
+                })
+            })
+
+            if (arrItems?.length > 0) {
+                await arrItemsPromise
+            }
+
             //send last item created
             let markAsEssential = 0
             if (essential) markAsEssential = 1
@@ -175,7 +220,35 @@ const NewItem = ({
                 markAsEssential,
                 barcode,
             )
-            saveItemsToLocalStorage([lastItem])
+            console.log('lastItem', lastItem)
+
+            // save item to server database
+            await addNewItemToDB(
+                lastItem.barcode,
+                lastItem.cItemName,
+                +lastItem.idCategory,
+            )
+
+            if (user?.uid) {
+                const expDateFormatted = new Date(lastItem.dexpirationdate)
+                    .toISOString()
+                    .split('T')[0]
+
+                const userItem = {
+                    itemId: lastItem.barcode,
+                    userId: user.uid,
+                    quantity: lastItem.iQuantity,
+                    expirationDate: expDateFormatted,
+                    locationId: +lastItem.idLocation,
+                    shelfId: lastItem.idShelff,
+                    isEssential: lastItem.essential ? true : false,
+                }
+                console.log('userItem', userItem)
+                await addUserItemList([userItem])
+            } else {
+                saveItemsToLocalStorage([lastItem])
+            }
+
             setArrItems([])
             navigation.push('VerticalMenu')
         }
@@ -212,8 +285,14 @@ const NewItem = ({
             barcode,
         )
 
+        // console.log('items in done continue scanning', item)
+
         setArrItems((prev) => [...prev, item])
     }
+
+    // useEffect(() => {
+    //     console.log('array in use effect', arrItems)
+    // }, [arrItems])
 
     const createItemObj = (
         idItem,

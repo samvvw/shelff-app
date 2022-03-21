@@ -76,8 +76,8 @@ export const UserItemsProvider = ({ children }) => {
 
     const [addUserItemListRequest] = useMutation(ADD_USER_ITEM_LIST)
 
-    const addUserItemList = (itemList) => {
-        addUserItemListRequest({
+    const addUserItemList = async (itemList) => {
+        await addUserItemListRequest({
             variables: {
                 itemList,
             },

@@ -99,6 +99,7 @@ const EssentialSwipeableList = ({
         <SwipeListView
             data={data}
             renderItem={renderItem}
+            keyExtractor={(item) => item?.itemId}
             renderHiddenItem={renderHiddenItem}
             leftOpenValue={75}
             rightOpenValue={-75}

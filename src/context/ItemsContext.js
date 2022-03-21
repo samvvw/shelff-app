@@ -95,24 +95,25 @@ export const ItemsProvider = ({ children }) => {
     const [addItem] = useMutation(ADD_ITEM)
 
     const addNewItemToDB = async (itemId, itemName, categoryId) => {
-        addItem({
+        console.log('addNewItemToDB', itemId, itemName, categoryId)
+        await addItem({
             variables: {
                 itemId,
                 itemName,
                 categoryId,
             },
-            optimisticResponse: {
-                __typename: 'Mutation',
-                addItem: {
-                    __typename: 'Item',
-                    itemId: itemId,
-                    itemName: itemName,
-                    creationDate: new Date().getTime(),
-                    categoryName: state.categories.filter(
-                        (cat) => cat.categoryId === +categoryId,
-                    )[0].categoryName,
-                },
-            },
+            // optimisticResponse: {
+            //     __typename: 'Mutation',
+            //     addItem: {
+            //         __typename: 'Item',
+            //         itemId: itemId,
+            //         itemName: itemName,
+            //         creationDate: new Date().getTime(),
+            //         categoryName: state.categories.filter(
+            //             (cat) => cat.categoryId === categoryId,
+            //         )[0].categoryName,
+            //     },
+            // },
         })
     }
 
