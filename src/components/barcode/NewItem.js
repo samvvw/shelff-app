@@ -11,7 +11,6 @@ import {
     ScrollView,
 } from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import DateTimePicker from '@react-native-community/datetimepicker'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
