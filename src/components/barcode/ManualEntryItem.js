@@ -7,7 +7,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
 
-import { TextInput } from 'react-native'
+import { TextInput, Platform } from 'react-native'
 
 //Toast to send messages validations
 import Toast from 'react-native-root-toast'
@@ -272,6 +272,17 @@ const ManualEntryItem = ({ navigation }) => {
     }
 
     const handleConfirm = (date) => {
+        const newDate = new Date(date)
+
+        setDate(formatDate(newDate))
+
+        setCurrentDate(
+            new Date(
+                newDate.getFullYear(),
+                newDate.getMonth(),
+                newDate.getDate(),
+            ),
+        )
         hideDatePicker()
     }
 
@@ -349,24 +360,16 @@ const ManualEntryItem = ({ navigation }) => {
                                             backgroundColor={'red'}
                                             onPress={showDatePicker}
                                         />
-                                        {/* {show && (
-                                            <DateTimePicker
-                                                testID="dateTimePicker"
-                                                value={currentDate}
-                                                mode={'date'}
-                                                is24Hour={true}
-                                                display="default"
-                                                onChange={onChange}
-                                                minimumDate={today}
-                                            />
-                                        )} */}
                                         <DateTimePickerModal
                                             isVisible={isDatePickerVisible}
                                             mode="date"
                                             onConfirm={handleConfirm}
                                             onCancel={hideDatePicker}
-                                            isDarkModeEnabled={false}
-                                            display="inline"
+                                            display={
+                                                Platform.OS === 'ios'
+                                                    ? 'inline'
+                                                    : 'default'
+                                            }
                                         />
                                     </View>
                                     <Text
