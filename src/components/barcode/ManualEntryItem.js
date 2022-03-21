@@ -452,12 +452,12 @@ const ManualEntryItem = ({ navigation }) => {
                         >
                             <Text>Done</Text>
                         </Button>
-                        <Button
+                        {/* <Button
                             onPress={() => handleSaveContinue()}
                             style={newItemStyles.moreItemsButton}
                         >
                             <Text>Save and add more items</Text>
-                        </Button>
+                        </Button> */}
                     </VStack>
                 </View>
             </RootSiblingParent>

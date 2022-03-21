@@ -55,7 +55,7 @@ const NewItem = ({
     const { user } = useContext(UserContext)
     /*states to save data from user*/
     const barcode = barCodeNumber
-    const [itemName, setItemName] = useState(productName)
+    const [itemName, setItemName] = useState(null)
     const [category, setCategory] = useState(null)
     const [location, setLocation] = useState('')
     const [counter, setCounter] = useState(1)
@@ -65,6 +65,11 @@ const NewItem = ({
     useEffect(() => {
         setCategory(productCategory)
     }, [productCategory])
+
+    useEffect(() => {
+        setItemName(productName)
+    }, [productName])
+
     /*Date picker*/
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
     //todayDate is to set minimum date in calendar
@@ -302,6 +307,7 @@ const NewItem = ({
                     handleNotificationDates(currentDate, today),
                 )
             } else {
+                console.log(lastItem)
                 saveItemsToLocalStorage([lastItem])
                 setNotification(
                     itemName,
