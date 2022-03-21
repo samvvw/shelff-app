@@ -44,6 +44,7 @@ const NewItem = ({
     setScanned,
     setcameraHeight,
     productName,
+    productCategory,
     setArrItems,
     arrItems,
     navigation,
@@ -55,12 +56,15 @@ const NewItem = ({
     /*states to save data from user*/
     const barcode = barCodeNumber
     const [itemName, setItemName] = useState(productName)
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState(null)
     const [location, setLocation] = useState('')
     const [counter, setCounter] = useState(1)
     const [essential, setEssential] = useState(false)
 
     /****************************** */
+    useEffect(() => {
+        setCategory(productCategory)
+    }, [productCategory])
     /*Date picker*/
 
     //todayDate is to set minimum date in calendar
@@ -429,10 +433,12 @@ const NewItem = ({
                                         style={{ marginRight: 15 }}
                                     />
 
-                                    <CategoryList
-                                        category={category}
-                                        setCategory={setCategory}
-                                    />
+                                    {category && (
+                                        <CategoryList
+                                            category={category}
+                                            setCategory={setCategory}
+                                        />
+                                    )}
                                 </HStack>
 
                                 <HStack

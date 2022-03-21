@@ -63,6 +63,7 @@ const AddItemBarcode = ({ navigation }) => {
                         setScanned={setScanned}
                         setcameraHeight={setcameraHeight}
                         productName={items && items.itemName}
+                        productCategory={items && items.categoryName}
                         setArrItems={setArrItems}
                         arrItems={arrItems}
                         navigation={navigation}
