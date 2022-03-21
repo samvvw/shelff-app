@@ -2,11 +2,11 @@ import react, { useContext } from 'react'
 import { View, VStack, Text, Box, HStack, Button, Switch } from 'native-base'
 import NewItemBackground from './NewItemBackground'
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import DateTimePicker from '@react-native-community/datetimepicker'
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
 
-import { TextInput } from 'react-native'
+import { TextInput, Platform } from 'react-native'
 
 //Toast to send messages validations
 import Toast from 'react-native-root-toast'
@@ -41,6 +41,7 @@ const ManualEntryItem = ({ navigation }) => {
     const [location, setLocation] = useState('')
     const [counter, setCounter] = useState(1)
     const [essential, setEssential] = useState(false)
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
 
     /****************************** */
     /*Date picker*/
@@ -103,10 +104,10 @@ const ManualEntryItem = ({ navigation }) => {
     }
 
     //this shows the calendar
-    const showDatepicker = () => {
-        // showMode(date);
-        setShow(true)
-    }
+    // const showDatepicker = () => {
+    //     // showMode(date);
+    //     setShow(true)
+    // }
 
     //this handles the quantity
     const handleCounter = (value) => {
@@ -261,6 +262,29 @@ const ManualEntryItem = ({ navigation }) => {
         }
     }, [itemsToUpdate])
 
+    const showDatePicker = () => {
+        setDatePickerVisibility(true)
+    }
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false)
+    }
+
+    const handleConfirm = (date) => {
+        const newDate = new Date(date)
+
+        setDate(formatDate(newDate))
+
+        setCurrentDate(
+            new Date(
+                newDate.getFullYear(),
+                newDate.getMonth(),
+                newDate.getDate(),
+            ),
+        )
+        hideDatePicker()
+    }
+
     return (
         <View>
             <NewItemBackground />
@@ -320,35 +344,32 @@ const ManualEntryItem = ({ navigation }) => {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <View style={{}}>
-                                        <View>
-                                            <Button
-                                                leftIcon={
-                                                    <Icon
-                                                        color={'pink'}
-                                                        size={20}
-                                                        name="calendar"
-                                                    />
-                                                }
-                                                style={{
-                                                    backgroundColor:
-                                                        'transparent',
-                                                }}
-                                                backgroundColor={'red'}
-                                                onPress={showDatepicker}
-                                            />
-                                        </View>
-                                        {show && (
-                                            <DateTimePicker
-                                                testID="dateTimePicker"
-                                                value={currentDate}
-                                                mode={'date'}
-                                                is24Hour={true}
-                                                display="default"
-                                                onChange={onChange}
-                                                minimumDate={today}
-                                            />
-                                        )}
+                                    <View>
+                                        <Button
+                                            leftIcon={
+                                                <Icon
+                                                    color={'pink'}
+                                                    size={20}
+                                                    name="calendar"
+                                                />
+                                            }
+                                            style={{
+                                                backgroundColor: 'transparent',
+                                            }}
+                                            backgroundColor={'red'}
+                                            onPress={showDatePicker}
+                                        />
+                                        <DateTimePickerModal
+                                            isVisible={isDatePickerVisible}
+                                            mode="date"
+                                            onConfirm={handleConfirm}
+                                            onCancel={hideDatePicker}
+                                            display={
+                                                Platform.OS === 'ios'
+                                                    ? 'inline'
+                                                    : 'default'
+                                            }
+                                        />
                                     </View>
                                     <Text
                                         style={{
@@ -431,12 +452,12 @@ const ManualEntryItem = ({ navigation }) => {
                         >
                             <Text>Done</Text>
                         </Button>
-                        <Button
+                        {/* <Button
                             onPress={() => handleSaveContinue()}
                             style={newItemStyles.moreItemsButton}
                         >
                             <Text>Save and add more items</Text>
-                        </Button>
+                        </Button> */}
                     </VStack>
                 </View>
             </RootSiblingParent>

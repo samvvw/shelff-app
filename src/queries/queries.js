@@ -34,7 +34,6 @@ export const GET_ESSENTIALS = gql`
         essentials(userId: $userId) {
             itemId
             itemName
-            creationDate
             categoryName
             categoryId
         }
@@ -192,8 +191,8 @@ export const REMOVE_ESSENTIAL_ITEM = gql`
         removeEssentialItem(itemId: $itemId, userId: $userId) {
             itemId
             itemName
-            creationDate
             categoryName
+            categoryId
         }
     }
 `

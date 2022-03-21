@@ -11,10 +11,10 @@ import {
     ScrollView,
 } from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import DateTimePicker from '@react-native-community/datetimepicker'
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
-import { TextInput } from 'react-native'
+import { TextInput, Platform } from 'react-native'
 import { theme } from '../../styles/theme'
 
 //Toast to send messages validations
@@ -55,7 +55,7 @@ const NewItem = ({
     const { user } = useContext(UserContext)
     /*states to save data from user*/
     const barcode = barCodeNumber
-    const [itemName, setItemName] = useState(productName)
+    const [itemName, setItemName] = useState(null)
     const [category, setCategory] = useState(null)
     const [location, setLocation] = useState('')
     const [counter, setCounter] = useState(1)
@@ -65,8 +65,13 @@ const NewItem = ({
     useEffect(() => {
         setCategory(productCategory)
     }, [productCategory])
-    /*Date picker*/
 
+    useEffect(() => {
+        setItemName(productName)
+    }, [productName])
+
+    /*Date picker*/
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
     //todayDate is to set minimum date in calendar
     const todayDate = new Date()
     const [today, setToday] = useState(
@@ -125,10 +130,10 @@ const NewItem = ({
     }
 
     //this shows the calendar
-    const showDatepicker = () => {
-        // showMode(date);
-        setShow(true)
-    }
+    // const showDatepicker = () => {
+    //     // showMode(date);
+    //     setShow(true)
+    // }
 
     //this handles the quantity
     const handleCounter = (value) => {
@@ -302,6 +307,7 @@ const NewItem = ({
                     handleNotificationDates(currentDate, today),
                 )
             } else {
+                console.log(lastItem)
                 saveItemsToLocalStorage([lastItem])
                 setNotification(
                     itemName,
@@ -383,6 +389,29 @@ const NewItem = ({
         return item
     }
 
+    const showDatePicker = () => {
+        setDatePickerVisibility(true)
+    }
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false)
+    }
+
+    const handleConfirm = (date) => {
+        const newDate = new Date(date)
+
+        setDate(formatDate(newDate))
+
+        setCurrentDate(
+            new Date(
+                newDate.getFullYear(),
+                newDate.getMonth(),
+                newDate.getDate(),
+            ),
+        )
+        hideDatePicker()
+    }
+
     return (
         <ScrollView>
             <RootSiblingParent>
@@ -446,34 +475,31 @@ const NewItem = ({
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <View style={{}}>
-                                        <View>
-                                            <Button
-                                                leftIcon={
-                                                    <Icon
-                                                        color={'pink'}
-                                                        size={20}
-                                                        name="calendar"
-                                                    />
-                                                }
-                                                style={{
-                                                    backgroundColor:
-                                                        'transparent',
-                                                }}
-                                                onPress={showDatepicker}
-                                            />
-                                        </View>
-                                        {show && (
-                                            <DateTimePicker
-                                                testID="dateTimePicker"
-                                                value={currentDate}
-                                                mode={'date'}
-                                                is24Hour={true}
-                                                display="default"
-                                                onChange={onChange}
-                                                minimumDate={today}
-                                            />
-                                        )}
+                                    <View>
+                                        <Button
+                                            leftIcon={
+                                                <Icon
+                                                    color={'pink'}
+                                                    size={20}
+                                                    name="calendar"
+                                                />
+                                            }
+                                            style={{
+                                                backgroundColor: 'transparent',
+                                            }}
+                                            onPress={showDatePicker}
+                                        />
+                                        <DateTimePickerModal
+                                            isVisible={isDatePickerVisible}
+                                            mode="date"
+                                            onConfirm={handleConfirm}
+                                            onCancel={hideDatePicker}
+                                            display={
+                                                Platform.OS === 'ios'
+                                                    ? 'inline'
+                                                    : 'default'
+                                            }
+                                        />
                                     </View>
                                     <Text
                                         style={{

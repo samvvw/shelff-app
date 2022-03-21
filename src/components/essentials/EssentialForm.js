@@ -8,9 +8,11 @@ import {
 } from 'react-native'
 import LocationList from '../elements/LocationList'
 import QuantityCounter from './QuantityCounter'
-import DateTimePicker from '@react-native-community/datetimepicker'
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { saveItemsToLocalStorage } from '../barcode/saveItems'
 import uuid from 'react-native-uuid'
+import { Button } from 'native-base'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 const EssentialForm = ({ navigation, route }) => {
     const todayDate = new Date()
@@ -30,6 +32,7 @@ const EssentialForm = ({ navigation, route }) => {
 
     const [date, setDate] = useState('')
     const [currentDate, setCurrentDate] = useState(today)
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
 
     const onChange = (_, selectedDate) => {
         if (Platform.OS === 'android') setShowCalendar(false)
@@ -76,6 +79,29 @@ const EssentialForm = ({ navigation, route }) => {
         }
     }
 
+    const showDatePicker = () => {
+        setDatePickerVisibility(true)
+    }
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false)
+    }
+
+    const handleConfirm = (date) => {
+        const newDate = new Date(date)
+
+        setDate(formatDate(newDate))
+
+        setCurrentDate(
+            new Date(
+                newDate.getFullYear(),
+                newDate.getMonth(),
+                newDate.getDate(),
+            ),
+        )
+        hideDatePicker()
+    }
+
     return (
         <>
             <View
@@ -94,47 +120,49 @@ const EssentialForm = ({ navigation, route }) => {
                         <Text style={styles.itemName}>{item?.itemName}</Text>
                     </View>
                     <View style={styles.row}>
-                        {item?.categoryName && (
+                        {item?.categoryId && (
                             <View style={styles.pair}>
                                 <View style={styles.icon}></View>
-                                <Text>{item?.categoryName}</Text>
+                                <Text>{item.categoryId}</Text>
                             </View>
                         )}
 
                         <View style={styles.pair}>
-                            <TouchableOpacity
-                                onPress={() => setShowCalendar(true)}
+                            <View>
+                                <Button
+                                    leftIcon={
+                                        <Icon
+                                            color={'pink'}
+                                            size={20}
+                                            name="calendar"
+                                        />
+                                    }
+                                    style={{
+                                        backgroundColor: 'transparent',
+                                    }}
+                                    onPress={showDatePicker}
+                                />
+                                <DateTimePickerModal
+                                    isVisible={isDatePickerVisible}
+                                    mode="date"
+                                    onConfirm={handleConfirm}
+                                    onCancel={hideDatePicker}
+                                    display={
+                                        Platform.OS === 'ios'
+                                            ? 'inline'
+                                            : 'default'
+                                    }
+                                />
+                            </View>
+                            <Text
+                                style={{
+                                    marginTop: 5,
+                                    marginLeft: 0,
+                                }}
                             >
-                                {Platform.OS === 'android' && (
-                                    <>
-                                        <View style={styles.icon}></View>
-                                        <Text>
-                                            {date || `Expiration Date`}
-                                            <Text style={{ color: '#f00' }}>
-                                                *
-                                            </Text>
-                                        </Text>
-                                    </>
-                                )}
-                                {showCalendar && (
-                                    <DateTimePicker
-                                        testID="dateTimePicker"
-                                        value={currentDate}
-                                        mode={'date'}
-                                        is24Hour={true}
-                                        display="default"
-                                        onChange={onChange}
-                                        minimumDate={today}
-                                        style={{ width: 150 }}
-                                    />
-                                )}
-                                {Platform.OS === 'ios' && (
-                                    <Text>
-                                        Expiration Date
-                                        <Text style={{ color: '#f00' }}>*</Text>
-                                    </Text>
-                                )}
-                            </TouchableOpacity>
+                                {date || 'Expiration Date'}
+                                {!date && <Text>*</Text>}
+                            </Text>
                         </View>
                     </View>
                     <View style={styles.formControl}>
@@ -170,17 +198,6 @@ const EssentialForm = ({ navigation, route }) => {
                     </View>
                 </View>
             </View>
-            {/* {showCalendar && (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={currentDate}
-                    mode={'date'}
-                    is24Hour={true}
-                    display="default"
-                    onChange={onChange}
-                    minimumDate={today}
-                />
-            )} */}
         </>
     )
 }

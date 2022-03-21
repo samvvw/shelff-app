@@ -75,7 +75,7 @@ const App = () => {
     //with hook
     LogBox.ignoreAllLogs()
     const client = new ApolloClient({
-        uri: 'http://10.128.213.149:8080/graphql',
+        uri: 'http://10.128.192.119:8080/graphql',
         cache: new InMemoryCache(),
     })
     const [fontsLoaded] = useFonts({
