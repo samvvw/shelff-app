@@ -43,6 +43,7 @@
     "react-native-circular-action-menu": "^0.5.0",
     "react-native-circular-progress-indicator": "^2.0.6",
     "react-native-modal": "^13.0.1",
+    "react-native-modal-datetime-picker": "^13.1.0",
     "react-native-pager-view": "5.4.9",
     "react-native-paper": "^4.11.2",
     "react-native-reanimated": "^2.4.1",

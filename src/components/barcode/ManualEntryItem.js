@@ -3,6 +3,7 @@ import { View, VStack, Text, Box, HStack, Button, Switch } from 'native-base'
 import NewItemBackground from './NewItemBackground'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
 import * as Notifications from 'expo-notifications'
@@ -38,6 +39,7 @@ const ManualEntryItem = ({ navigation }) => {
     const [location, setLocation] = useState('')
     const [counter, setCounter] = useState(1)
     const [essential, setEssential] = useState(false)
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
 
     /****************************** */
     /*Date picker*/
@@ -102,10 +104,10 @@ const ManualEntryItem = ({ navigation }) => {
     }
 
     //this shows the calendar
-    const showDatepicker = () => {
-        // showMode(date);
-        setShow(true)
-    }
+    // const showDatepicker = () => {
+    //     // showMode(date);
+    //     setShow(true)
+    // }
 
     //this handles the quantity
     const handleCounter = (value) => {
@@ -368,6 +370,18 @@ const ManualEntryItem = ({ navigation }) => {
         }
     }
 
+    const showDatePicker = () => {
+        setDatePickerVisibility(true)
+    }
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false)
+    }
+
+    const handleConfirm = (date) => {
+        hideDatePicker()
+    }
+
     return (
         <View>
             <NewItemBackground />
@@ -427,25 +441,22 @@ const ManualEntryItem = ({ navigation }) => {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <View style={{}}>
-                                        <View>
-                                            <Button
-                                                leftIcon={
-                                                    <Icon
-                                                        color={'pink'}
-                                                        size={20}
-                                                        name="calendar"
-                                                    />
-                                                }
-                                                style={{
-                                                    backgroundColor:
-                                                        'transparent',
-                                                }}
-                                                backgroundColor={'red'}
-                                                onPress={showDatepicker}
-                                            />
-                                        </View>
-                                        {show && (
+                                    <View>
+                                        <Button
+                                            leftIcon={
+                                                <Icon
+                                                    color={'pink'}
+                                                    size={20}
+                                                    name="calendar"
+                                                />
+                                            }
+                                            style={{
+                                                backgroundColor: 'transparent',
+                                            }}
+                                            backgroundColor={'red'}
+                                            onPress={showDatePicker}
+                                        />
+                                        {/* {show && (
                                             <DateTimePicker
                                                 testID="dateTimePicker"
                                                 value={currentDate}
@@ -455,7 +466,15 @@ const ManualEntryItem = ({ navigation }) => {
                                                 onChange={onChange}
                                                 minimumDate={today}
                                             />
-                                        )}
+                                        )} */}
+                                        <DateTimePickerModal
+                                            isVisible={isDatePickerVisible}
+                                            mode="date"
+                                            onConfirm={handleConfirm}
+                                            onCancel={hideDatePicker}
+                                            isDarkModeEnabled={false}
+                                            display="inline"
+                                        />
                                     </View>
                                     <Text
                                         style={{
