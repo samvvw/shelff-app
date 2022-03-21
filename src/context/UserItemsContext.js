@@ -68,7 +68,10 @@ export const UserItemsProvider = ({ children }) => {
                 shelfId,
                 isEssential,
             },
-            refetchQueries: [{ query: GET_USER_ITEMS, variables: { userId } }],
+            refetchQueries: [
+                { query: GET_USER_ITEMS, variables: { userId } },
+                { query: GET_ESSENTIALS, variables: { userId } },
+            ],
         })
     }
 
@@ -84,6 +87,10 @@ export const UserItemsProvider = ({ children }) => {
             refetchQueries: [
                 {
                     query: GET_USER_ITEMS,
+                    variables: { userId: itemList[0].userId },
+                },
+                {
+                    query: GET_ESSENTIALS,
                     variables: { userId: itemList[0].userId },
                 },
             ],
