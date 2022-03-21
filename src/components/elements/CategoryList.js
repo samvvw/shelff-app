@@ -1,15 +1,24 @@
-import react from 'react'
+import { useEffect, useContext } from 'react'
 import { Select, Icon } from 'native-base'
 import { Ionicons } from '@expo/vector-icons'
 import { theme } from '../../styles/theme'
+import { ItemsContext } from '../../context/ItemsContext'
 const CategoryList = ({ category, setCategory }) => {
+    const { categories } = useContext(ItemsContext)
+
     return (
         <Select
             w={120}
             placeholderTextColor="blue"
             borderRadius={15}
             placeholder="Category"
-            selectedValue={category.toString()}
+            selectedValue={
+                category &&
+                categories &&
+                categories
+                    .find((c) => c.categoryName === category)
+                    ?.categoryId.toString()
+            }
             accessibilityLabel="select category"
             onValueChange={(itemValue) => setCategory(itemValue)}
             color={theme.primaryColour.crimson}
@@ -22,15 +31,16 @@ const CategoryList = ({ category, setCategory }) => {
                 />
             }
         >
-            <Select.Item label="Fruits" value="1" />
-            <Select.Item label="Vegetables" value="2" />
-            <Select.Item label="Meat" value="3" />
-            <Select.Item label="Seafood" value="4" />
-            <Select.Item label="Cold cuts" value="5" />
-
-            <Select.Item label="Dairy" value="6" />
-            <Select.Item label="Bread cake" value="7" />
-            <Select.Item label="Canned food" value="8" />
+            {categories?.length > 0 &&
+                categories.map((category) => {
+                    return (
+                        <Select.Item
+                            label={category.categoryName}
+                            value={`${category.categoryId}`}
+                            key={category.categoryName}
+                        />
+                    )
+                })}
         </Select>
     )
 }

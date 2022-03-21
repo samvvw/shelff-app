@@ -4,11 +4,13 @@ import Barcode from '../components/barcode/Barcode'
 import NewItem from '../components/barcode/NewItem'
 import ItemsList from '../components/barcode/ItemsList'
 import NewItemBackground from '../components/barcode/NewItemBackground'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
 import { findBarcodeinLocalDB } from '../components/barcode/saveItems'
+import { ItemsContext } from '../context/ItemsContext'
 
 const AddItemBarcode = ({ navigation }) => {
+    const { findItemInDB, itemFoundDB } = useContext(ItemsContext)
     const [arrowButton, setArrowButton] = useState('arrow-up')
     const [cameraHeight, setcameraHeight] = useState('50%')
     const [barCodeNumber, setBarCodeNumber] = useState()
@@ -28,10 +30,17 @@ const AddItemBarcode = ({ navigation }) => {
         }
     }
 
-    // useEffect(() => {
-    //     //look for barcode in local database
-    //     // findBarcodeinLocalDB(barCodeNumber, setItems)
-    // }, [barCodeNumber])
+    useEffect(() => {
+        //look for barcode in local database
+        // findBarcodeinLocalDB(barCodeNumber, setItems)
+        findItemInDB(barCodeNumber)
+    }, [barCodeNumber])
+
+    useEffect(() => {
+        if (itemFoundDB) {
+            setItems(itemFoundDB)
+        }
+    }, [itemFoundDB])
 
     return (
         <>
@@ -53,7 +62,8 @@ const AddItemBarcode = ({ navigation }) => {
                         barCodeNumber={barCodeNumber}
                         setScanned={setScanned}
                         setcameraHeight={setcameraHeight}
-                        productName={items?.length ? items[0].itemName : ''}
+                        productName={items && items.itemName}
+                        productCategory={items && items.categoryName}
                         setArrItems={setArrItems}
                         arrItems={arrItems}
                         navigation={navigation}
