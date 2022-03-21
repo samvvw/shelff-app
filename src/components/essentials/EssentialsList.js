@@ -8,7 +8,7 @@ const EssentialsList = ({ data, isAdd }) => {
             renderItem={({ item }) => (
                 <EssentialItem item={item} isAdd={isAdd} />
             )}
-            keyExtractor={(item) => item.itemId}
+            keyExtractor={(item, i) => item.itemId + i}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 10 }}
         />
