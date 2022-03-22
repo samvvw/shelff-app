@@ -11,6 +11,8 @@ import AddItemBarcode from '../screens/AddItemBarcode'
 import ManualEntryItem from '../components/barcode/ManualEntryItem'
 import EssentialsAddItemScreen from '../screens/essentials/EssentialsAddItemScreen'
 import EssentialForm from '../components/essentials/EssentialForm'
+import PersonalInfo from '../screens/profile/PersonalInfo'
+import NotificationsSettings from '../screens/profile/NotificationsSettings'
 
 const Stack = createNativeStackNavigator()
 
@@ -74,6 +76,16 @@ const AppStack = () => {
                     name="EssentialForm"
                     component={EssentialForm}
                     options={{ title: 'Add your essential item' }}
+                />
+                <Stack.Screen
+                    name="PersonalInfo"
+                    component={PersonalInfo}
+                    options={{ title: 'Personal Info' }}
+                />
+                <Stack.Screen
+                    name="SetNotifications"
+                    component={NotificationsSettings}
+                    options={{ title: 'Set Notifications' }}
                 />
             </Stack.Navigator>
         </NavigationContainer>

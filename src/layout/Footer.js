@@ -10,6 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import MyShelff from '../components/myShelff/MyShelff'
 import EssentialsScreen from '../screens/essentials/EssentialsScreen'
 import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
+import { Profile } from '../screens/profile/Profile'
 import { theme } from '../styles/theme'
 
 function List(props) {
@@ -81,16 +82,6 @@ function List(props) {
                 )}
             </Tab.Screen>
         </Tab.Navigator>
-    )
-}
-
-function Profile() {
-    return (
-        <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
-            <Text>Profile!</Text>
-        </View>
     )
 }
 

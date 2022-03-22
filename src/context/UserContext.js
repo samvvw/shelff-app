@@ -65,6 +65,7 @@ export const UserProvider = ({ children }) => {
                                 userId: user.uid,
                                 email: user.email,
                                 fullName: user.displayName,
+                                photoURL: user.photoURL,
                             },
                         })
                     } catch (error) {
