@@ -335,6 +335,8 @@ const NewItem = ({
         if (msg === '') {
             saveItemIntoArray()
             handleCancel()
+            setCategory('')
+            setItemName('')
         }
     }
 

@@ -40,7 +40,11 @@ const AddItemBarcode = ({ navigation }) => {
         if (itemFoundDB) {
             setItems(itemFoundDB)
         }
-    }, [itemFoundDB])
+        if (!scanned) {
+            setItems(null)
+            setBarCodeNumber('')
+        }
+    }, [itemFoundDB, scanned])
 
     return (
         <>
