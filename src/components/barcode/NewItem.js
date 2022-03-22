@@ -56,7 +56,7 @@ const NewItem = ({
     /*states to save data from user*/
     const barcode = barCodeNumber
     const [itemName, setItemName] = useState(null)
-    const [category, setCategory] = useState(null)
+    const [category, setCategory] = useState('')
     const [location, setLocation] = useState('')
     const [counter, setCounter] = useState(1)
     const [essential, setEssential] = useState(false)
@@ -462,12 +462,10 @@ const NewItem = ({
                                         style={{ marginRight: 15 }}
                                     />
 
-                                    {category && (
-                                        <CategoryList
-                                            category={category}
-                                            setCategory={setCategory}
-                                        />
-                                    )}
+                                    <CategoryList
+                                        category={category}
+                                        setCategory={setCategory}
+                                    />
                                 </HStack>
 
                                 <HStack
