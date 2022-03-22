@@ -42,7 +42,7 @@ const VerticalMenu = ({ navigation }) => {
                             borderColor: theme.primaryColour.crimson,
                             backgroundColor: 'white',
                             marginBottom: 45,
-
+                            borderRadius: '50%',
                             alignSelf: 'center',
                         }}
                         color={theme.primaryColour.crimson}

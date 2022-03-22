@@ -1,5 +1,5 @@
 import { View, Text } from 'native-base'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { filter } from 'lodash'
 import Category from '../components/list/Category'
 import Storage from '../components/list/Storage'
@@ -12,11 +12,13 @@ import EssentialsScreen from '../screens/essentials/EssentialsScreen'
 import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 import { Profile } from '../screens/profile/Profile'
 import { theme } from '../styles/theme'
+import { UserContext } from '../context/UserContext'
+import { UserItemsContext } from '../context/UserItemsContext'
 
 function List(props) {
     const Tab = createMaterialTopTabNavigator()
 
-    const { navigation, shelfItems, setShelfItems, allItems } = props
+    const { navigation, shelfItems, allItems } = props
 
     return (
         <Tab.Navigator
@@ -51,7 +53,6 @@ function List(props) {
                     <Category
                         {...props}
                         shelfItems={shelfItems}
-                        setShelfItems={setShelfItems}
                         allItems={allItems}
                     />
                 )}
@@ -76,7 +77,6 @@ function List(props) {
                     <Storage
                         {...props}
                         shelfItems={shelfItems}
-                        setShelfItems={setShelfItems}
                         allItems={allItems}
                     />
                 )}
@@ -99,155 +99,184 @@ const Footer = () => {
     const Tab = createBottomTabNavigator()
     //tabBarActiveTintColor: "#e91e63",
 
+    const { user } = useContext(UserContext)
+
+    const {
+        getUserItems,
+        userItems,
+        shelfItems: shelfItems,
+        allItems: allItems,
+        freshItems: freshItems,
+        expiringItems: expiringItems,
+        expiredItems: expiredItems,
+    } = useContext(UserItemsContext)
+
+    useEffect(() => {
+        if (user.uid) {
+            getUserItems(user.uid)
+        }
+        // console.log('rendeerr')
+    }, [user])
+
+    useEffect(() => {
+        if (userItems) {
+            // console.log('UserItemsLength', userItems.length)
+            // console.log('firstUserItems', userItems[0])
+            console.log('expiring', expiringItems)
+            console.log('fesh', freshItems)
+        }
+        console.log('rendeerr USERITEMSJ')
+    }, [userItems, expiringItems, freshItems])
+
     /***********************************************/
     /******  Temporal data                  ********/
     /***********************************************/
     //Like this is in the database
-    const [shelfItems, setShelfItems] = useState([
-        {
-            id: '1',
-            name: 'Apple',
-            expiry: 'xxx',
-            quantity: 5,
-            location: 'Pantry',
-            category: 'Fruits',
-            essential: true,
-            status: 'Fresh',
-            action: '',
-        },
-        {
-            id: '2',
-            name: 'Banana',
-            expiry: 'xxx',
-            quantity: 10,
-            location: 'Pantry',
-            category: 'Fruits',
-            essential: true,
-            status: 'Fresh',
-            action: '',
-        },
-        {
-            id: '3',
-            name: 'Mango',
-            expiry: 'xxx',
-            quantity: 2,
-            location: 'Pantry',
-            category: 'Fruits',
-            essential: false,
-            status: 'Fresh',
-            action: '',
-        },
-        {
-            id: '4',
-            name: 'grape',
-            expiry: 'xxx',
-            quantity: 1,
-            location: 'Fridge',
-            category: 'Fruits',
-            essential: false,
-            status: 'Fresh',
-            action: 'Consumed',
-        },
-        {
-            id: '5',
-            name: 'Milk',
-            expiry: 'xxx',
-            quantity: 1,
-            location: 'Fridge',
-            category: 'Dairy',
-            essential: true,
-            status: 'Expiring',
-            action: '',
-        },
-        {
-            id: '6',
-            name: 'Cheese',
-            expiry: 'xxx',
-            quantity: 1,
-            location: 'Fridge',
-            category: 'Dairy',
-            essential: false,
-            status: 'Expiring',
-            action: '',
-        },
-        {
-            id: '7',
-            name: 'egg',
-            expiry: 'xxx',
-            quantity: 12,
-            location: 'Fridge',
-            category: 'Dairy',
-            essential: true,
-            status: 'Expiring',
-            action: '',
-        },
-        {
-            id: '8',
-            name: 'Donuts',
-            expiry: 'xxx',
-            quantity: 5,
-            location: 'Pantry',
-            category: 'Bread & Cake',
-            essential: false,
-            status: 'Expired',
-            action: '',
-        },
-        {
-            id: '9',
-            name: 'Cookies',
-            expiry: 'xxx',
-            quantity: 3,
-            location: 'Pantry',
-            category: 'Bread & Cake',
-            essential: false,
-            status: 'Expired',
-            action: '',
-        },
-    ])
+    // const [shelfItems, setShelfItems] = useState([
+    //     {
+    //         id: '1',
+    //         name: 'Apple',
+    //         expiry: 'xxx',
+    //         quantity: 5,
+    //         location: 'Pantry',
+    //         category: 'Fruits',
+    //         essential: true,
+    //         status: 'Fresh',
+    //         action: '',
+    //     },
+    //     {
+    //         id: '2',
+    //         name: 'Banana',
+    //         expiry: 'xxx',
+    //         quantity: 10,
+    //         location: 'Pantry',
+    //         category: 'Fruits',
+    //         essential: true,
+    //         status: 'Fresh',
+    //         action: '',
+    //     },
+    //     {
+    //         id: '3',
+    //         name: 'Mango',
+    //         expiry: 'xxx',
+    //         quantity: 2,
+    //         location: 'Pantry',
+    //         category: 'Fruits',
+    //         essential: false,
+    //         status: 'Fresh',
+    //         action: '',
+    //     },
+    //     {
+    //         id: '4',
+    //         name: 'grape',
+    //         expiry: 'xxx',
+    //         quantity: 1,
+    //         location: 'Fridge',
+    //         category: 'Fruits',
+    //         essential: false,
+    //         status: 'Fresh',
+    //         action: 'Consumed',
+    //     },
+    //     {
+    //         id: '5',
+    //         name: 'Milk',
+    //         expiry: 'xxx',
+    //         quantity: 1,
+    //         location: 'Fridge',
+    //         category: 'Dairy',
+    //         essential: true,
+    //         status: 'Expiring',
+    //         action: '',
+    //     },
+    //     {
+    //         id: '6',
+    //         name: 'Cheese',
+    //         expiry: 'xxx',
+    //         quantity: 1,
+    //         location: 'Fridge',
+    //         category: 'Dairy',
+    //         essential: false,
+    //         status: 'Expiring',
+    //         action: '',
+    //     },
+    //     {
+    //         id: '7',
+    //         name: 'egg',
+    //         expiry: 'xxx',
+    //         quantity: 12,
+    //         location: 'Fridge',
+    //         category: 'Dairy',
+    //         essential: true,
+    //         status: 'Expiring',
+    //         action: '',
+    //     },
+    //     {
+    //         id: '8',
+    //         name: 'Donuts',
+    //         expiry: 'xxx',
+    //         quantity: 5,
+    //         location: 'Pantry',
+    //         category: 'Bread & Cake',
+    //         essential: false,
+    //         status: 'Expired',
+    //         action: '',
+    //     },
+    //     {
+    //         id: '9',
+    //         name: 'Cookies',
+    //         expiry: 'xxx',
+    //         quantity: 3,
+    //         location: 'Pantry',
+    //         category: 'Bread & Cake',
+    //         essential: false,
+    //         status: 'Expired',
+    //         action: '',
+    //     },
+    // ])
 
-    const [allItems, setAllItems] = useState(
-        filter(shelfItems, (item) => {
-            return item.action === ''
-        }),
-    )
-    const [freshItems, setFreshItems] = useState(
-        filter(shelfItems, (item) => {
-            return item.action === '' && item.status === 'Fresh'
-        }),
-    )
-    const [expiringItems, setExpiringItems] = useState(
-        filter(shelfItems, (item) => {
-            return item.action === '' && item.status === 'Expiring'
-        }),
-    )
-    const [expiredItems, setExpiredItems] = useState(
-        filter(shelfItems, (item) => {
-            return item.action === '' && item.status === 'Expired'
-        }),
-    )
+    // const [allItems, setAllItems] = useState(
+    //     filter(shelfItems, (item) => {
+    //         return item.action === ''
+    //     }),
+    // )
+    // const [freshItems, setFreshItems] = useState(
+    //     filter(shelfItems, (item) => {
+    //         return item.action === '' && item.status === 'Fresh'
+    //     }),
+    // )
+    // const [expiringItems, setExpiringItems] = useState(
+    //     filter(shelfItems, (item) => {
+    //         return item.action === '' && item.status === 'Expiring'
+    //     }),
+    // )
+    // const [expiredItems, setExpiredItems] = useState(
+    //     filter(shelfItems, (item) => {
+    //         return item.action === '' && item.status === 'Expired'
+    //     }),
+    // )
 
-    useEffect(() => {
-        setAllItems(
-            filter(shelfItems, (item) => {
-                return item.action === ''
-            }),
-        )
-        setFreshItems(
-            filter(shelfItems, (item) => {
-                return item.action === '' && item.status === 'Fresh'
-            }),
-        )
-        setExpiringItems(
-            filter(shelfItems, (item) => {
-                return item.action === '' && item.status === 'Expiring'
-            }),
-        )
-        setExpiredItems(
-            filter(shelfItems, (item) => {
-                return item.action === '' && item.status === 'Expired'
-            }),
-        )
-    }, [shelfItems, setShelfItems])
+    // useEffect(() => {
+    //     setAllItems(
+    //         filter(shelfItems, (item) => {
+    //             return item.action === ''
+    //         }),
+    //     )
+    //     setFreshItems(
+    //         filter(shelfItems, (item) => {
+    //             return item.action === '' && item.status === 'Fresh'
+    //         }),
+    //     )
+    //     setExpiringItems(
+    //         filter(shelfItems, (item) => {
+    //             return item.action === '' && item.status === 'Expiring'
+    //         }),
+    //     )
+    //     setExpiredItems(
+    //         filter(shelfItems, (item) => {
+    //             return item.action === '' && item.status === 'Expired'
+    //         }),
+    //     )
+    // }, [shelfItems])
 
     /************************************************/
     /************************************************/
@@ -285,14 +314,10 @@ const Footer = () => {
                     <MyShelff
                         {...props}
                         shelfItems={shelfItems}
-                        setShelfItems={setShelfItems}
                         allItems={allItems}
-                        setAllItems={setAllItems}
                         freshItems={freshItems}
                         expiringItems={expiringItems}
-                        setExpiringItems={setExpiringItems}
                         expiredItems={expiredItems}
-                        setExpiredItems={setExpiredItems}
                     />
                 )}
             </Tab.Screen>
@@ -334,7 +359,6 @@ const Footer = () => {
                     <List
                         {...props}
                         shelfItems={shelfItems}
-                        setShelfItems={setShelfItems}
                         allItems={allItems}
                     />
                 )}

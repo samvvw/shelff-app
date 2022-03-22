@@ -15,6 +15,9 @@ const List = (props) => {
     return (
         <Center>
             <FlatGrid
+                keyExtractor={(item) =>
+                    item.itemId + item.creationDate + `${Math.random() * 1000}`
+                }
                 data={listItems}
                 style={listStyles.gridView}
                 spacing={20}

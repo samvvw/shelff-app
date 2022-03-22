@@ -7,7 +7,7 @@ import Frezzer from '../../../assets/images/icons/Frezzer.png'
 import Pantry from '../../../assets/images/icons/Pantry.png'
 
 const Storage = (props) => {
-    const { shelfItems, setShelfItems, allItems } = props
+    const { shelfItems, allItems } = props
     const [listDetailsOpen, setListDetailsOpen] = useState(false)
     const [selectedList, setSelectedList] = useState()
 
@@ -31,7 +31,6 @@ const Storage = (props) => {
                         listType="Storage"
                         selectedList={selectedList}
                         shelfItems={shelfItems}
-                        setShelfItems={setShelfItems}
                         allItems={allItems}
                         setListDetailsOpen={setListDetailsOpen}
                     />

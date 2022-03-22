@@ -18,6 +18,10 @@ const CategoryList = ({ category, setCategory }) => {
                 categories
                     .find((c) => c.categoryName === category)
                     ?.categoryId.toString()
+                    ? categories
+                          .find((c) => c.categoryName === category)
+                          ?.categoryId.toString()
+                    : category
             }
             accessibilityLabel="select category"
             onValueChange={(itemValue) => setCategory(itemValue)}
