@@ -60,6 +60,8 @@ const classifyUserItemsByStatus = (userItems) => {
             essential: item.isEssential,
             status: status,
             action: '',
+            expiresIn: Math.floor(differenceInDays),
+            creationDate: item.creationDate,
         }
 
         shelfItems.push(itemObject)

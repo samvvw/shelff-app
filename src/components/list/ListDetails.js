@@ -11,12 +11,6 @@ const ListDetails = (props) => {
 
     const [listItems, setListItems] = useState(
         filter(allItems, (item) => {
-            console.log(
-                'category',
-                item.category === selectedList,
-                item.category,
-                selectedList,
-            )
             return listType === 'Category'
                 ? item.category === selectedList
                 : item.location === selectedList

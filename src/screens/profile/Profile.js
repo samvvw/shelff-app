@@ -14,9 +14,6 @@ import { TouchableOpacity } from 'react-native'
 export function Profile({ navigation }) {
     const { user } = useContext(UserContext)
 
-    useEffect(() => {
-        console.log(user)
-    }, [user])
     return (
         <View
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}

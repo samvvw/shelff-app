@@ -119,7 +119,22 @@ const SwipableList = (props) => {
                                         swipableListStyles.flexRightChildBottomText
                                     }
                                 >
-                                    Shelf Life: xx days
+                                    {data.item.expiresIn >= 0
+                                        ? `Shelf Life: ${
+                                              data.item.expiresIn
+                                          } day${
+                                              data.item.expiresIn === 0 ||
+                                              data.item.expiresIn > 1
+                                                  ? 's'
+                                                  : ''
+                                          }`
+                                        : `Expired ${Math.abs(
+                                              data.item.expiresIn,
+                                          )} day${
+                                              Math.abs(data.item.expiresIns) > 1
+                                                  ? 's'
+                                                  : ''
+                                          } ago`}
                                 </Text>
                                 <Text
                                     numberOfLines={1}
