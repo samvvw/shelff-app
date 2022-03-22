@@ -24,6 +24,8 @@ import uuid from 'react-native-uuid'
 import { saveItemsToLocalStorage } from './saveItems'
 import { findBarcodeinLocalDB, updateItemNameForAll } from './saveItems'
 import { ItemsContext } from '../../context/ItemsContext'
+import { UserContext } from '../../context/UserContext'
+import { UserItemsContext } from '../../context/UserItemsContext'
 
 import {
     handleNotificationDates,
@@ -31,7 +33,9 @@ import {
 } from '../../services/notifications'
 
 const ManualEntryItem = ({ navigation }) => {
+    const { user } = useContext(UserContext)
     const { addNewItemToDB } = useContext(ItemsContext)
+    const { addUserItemList } = useContext(UserItemsContext)
     /*states to save data from user*/
     const [items, setItems] = useState([])
     const [itemsToUpdate, setItemsToUpdate] = useState([])
@@ -178,10 +182,16 @@ const ManualEntryItem = ({ navigation }) => {
         findBarcodeinLocalDB(barCodeNumber, setItemsToUpdate)
     }
 
-    const handleDone = () => {
+    const handleDone = async () => {
         const msg = handleValidation()
         if (msg === '') {
-            sendItemtoLocalStorage()
+            const item = await addItemToServer()
+            if (user?.uid) {
+                await sendUserItemsToServer(item)
+            } else {
+                sendItemtoLocalStorage()
+            }
+
             navigation.push('VerticalMenu')
             setNotification(
                 itemName,
@@ -190,6 +200,52 @@ const ManualEntryItem = ({ navigation }) => {
                 handleNotificationDates(currentDate, today),
             )
         }
+    }
+
+    const addItemToServer = async () => {
+        const id = uuid.v4()
+        let barcode = id
+        if (barCodeNumber !== '') {
+            barcode = barCodeNumber
+        }
+
+        const itemToSend = {
+            itemId: id,
+            itemName,
+            quantity: counter,
+            expirationDate: date,
+            categoryId: +category,
+            locationId: +location,
+            shelfId: 1,
+            isEssential: essential,
+            barcode,
+        }
+
+        await addNewItemToDB(
+            itemToSend.barcode,
+            itemToSend.itemName,
+            +itemToSend.categoryId,
+        )
+
+        return itemToSend
+    }
+
+    const sendUserItemsToServer = async (item) => {
+        const expDateFormatted = new Date(item.expirationDate)
+            .toISOString()
+            .split('T')[0]
+
+        const userItem = {
+            itemId: item.barcode,
+            userId: user.uid,
+            quantity: item.quantity,
+            expirationDate: expDateFormatted,
+            locationId: +item.locationId,
+            shelfId: item.shelfId,
+            isEssential: item.isEssential ? true : false,
+        }
+        // console.log('userItem', userItem)
+        await addUserItemList([userItem])
     }
 
     const cleanFields = () => {
