@@ -119,7 +119,7 @@ export function Profile({ navigation }) {
                             justifyContent={'flex-start'}
                             colorScheme={'secondary'}
                             key={'login-button'}
-                            onPress={() => navigation.navigate('Sign')}
+                            onPress={() => navigation.replace('Sign')}
                         >
                             <Text fontSize={'lg'} color="primary.500">
                                 Log In
