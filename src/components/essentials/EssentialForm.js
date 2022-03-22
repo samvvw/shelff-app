@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import {
     StyleSheet,
     View,
@@ -10,13 +10,21 @@ import LocationList from '../elements/LocationList'
 import QuantityCounter from './QuantityCounter'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { saveItemsToLocalStorage } from '../barcode/saveItems'
-import uuid from 'react-native-uuid'
+// import uuid from 'react-native-uuid'
 import { Button } from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import { UserContext } from '../../context/UserContext'
+import { UserItemsContext } from '../../context/UserItemsContext'
+import { ItemsContext } from '../../context/ItemsContext'
 
 const EssentialForm = ({ navigation, route }) => {
+    const { user } = useContext(UserContext)
+    const { addUserItemList } = useContext(UserItemsContext)
+    const { categories } = useContext(ItemsContext)
+
     const todayDate = new Date()
     const { item } = route.params
+    const [category, setCategory] = useState()
     const [location, setLocation] = useState()
     const [quantity, setQuantity] = useState(1)
     const [showCalendar, setShowCalendar] = useState(
@@ -60,23 +68,44 @@ const EssentialForm = ({ navigation, route }) => {
         return num.toString().padStart(2, '0')
     }
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
         if (currentDate && location && quantity) {
-            const id = uuid.v4()
-            saveItemsToLocalStorage([
-                {
-                    idItem: id,
-                    cItemName: item.itemName,
-                    iQuantity: quantity,
-                    dexpirationdate: date,
-                    idCategory: item.categoryId,
-                    idLocation: location,
-                    essential: item.isEssential,
-                    barcode: item?.barcode ? item.barcode : item.itemId,
-                },
-            ])
-            navigation.goBack()
+            if (user?.uid) {
+                await sendUserItemToServer()
+            } else {
+                // const id = uuid.v4()
+                saveItemsToLocalStorage([
+                    {
+                        idItem: item?.barcode ? item.barcode : item.itemId,
+                        cItemName: item.itemName,
+                        iQuantity: quantity,
+                        dexpirationdate: date,
+                        idCategory: item.categoryId,
+                        idLocation: location,
+                        essential: item.isEssential,
+                        barcode: item?.barcode ? item.barcode : item.itemId,
+                    },
+                ])
+            }
+
+            navigation.navigate('VerticalMenu')
         }
+    }
+
+    const sendUserItemToServer = async () => {
+        const expDateFormatted = new Date(date).toISOString().split('T')[0]
+
+        const userItem = {
+            itemId: item?.barcode ? item.barcode : item.itemId,
+            userId: user.uid,
+            quantity: quantity,
+            expirationDate: expDateFormatted,
+            locationId: +location,
+            shelfId: 1,
+            isEssential: item.isEssential ? true : false,
+        }
+        // console.log('userItem', userItem)
+        await addUserItemList([userItem])
     }
 
     const showDatePicker = () => {
@@ -102,6 +131,15 @@ const EssentialForm = ({ navigation, route }) => {
         hideDatePicker()
     }
 
+    useEffect(() => {
+        if (categories) {
+            const category = categories.find(
+                (category) => category.categoryId === item.categoryId,
+            )
+            setCategory(category?.categoryName)
+        }
+    }, [categories])
+
     return (
         <>
             <View
@@ -123,7 +161,7 @@ const EssentialForm = ({ navigation, route }) => {
                         {item?.categoryId && (
                             <View style={styles.pair}>
                                 <View style={styles.icon}></View>
-                                <Text>{item.categoryId}</Text>
+                                <Text>{category}</Text>
                             </View>
                         )}
 
