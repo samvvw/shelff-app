@@ -1,66 +1,82 @@
 import React from 'react'
-import {Center} from 'native-base'
-import {View, Text, Image, Platform, FlatList, SafeAreaView} from 'react-native'
+import { Center } from 'native-base'
+import {
+    View,
+    Text,
+    Image,
+    Platform,
+    FlatList,
+    SafeAreaView,
+} from 'react-native'
 import { CircularProgressWithChild } from 'react-native-circular-progress-indicator'
-import { allChartsStyles } from "../../styles/styles"
-import { theme } from "../../styles/theme"
+import { allChartsStyles } from '../../styles/styles'
+import { theme } from '../../styles/theme'
 import SwipableList from './SwipableList'
 
 import Logo from '../../../assets/images/FinalShelff-Logo.png'
 
 const All = (props) => {
-
-    const {navigation, allItems, freshItems, expiringItems, expiredItems, totalItems, setShelfItems} = props
-
+    const {
+        navigation,
+        allItems,
+        freshItems,
+        expiringItems,
+        expiredItems,
+        totalItems,
+    } = props
 
     const ChartAll = () => {
         return (
-        <View style={allChartsStyles.outer}>
-            <View style={allChartsStyles.container}>
-                <CircularProgressWithChild
-                value={freshItems.length}
-                maxValue={totalItems}
-                radius={Platform.OS === 'ios' ? 170 : 160}
-                activeStrokeColor={theme.statusColour.darkCyan}
-                inActiveStrokeColor={theme.statusColour.darkCyan}
-                activeStrokeWidth={23}
-                inActiveStrokeWidth={23}
-                inActiveStrokeOpacity={0.2}
-                >
+            <View style={allChartsStyles.outer}>
+                <View style={allChartsStyles.container}>
                     <CircularProgressWithChild
-                        value={expiringItems.length}
+                        value={freshItems.length}
                         maxValue={totalItems}
-                        radius={Platform.OS === 'ios' ? 145 : 137}
-                        activeStrokeColor={theme.statusColour.orange}
-                        inActiveStrokeColor={theme.statusColour.orange}
-                        activeStrokeWidth={25}
-                        inActiveStrokeWidth={25}
+                        radius={Platform.OS === 'ios' ? 170 : 160}
+                        activeStrokeColor={theme.statusColour.darkCyan}
+                        inActiveStrokeColor={theme.statusColour.darkCyan}
+                        activeStrokeWidth={23}
+                        inActiveStrokeWidth={23}
                         inActiveStrokeOpacity={0.2}
                     >
                         <CircularProgressWithChild
-                        value={expiredItems.length}
-                        maxValue={totalItems}
-                        radius={Platform.OS === 'ios' ? 120 : 112}
-                        activeStrokeColor={theme.statusColour.firebrickRed}
-                        inActiveStrokeColor={theme.statusColour.firebrickRed}
-                        activeStrokeWidth={25}
-                        inActiveStrokeWidth={25}
-                        inActiveStrokeOpacity={0.2}
+                            value={expiringItems.length}
+                            maxValue={totalItems}
+                            radius={Platform.OS === 'ios' ? 145 : 137}
+                            activeStrokeColor={theme.statusColour.orange}
+                            inActiveStrokeColor={theme.statusColour.orange}
+                            activeStrokeWidth={25}
+                            inActiveStrokeWidth={25}
+                            inActiveStrokeOpacity={0.2}
                         >
-                            <View style={allChartsStyles.innerWrapper}>
-                                <Image 
-                                    source={Logo} 
-                                    alt="Logo"
-                                    style={allChartsStyles.image}    
-                                />
-                            </View>
+                            <CircularProgressWithChild
+                                value={expiredItems.length}
+                                maxValue={totalItems}
+                                radius={Platform.OS === 'ios' ? 120 : 112}
+                                activeStrokeColor={
+                                    theme.statusColour.firebrickRed
+                                }
+                                inActiveStrokeColor={
+                                    theme.statusColour.firebrickRed
+                                }
+                                activeStrokeWidth={25}
+                                inActiveStrokeWidth={25}
+                                inActiveStrokeOpacity={0.2}
+                            >
+                                <View style={allChartsStyles.innerWrapper}>
+                                    <Image
+                                        source={Logo}
+                                        alt="Logo"
+                                        style={allChartsStyles.image}
+                                    />
+                                </View>
+                            </CircularProgressWithChild>
                         </CircularProgressWithChild>
                     </CircularProgressWithChild>
-                </CircularProgressWithChild>
-            </View>
+                </View>
 
-            <View style={allChartsStyles.details}>
-                {/* <Text style={allChartsStyles.detail}>
+                <View style={allChartsStyles.details}>
+                    {/* <Text style={allChartsStyles.detail}>
                     {expiredItems.length} Expired
                 </Text>
                 <Text style={allChartsStyles.detail}>
@@ -70,11 +86,13 @@ const All = (props) => {
                     {freshItems.length} Fresh
                 </Text> */}
 
-                <Text> 
-                    Fresh: {freshItems.length}items ・ Expiring: {expiringItems.length}items ・ Expired: {expiredItems.length}items
-                </Text>
+                    <Text>
+                        Fresh: {freshItems.length}items ・ Expiring:{' '}
+                        {expiringItems.length}items ・ Expired:{' '}
+                        {expiredItems.length}items
+                    </Text>
+                </View>
             </View>
-        </View>
         )
     }
 
@@ -83,7 +101,9 @@ const All = (props) => {
             <FlatList
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={<ChartAll />}
-                ListFooterComponent={<SwipableList items={allItems} allItems={allItems} setShelfItems={setShelfItems}/>}
+                ListFooterComponent={
+                    <SwipableList items={allItems} allItems={allItems} />
+                }
             />
         </SafeAreaView>
     )

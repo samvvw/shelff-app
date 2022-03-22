@@ -80,6 +80,7 @@ export const GET_USER_ITEMS = gql`
         userItems(userId: $userId) {
             itemId
             itemName
+            categoryName
             userId
             creationDate
             expirationDate

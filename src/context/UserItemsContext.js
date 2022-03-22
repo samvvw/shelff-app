@@ -15,6 +15,11 @@ const initialState = {
     error: null,
     userItems: null,
     essentials: null,
+    shelfItems: null,
+    allItems: null,
+    freshItems: null,
+    expiringItems: null,
+    expiredItems: null,
 }
 
 export const UserItemsContext = createContext(initialState)
@@ -194,6 +199,11 @@ export const UserItemsProvider = ({ children }) => {
                 loading: state.loading,
                 error: state.error,
                 userItems: state.userItems,
+                allItems: state.allItems,
+                shelfItems: state.shelfItems,
+                freshItems: state.freshItems,
+                expiringItems: state.expiringItems,
+                expiredItems: state.expiredItems,
                 essentials: state.essentials,
                 getUserItems,
                 getEssentials,

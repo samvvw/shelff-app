@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Center, View } from 'native-base'
 import List from './List'
 import ListDetails from './ListDetails'
@@ -11,22 +11,31 @@ import Fish from '../../../assets/images/icons/Fish.png'
 import Veggies from '../../../assets/images/icons/Veggies.png'
 import Meat from '../../../assets/images/icons/Meat.png'
 import Fruits from '../../../assets/images/icons/Fruits.png'
+import { ItemsContext } from '../../context/ItemsContext'
 
 const Category = (props) => {
-    const { shelfItems, setShelfItems, allItems } = props
+    const { shelfItems, allItems } = props
     const [listDetailsOpen, setListDetailsOpen] = useState(false)
     const [selectedList, setSelectedList] = useState()
+    const [categoryListB, setCategoryList] = useState([])
+    // const { categories } = useContext(ItemsContext)
 
     const categoryList = [
         { name: 'Fruits', icon: Fruits },
-        { name: 'Canned Food', icon: CanFood },
         { name: 'Vegetables', icon: Veggies },
-        { name: 'Seafoods', icon: Fish },
-        { name: 'Bread & Cake', icon: Bread },
         { name: 'Meat', icon: Meat },
+        { name: 'Seafood', icon: Fish },
+        { name: 'Cold cuts', icon: Chicken },
         { name: 'Dairy', icon: Dairy },
-        { name: 'Chicken', icon: Chicken },
+        { name: 'Bread & Cake', icon: Bread },
+        { name: 'Canned Food', icon: CanFood },
     ]
+
+    // useEffect(() => {
+    //     if (categories?.length > 0) {
+    //         console.log('categories', categories)
+    //     }
+    // }, [categories])
 
     return (
         <View backgroundColor={'white'}>
@@ -42,7 +51,6 @@ const Category = (props) => {
                         listType="Category"
                         selectedList={selectedList}
                         shelfItems={shelfItems}
-                        setShelfItems={setShelfItems}
                         allItems={allItems}
                         setListDetailsOpen={setListDetailsOpen}
                     />
