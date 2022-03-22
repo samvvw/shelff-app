@@ -15,7 +15,7 @@ const PersonalInfo = () => {
                             fontSize: 18,
                         }}
                     >
-                        First Name
+                        Full Name
                     </FormControl.Label>
                     <Input
                         fontSize={'md'}
