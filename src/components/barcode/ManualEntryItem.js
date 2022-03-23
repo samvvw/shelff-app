@@ -416,6 +416,7 @@ const ManualEntryItem = ({ navigation }) => {
                                             onPress={showDatePicker}
                                         />
                                         <DateTimePickerModal
+                                            minimumDate={today}
                                             isVisible={isDatePickerVisible}
                                             mode="date"
                                             onConfirm={handleConfirm}

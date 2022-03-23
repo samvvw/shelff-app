@@ -34,7 +34,7 @@ const ListDetails = (props) => {
             >
                 <Text style={listDetailsStyles.icon}>
                     <MaterialCommunityIcons
-                        name="chevron-double-left"
+                        name="chevron-left"
                         size={30}
                         color="#535657"
                     />
