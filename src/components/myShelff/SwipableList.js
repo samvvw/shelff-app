@@ -13,9 +13,9 @@ import { SwipeListView } from 'react-native-swipe-list-view'
 import { findIndex } from 'lodash'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import ConsumedIcon from '../../../assets/images/icons/Consumed.png'
-import DonatedIcon from '../../../assets/images/icons/Donate.png'
-import BinIcon from '../../../assets/images/icons/Bin.png'
+import ConsumedIcon from '../../../assets/images/icons/ConsumedIcon.js'
+import DonatedIcon from '../../../assets/images/icons/DonatedIcon.js'
+import BinIcon from '../../../assets/images/icons/BinIcon.js'
 
 const SwipableList = (props) => {
     const { items, allItems, selectedList } = props
@@ -109,6 +109,7 @@ const SwipableList = (props) => {
                                         name="cards-heart"
                                         size={25}
                                         color={theme.primaryColour.crimson}
+                                        style={swipableListStyles.essential}
                                     />
                                 ) : null}
                             </View>
@@ -121,21 +122,22 @@ const SwipableList = (props) => {
                                 >
                                     {data.item.expiresIn >= 0
                                         ? `Shelf Life: ${
-                                              data.item.expiresIn
-                                          } day${
-                                              data.item.expiresIn === 0 ||
-                                              data.item.expiresIn > 1
-                                                  ? 's'
-                                                  : ''
-                                          }`
+                                                data.item.expiresIn
+                                            } day${
+                                                data.item.expiresIn === 0 ||
+                                                data.item.expiresIn > 1
+                                                    ? 's'
+                                                    : ''
+                                        }`
                                         : `Expired ${Math.abs(
-                                              data.item.expiresIn,
-                                          )} day${
-                                              Math.abs(data.item.expiresIns) > 1
-                                                  ? 's'
-                                                  : ''
-                                          } ago`}
+                                            data.item.expiresIn,
+                                        )} day${
+                                                Math.abs(data.item.expiresIns) > 1
+                                                    ? 's'
+                                                    : ''
+                                        } ago`}
                                 </Text>
+                                <Text> ・ </Text>
                                 <Text
                                     numberOfLines={1}
                                     style={
@@ -144,6 +146,7 @@ const SwipableList = (props) => {
                                 >
                                     {data.item.location}
                                 </Text>
+                                <Text> ・ </Text>
                                 <Text
                                     numberOfLines={1}
                                     style={
@@ -223,6 +226,7 @@ const SwipableList = (props) => {
                         style={[
                             swipableListStyles.backRightBtn,
                             swipableListStyles.backRightBtnLeft,
+                            swipableListStyles.donated
                         ]}
                         onPress={onDonate}
                     >
@@ -244,7 +248,8 @@ const SwipableList = (props) => {
                                 },
                             ]}
                         >
-                            <Image source={DonatedIcon} alt="Donated" />
+                            <DonatedIcon />
+                            <Text style={swipableListStyles.btnText}>Donated</Text>
                         </Animated.View>
                     </TouchableOpacity>
                 ) : null}
@@ -290,7 +295,8 @@ const SwipableList = (props) => {
                                         },
                                     ]}
                                 >
-                                    <Image source={BinIcon} alt="Bin" />
+                                    <BinIcon />
+                                    <Text style={swipableListStyles.btnText}>Bin</Text>
                                 </Animated.View>
                             </TouchableOpacity>
                         ) : (
@@ -323,10 +329,8 @@ const SwipableList = (props) => {
                                         },
                                     ]}
                                 >
-                                    <Image
-                                        source={ConsumedIcon}
-                                        alt="consumed"
-                                    />
+                                    <ConsumedIcon/>
+                                    <Text style={swipableListStyles.btnText}>Consumed</Text>
                                 </Animated.View>
                             </TouchableOpacity>
                         )}
@@ -353,12 +357,13 @@ const SwipableList = (props) => {
     }
 
     return (
-        <View>
+        <View style={swipableListStyles.container}>
             {/* selectedList is for Listing, '' is for MyShelff */}
-            <Text style={swipableListStyles.header}>
-                {selectedList ? selectedList : ''}
-            </Text>
-            {items.length === 0 ? <Text>No Item</Text> : null}
+            {selectedList ? 
+                <Text style={swipableListStyles.header}>{selectedList}</Text> 
+            : null}
+            
+            {items.length === 0 ? <Text style={swipableListStyles.noItem}>No Item</Text> : null}
 
             <SwipeListView
                 keyExtractor={(item) =>
@@ -367,8 +372,8 @@ const SwipableList = (props) => {
                 data={items}
                 renderItem={renderItem}
                 renderHiddenItem={renderHiddenItem}
-                leftOpenValue={75}
-                rightOpenValue={-150}
+                leftOpenValue={90}
+                rightOpenValue={-180}
                 disableRightSwipe //avoid swipe on the left side
                 //Some other actions
                 onRowDidOpen={onRowDidOpen}
@@ -379,7 +384,6 @@ const SwipableList = (props) => {
                 onRightAction={onRightAction}
                 onLeftActionStatusChange={onLeftActionStatusChange}
                 onRightActionStatusChange={onRightActionStatusChange}
-                contentContainerStyle={swipableListStyles.container}
             />
 
             <StatusBar style="auto" />

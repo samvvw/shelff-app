@@ -6,8 +6,7 @@ import { listDetailsStyles } from '../../styles/styles'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const ListDetails = (props) => {
-    const { listType, selectedList, shelfItems, allItems, setListDetailsOpen } =
-        props
+    const { listType, selectedList, shelfItems, allItems, setListDetailsOpen } = props
 
     const [listItems, setListItems] = useState(
         filter(allItems, (item) => {

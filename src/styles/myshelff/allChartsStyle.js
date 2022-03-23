@@ -2,12 +2,12 @@ import { screenWidth } from "../../layout/layout";
 import { theme } from "../theme"
 import { StyleSheet } from "react-native";
 import {Platform} from 'react-native'
+import { Center } from "native-base";
 
 export const allChartsStyle = StyleSheet.create({
     outer: {
         position: 'relative',
         marginTop: 30,
-        marginBottom: 10
     },
     container: {
         display: 'flex',
@@ -39,10 +39,9 @@ export const allChartsStyle = StyleSheet.create({
         marginTop: 30,
         paddingBottom: 10,
         borderBottomWidth: 1,
-        borderBottomColor: theme.textColour.inactiveText
+        borderBottomColor: theme.textColour.inactiveText,
     },
-    detail: {
-        fontSize: 15,
-    }
-    
+    detailsText: {
+        textAlign: 'center'
+    },
 });

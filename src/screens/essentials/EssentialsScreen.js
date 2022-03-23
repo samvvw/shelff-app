@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, Image } from 'react-native'
 import { UserContext } from '../../context/UserContext'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { GET_ESSENTIALS, REMOVE_ESSENTIAL_ITEM } from '../../queries/queries'
@@ -48,10 +48,14 @@ const EssentialsScreen = () => {
 
     return (
         <>
-            {loading && <Spinner size="lg" />}
+            {loading && <Spinner size="lg" mt={100}/>}
             {items?.length === 0 && (
                 <View style={styles.container}>
-                    <View style={styles.emptyImage}></View>
+                    <Image 
+                        source={require('../../../assets/icon.png')} 
+                        alt={'icon'}
+                        style={styles.emptyImage}    
+                    />
                     <Text style={styles.emptyTitle}>
                         Your essential list is empty
                     </Text>
@@ -78,6 +82,8 @@ const styles = new StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         paddingHorizontal: 50,
+        backgroundColor: 'white',
+        borderTopWidth: 0.5,
     },
     spinnerContainer: {
         flex: 1,
@@ -87,7 +93,6 @@ const styles = new StyleSheet.create({
     emptyImage: {
         width: 96,
         height: 96,
-        backgroundColor: '#ed4074',
         borderRadius: 20,
         marginBottom: 20,
     },

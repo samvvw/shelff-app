@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import { FAB, Portal, Provider } from 'react-native-paper'
 import { useState } from 'react'
-import { screenWidth } from './layout'
+import { screenWidth, screenHeight } from './layout'
 import { Text } from 'react-native'
 import { UserContext } from '../context/UserContext'
 import { theme } from '../styles/theme'
@@ -41,8 +41,8 @@ const VerticalMenu = ({ navigation }) => {
                             borderWidth: 2,
                             borderColor: theme.primaryColour.crimson,
                             backgroundColor: 'white',
-                            marginBottom: 45,
-                            borderRadius: '50%',
+                            marginBottom: screenHeight < 750 ? 45 : 5,
+                            borderRadius: 50,
                             alignSelf: 'center',
                         }}
                         color={theme.primaryColour.crimson}
@@ -50,7 +50,7 @@ const VerticalMenu = ({ navigation }) => {
                             backgroundColor: 'transparent',
                         }}
                         open={open}
-                        icon={open ? 'calendar-today' : 'plus'}
+                        icon={open ? 'close-thick' : 'plus'}
                         actions={[
                             {
                                 style: {
@@ -58,7 +58,13 @@ const VerticalMenu = ({ navigation }) => {
                                         theme.primaryColour.crimson,
                                     marginRight: screenWidth / 2 - 42,
                                 },
-                                icon: 'card-outline',
+                                icon: 'format-letter-case',
+                                label: 'Manual Entry',
+                                labelTextColor: 'white',
+                                labelStyle: {
+                                    backgroundColor:
+                                    theme.primaryColour.crimson,
+                                },
                                 onPress: handleManualEntry,
                             },
                             {
@@ -67,9 +73,14 @@ const VerticalMenu = ({ navigation }) => {
                                         theme.primaryColour.crimson,
                                     marginRight: screenWidth / 2 - 42,
                                 },
-                                icon: 'heart',
-
-                                onPress: handleEssentialsAddItem,
+                                icon: 'barcode-scan',
+                                label: 'Scan',
+                                labelTextColor: 'white',
+                                labelStyle: {
+                                    backgroundColor:
+                                    theme.primaryColour.crimson,
+                                },
+                                onPress: handleBarcodeScan,
                             },
                             {
                                 style: {
@@ -77,9 +88,14 @@ const VerticalMenu = ({ navigation }) => {
                                         theme.primaryColour.crimson,
                                     marginRight: screenWidth / 2 - 42,
                                 },
-                                icon: 'barcode-scan',
-
-                                onPress: handleBarcodeScan,
+                                icon: 'heart-outline',
+                                label: 'Essentials',
+                                labelTextColor: 'white',
+                                labelStyle: {
+                                    backgroundColor:
+                                    theme.primaryColour.crimson,
+                                },
+                                onPress: handleEssentialsAddItem,
                             },
                         ]}
                         onStateChange={onStateChange}

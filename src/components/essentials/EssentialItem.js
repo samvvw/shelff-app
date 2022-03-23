@@ -5,6 +5,7 @@ import {
     Text,
     TouchableOpacity,
     TouchableHighlight,
+    Image,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import dayjs from 'dayjs'
@@ -13,9 +14,33 @@ import { useContext } from 'react'
 
 const EssentialItem = ({ item, isAdd = false }) => {
     const itemInfo = item?.item ? item?.item : item
-    // console.log('itemInfo', itemInfo)
+    console.log('itemInfo', itemInfo)
     const navigation = useNavigation()
     const { user } = useContext(UserContext)
+
+    const setCategoryIcon = (item) => {
+        switch (item) {
+            case 'Fruits':
+                return require('../../../assets/images/icons/Fruits.png')
+            case 'Vegetables':
+                return require('../../../assets/images/icons/Veggies.png')
+            case 'Meat':
+                return require('../../../assets/images/icons/Meat.png')
+            case 'Seafood':
+                return require('../../../assets/images/icons/Fish.png')
+            case 'Cold cuts':
+                return require('../../../assets/images/icons/Chicken.png')
+            case 'Dairy':
+                return require('../../../assets/images/icons/Dairy.png')
+            case 'Bread cake':
+                return require('../../../assets/images/icons/Bread.png')
+            case 'Canned food':
+                return require('../../../assets/images/icons/CanFood.png')
+            default:
+                return require('../../../assets/icon.png')
+        }
+    }
+
 
     const diffDates = (itemDate) => {
         let dateComing
@@ -31,11 +56,20 @@ const EssentialItem = ({ item, isAdd = false }) => {
         else return 'Today'
     }
 
+    const rowHeightAnimatedValue = new Animated.Value(60)
+
     return (
-        <Animated.View>
-            <TouchableHighlight>
+        <Animated.View style={[
+            styles.rowFront,                     
+            {height: rowHeightAnimatedValue}
+        ]}>
+            <TouchableHighlight style={styles.rowFrontVisible}>
                 <View style={styles.container}>
-                    <View style={styles.imageContainer}></View>
+                    <Image
+                            source={setCategoryIcon(itemInfo.categoryName)}
+                            alt={itemInfo.categoryName}
+                            style={styles.imageContainer}
+                    />
                     <View style={styles.row}>
                         <View style={styles.content}>
                             <Text style={styles.title}>
@@ -72,47 +106,74 @@ const EssentialItem = ({ item, isAdd = false }) => {
 }
 
 const styles = new StyleSheet.create({
+
+    rowFront: {
+        backgroundColor: 'white',
+        borderRadius: 5,
+        height: 80,
+        margin: 20,
+        marginBottom: 40,
+        elevation: 5,
+    },
+    rowFrontVisible: {
+        backgroundColor: 'white',
+        borderRadius: 5,
+        height: 80,
+        marginBottom: 15,
+    },
     container: {
-        width: '100%',
+        height: 95,
+        borderWidth: 1,
         borderColor: '#e8e8e8',
         backgroundColor: '#fff',
-        flexDirection: 'row',
-        paddingVertical: 20,
-        paddingLeft: 30,
+        display: 'flex',        
         alignItems: 'center',
-        marginVertical: 5,
+        flexDirection: 'row',
+        padding: 20,
+        borderRadius: 5,
     },
     imageContainer: {
-        width: 55,
-        height: 55,
-        backgroundColor: '#ed4074',
-        borderRadius: 10,
+        width: Platform.OS === 'ios' ? 70 : 60,
+        height: Platform.OS === 'ios' ? 70 : 60,
+        borderRadius: 5,
         marginRight: 20,
     },
+    row: {
+        width: '70%',
+        height: '80%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        marginLeft: 10
+    },
+    contetnt: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 5,
+    },
     title: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
     },
     subtitle: {
-        fontSize: 12,
+        textAlign: 'center',
+        fontSize: 13,
         marginTop: 3,
         color: '#000',
     },
     highlight: {
+        textAlign: 'left',
         fontWeight: 'bold',
     },
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: '70%',
-    },
     button: {
+        width: '80%',
         borderWidth: 2,
         borderRadius: 60,
-        paddingVertical: 13,
-        paddingHorizontal: 11,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
         borderColor: '#ed4074',
+        marginTop: 5,
     },
 })
 

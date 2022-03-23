@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Box, Text } from 'native-base'
+import { View, Box, Text, Image } from 'native-base'
 import { myShelffStyles } from '../../styles/styles'
 import { theme } from '../../styles/theme'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
@@ -11,7 +11,11 @@ import Expired from './Expired'
 const Empty = () => {
     return (
         <Box style={myShelffStyles.emptyBox}>
-            <Box style={myShelffStyles.box}></Box>
+            <Image 
+                source={require('../../../assets/icon.png')} 
+                alt={'icon'}
+                style={myShelffStyles.box}    
+            />
             <Text style={myShelffStyles.textEmpty}>Your Shelf is empty.</Text>
             <Text style={myShelffStyles.subTextEmpty}>
                 Tap the add icon below to add items
@@ -48,11 +52,9 @@ function MyShelff(props) {
                 tabBarIndicatorStyle: { backgroundColor: 'transparent' },
                 lazy: true,
                 swipeEnabled: false,
-            }}
-            tabBarOptions={{
-                style: {
-                    backgroundColor: theme.components.chip,
-                },
+                tabBarStyle: {
+                    backgroundColor: theme.components.chip
+                }
             }}
         >
             <Tab.Screen

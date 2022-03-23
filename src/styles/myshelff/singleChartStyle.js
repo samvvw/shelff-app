@@ -8,7 +8,7 @@ export const singleChartStyle = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 30,
+        marginTop: 30,
         transform: [{ rotate: '180deg'}] //to start from the bottom 
     },
     innerWrapper: {
