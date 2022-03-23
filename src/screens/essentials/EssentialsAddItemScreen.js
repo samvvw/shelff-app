@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client'
 import { useContext, useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
 import { UserContext } from '../../context/UserContext'
 import { GET_ESSENTIALS } from '../../queries/queries'
 import EssentialsList from '../../components/essentials/EssentialsList'
@@ -29,7 +29,7 @@ const EssentialsAddItemScreen = ({ navigation }) => {
 
     return (
         <>
-            {loading && <Spinner />}
+            {loading && <Spinner mt={100} />}
             {items?.length >= 1 && (
                 <View style={styles.listContainer}>
                     <EssentialsList data={items} isAdd={true} />
@@ -37,7 +37,11 @@ const EssentialsAddItemScreen = ({ navigation }) => {
             )}
             {items?.length === 0 && (
                 <View style={styles.container}>
-                    <View style={styles.emptyImage}></View>
+                    <Image 
+                        source={require('../../../assets/icon.png')} 
+                        alt={'icon'}
+                        style={styles.emptyImage}    
+                    />
                     <Text style={styles.emptyTitle}>
                         Your essential list is empty
                     </Text>
@@ -58,12 +62,13 @@ const styles = new StyleSheet.create({
         width: '100%',
         paddingHorizontal: 50,
         marginTop: 30,
+        backgroundColor: 'white',
+        borderTopWidth: 0.5,
     },
     listContainer: {},
     emptyImage: {
         width: 96,
         height: 96,
-        backgroundColor: '#ed4074',
         borderRadius: 20,
         marginBottom: 20,
     },

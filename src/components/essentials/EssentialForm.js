@@ -181,6 +181,7 @@ const EssentialForm = ({ navigation, route }) => {
                                     onPress={showDatePicker}
                                 />
                                 <DateTimePickerModal
+                                    minimumDate={today}
                                     isVisible={isDatePickerVisible}
                                     mode="date"
                                     onConfirm={handleConfirm}

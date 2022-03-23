@@ -1,11 +1,9 @@
 import { View, Text } from 'native-base'
 import React, { useState, useEffect, useContext } from 'react'
-import { filter } from 'lodash'
 import Category from '../components/list/Category'
 import Storage from '../components/list/Storage'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import MyShelff from '../components/myShelff/MyShelff'
 import EssentialsScreen from '../screens/essentials/EssentialsScreen'
@@ -14,6 +12,12 @@ import { Profile } from '../screens/profile/Profile'
 import { theme } from '../styles/theme'
 import { UserContext } from '../context/UserContext'
 import { UserItemsContext } from '../context/UserItemsContext'
+
+import HomeIcon from '../../assets/images/icons/HomeIcon.js'
+import EssentialIcon from '../../assets/images/icons/EssentialIcon.js'
+import ListingIcon from '../../assets/images/icons/ListingIcon.js'
+import ProfileIcon from '../../assets/images/icons/ProfileIcon.js'
+
 
 function List(props) {
     const Tab = createMaterialTopTabNavigator()
@@ -128,159 +132,7 @@ const Footer = () => {
         console.log('rendeerr USERITEMSJ')
     }, [userItems, expiringItems, freshItems])
 
-    /***********************************************/
-    /******  Temporal data                  ********/
-    /***********************************************/
-    //Like this is in the database
-    // const [shelfItems, setShelfItems] = useState([
-    //     {
-    //         id: '1',
-    //         name: 'Apple',
-    //         expiry: 'xxx',
-    //         quantity: 5,
-    //         location: 'Pantry',
-    //         category: 'Fruits',
-    //         essential: true,
-    //         status: 'Fresh',
-    //         action: '',
-    //     },
-    //     {
-    //         id: '2',
-    //         name: 'Banana',
-    //         expiry: 'xxx',
-    //         quantity: 10,
-    //         location: 'Pantry',
-    //         category: 'Fruits',
-    //         essential: true,
-    //         status: 'Fresh',
-    //         action: '',
-    //     },
-    //     {
-    //         id: '3',
-    //         name: 'Mango',
-    //         expiry: 'xxx',
-    //         quantity: 2,
-    //         location: 'Pantry',
-    //         category: 'Fruits',
-    //         essential: false,
-    //         status: 'Fresh',
-    //         action: '',
-    //     },
-    //     {
-    //         id: '4',
-    //         name: 'grape',
-    //         expiry: 'xxx',
-    //         quantity: 1,
-    //         location: 'Fridge',
-    //         category: 'Fruits',
-    //         essential: false,
-    //         status: 'Fresh',
-    //         action: 'Consumed',
-    //     },
-    //     {
-    //         id: '5',
-    //         name: 'Milk',
-    //         expiry: 'xxx',
-    //         quantity: 1,
-    //         location: 'Fridge',
-    //         category: 'Dairy',
-    //         essential: true,
-    //         status: 'Expiring',
-    //         action: '',
-    //     },
-    //     {
-    //         id: '6',
-    //         name: 'Cheese',
-    //         expiry: 'xxx',
-    //         quantity: 1,
-    //         location: 'Fridge',
-    //         category: 'Dairy',
-    //         essential: false,
-    //         status: 'Expiring',
-    //         action: '',
-    //     },
-    //     {
-    //         id: '7',
-    //         name: 'egg',
-    //         expiry: 'xxx',
-    //         quantity: 12,
-    //         location: 'Fridge',
-    //         category: 'Dairy',
-    //         essential: true,
-    //         status: 'Expiring',
-    //         action: '',
-    //     },
-    //     {
-    //         id: '8',
-    //         name: 'Donuts',
-    //         expiry: 'xxx',
-    //         quantity: 5,
-    //         location: 'Pantry',
-    //         category: 'Bread & Cake',
-    //         essential: false,
-    //         status: 'Expired',
-    //         action: '',
-    //     },
-    //     {
-    //         id: '9',
-    //         name: 'Cookies',
-    //         expiry: 'xxx',
-    //         quantity: 3,
-    //         location: 'Pantry',
-    //         category: 'Bread & Cake',
-    //         essential: false,
-    //         status: 'Expired',
-    //         action: '',
-    //     },
-    // ])
-
-    // const [allItems, setAllItems] = useState(
-    //     filter(shelfItems, (item) => {
-    //         return item.action === ''
-    //     }),
-    // )
-    // const [freshItems, setFreshItems] = useState(
-    //     filter(shelfItems, (item) => {
-    //         return item.action === '' && item.status === 'Fresh'
-    //     }),
-    // )
-    // const [expiringItems, setExpiringItems] = useState(
-    //     filter(shelfItems, (item) => {
-    //         return item.action === '' && item.status === 'Expiring'
-    //     }),
-    // )
-    // const [expiredItems, setExpiredItems] = useState(
-    //     filter(shelfItems, (item) => {
-    //         return item.action === '' && item.status === 'Expired'
-    //     }),
-    // )
-
-    // useEffect(() => {
-    //     setAllItems(
-    //         filter(shelfItems, (item) => {
-    //             return item.action === ''
-    //         }),
-    //     )
-    //     setFreshItems(
-    //         filter(shelfItems, (item) => {
-    //             return item.action === '' && item.status === 'Fresh'
-    //         }),
-    //     )
-    //     setExpiringItems(
-    //         filter(shelfItems, (item) => {
-    //             return item.action === '' && item.status === 'Expiring'
-    //         }),
-    //     )
-    //     setExpiredItems(
-    //         filter(shelfItems, (item) => {
-    //             return item.action === '' && item.status === 'Expired'
-    //         }),
-    //     )
-    // }, [shelfItems])
-
-    /************************************************/
-    /************************************************/
-    /************************************************/
+    
 
     return (
         <Tab.Navigator
@@ -289,10 +141,8 @@ const Footer = () => {
                 tabBarStyle: {
                     height: 70,
                     paddingBottom: 20,
-
-                    backgroundColor: 'white',
+                    backgroundColor: theme.components.chip,
                 },
-
                 tabBarActiveTintColor: theme.primaryColour.crimson,
                 tabBarInactiveTintColor: theme.textColour.icons,
             }}
@@ -302,10 +152,9 @@ const Footer = () => {
                 options={{
                     tabBarLabel: 'My Shelff',
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons
-                            name="home"
-                            color={color}
+                        <HomeIcon
                             size={size}
+                            color={color}
                         />
                     ),
                 }}
@@ -327,8 +176,7 @@ const Footer = () => {
                 options={{
                     tabBarLabel: 'Essentials',
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons
-                            name="heart"
+                        <EssentialIcon
                             color={color}
                             size={size}
                         />
@@ -347,8 +195,7 @@ const Footer = () => {
                 options={{
                     tabBarLabel: 'Listing',
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons
-                            name="shape"
+                        <ListingIcon
                             color={color}
                             size={size}
                         />
@@ -369,8 +216,7 @@ const Footer = () => {
                 options={{
                     tabBarLabel: 'Profile',
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons
-                            name="account"
+                        <ProfileIcon
                             color={color}
                             size={size}
                         />

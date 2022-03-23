@@ -16,7 +16,8 @@ export const addItemBarcodeStyle = StyleSheet.create({
     },
     boxItems: {
         justifyContent: 'space-between',
-        margin: 5,
+        margin: 10,
+        paddingRight: 10,
         // height: "100%",
     },
 

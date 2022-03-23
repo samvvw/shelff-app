@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
-
+import { theme } from "../../styles/theme"
 import { TextInput, Platform } from 'react-native'
 
 //Toast to send messages validations
@@ -416,6 +416,7 @@ const ManualEntryItem = ({ navigation }) => {
                                             onPress={showDatePicker}
                                         />
                                         <DateTimePickerModal
+                                            minimumDate={today}
                                             isVisible={isDatePickerVisible}
                                             mode="date"
                                             onConfirm={handleConfirm}
@@ -499,6 +500,7 @@ const ManualEntryItem = ({ navigation }) => {
                                 <Switch
                                     isChecked={essential}
                                     onToggle={handleEssential}
+                                    onTrackColor={theme.primaryColour.crimson}
                                 />
                             </HStack>
                         </Box>

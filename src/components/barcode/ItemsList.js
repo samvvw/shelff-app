@@ -34,7 +34,7 @@ const ItemsList = ({
                         key="l-header-button"
                     >
                         <Icon
-                            size={18}
+                            size={16}
                             name={arrowButton}
                             color={theme.primaryColour.crimson}
                         />

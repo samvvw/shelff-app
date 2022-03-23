@@ -6,8 +6,7 @@ import { listDetailsStyles } from '../../styles/styles'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const ListDetails = (props) => {
-    const { listType, selectedList, shelfItems, allItems, setListDetailsOpen } =
-        props
+    const { listType, selectedList, shelfItems, allItems, setListDetailsOpen } = props
 
     const [listItems, setListItems] = useState(
         filter(allItems, (item) => {
@@ -35,7 +34,7 @@ const ListDetails = (props) => {
             >
                 <Text style={listDetailsStyles.icon}>
                     <MaterialCommunityIcons
-                        name="chevron-double-left"
+                        name="chevron-left"
                         size={30}
                         color="#535657"
                     />

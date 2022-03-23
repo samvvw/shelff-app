@@ -14,7 +14,7 @@ const Fresh = (props) => {
         <View style={singleChartStyles.container}>
 
             <View style={singleChartStyles.numOfItem}>
-                <Text>{status}: {numOfItems} items</Text>
+                <Text>{status}: {numOfItems} item{numOfItems <= 1 ? '' : 's'}</Text>
             </View>
 
             <CircularProgressWithChild

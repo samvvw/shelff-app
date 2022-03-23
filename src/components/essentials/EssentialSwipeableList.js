@@ -1,10 +1,11 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useContext } from 'react'
-import { Animated, TouchableOpacity } from 'react-native'
+import { Animated, TouchableOpacity, Text, View } from 'react-native'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { swipableListStyles } from '../../styles/styles'
 import EssentialItem from './EssentialItem'
 import { UserContext } from '../../context/UserContext'
+import RemoveIcon from '../../../assets/images/icons/RemoveIcon.js'
+
 
 const EssentialSwipeableList = ({
     data,
@@ -32,7 +33,7 @@ const EssentialSwipeableList = ({
 
     const renderHiddenItem = (data, rowMap) => {
         const rowActionAnimatedValue = new Animated.Value(75)
-        const rowHeightAnimatedValue = new Animated.Value(60)
+        const rowHeightAnimatedValue = new Animated.Value(65)
         return (
             <HiddenItemWithActions
                 data={data}
@@ -75,7 +76,7 @@ const EssentialSwipeableList = ({
                                 transform: [
                                     {
                                         scale: swipeAnimatedValue.interpolate({
-                                            inputRange: [-85, -45],
+                                            inputRange: [-90, -45],
                                             outputRange: [1, 0],
                                             extrapolate: 'clamp',
                                         }),
@@ -84,11 +85,8 @@ const EssentialSwipeableList = ({
                             },
                         ]}
                     >
-                        <MaterialCommunityIcons
-                            name="trash-can-outline"
-                            size={30}
-                            color="#fff"
-                        />
+                        <RemoveIcon/>
+                        <Text style={swipableListStyles.btnText}>Remove</Text>
                     </Animated.View>
                 </TouchableOpacity>
             </Animated.View>
@@ -96,19 +94,21 @@ const EssentialSwipeableList = ({
     }
 
     return (
-        <SwipeListView
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={(item, i) => item?.itemId + i}
-            renderHiddenItem={renderHiddenItem}
-            leftOpenValue={75}
-            rightOpenValue={-75}
-            disableRightSwipe
-            //Some other actions
-            rightActionValue={-200}
-            leftActionValue={0}
-            rightActivationValue={-500}
-        />
+        <View style={swipableListStyles.essentialContainer}>
+            <SwipeListView
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={(item, i) => item?.itemId + i}
+                renderHiddenItem={renderHiddenItem}
+                leftOpenValue={90}
+                rightOpenValue={-90}
+                disableRightSwipe
+                //Some other actions
+                rightActionValue={-200}
+                leftActionValue={0}
+                rightActivationValue={-500}
+            />
+        </View>
     )
 }
 

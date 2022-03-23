@@ -76,20 +76,8 @@ const All = (props) => {
                 </View>
 
                 <View style={allChartsStyles.details}>
-                    {/* <Text style={allChartsStyles.detail}>
-                    {expiredItems.length} Expired
-                </Text>
-                <Text style={allChartsStyles.detail}>
-                    {expiringItems.length} Expiring
-                </Text>
-                <Text style={allChartsStyles.detail}>
-                    {freshItems.length} Fresh
-                </Text> */}
-
-                    <Text>
-                        Fresh: {freshItems.length}items ・ Expiring:{' '}
-                        {expiringItems.length}items ・ Expired:{' '}
-                        {expiredItems.length}items
+                    <Text style={allChartsStyles.detailsText}>
+                        Fresh: {freshItems.length} item{freshItems.length <= 1? '' : 's'} ・ Expiring: {expiringItems.length} item{expiringItems.length <= 1? '' : 's'} ・ Expired: {expiredItems.length} item{expiringItems.length <= 1? '' : 's'}
                     </Text>
                 </View>
             </View>
