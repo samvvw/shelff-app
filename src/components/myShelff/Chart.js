@@ -53,11 +53,30 @@ const Fresh = (props) => {
                             }}
                         />
                     )}
-                    {status !== 'Fresh' && (
-                        <Image
-                            source={require('../../../assets/icon.png')}
-                            alt={'Fresh'}
-                            style={singleChartStyles.image}
+                    {status === 'Expiring' && (
+                        <LottieView
+                            source={require('../../assets/expiring-animation.json')}
+                            autoPlay
+                            loop={true}
+                            style={{
+                                width: 140,
+                                height: 140,
+                                backgroundColor: '#fff',
+                                justifyContent: 'center',
+                            }}
+                        />
+                    )}
+                    {status !== 'Fresh' && status !== 'Expiring' && (
+                        <LottieView
+                            source={require('../../assets/expired-animation.json')}
+                            autoPlay
+                            loop={true}
+                            style={{
+                                width: 140,
+                                height: 140,
+                                backgroundColor: '#fff',
+                                justifyContent: 'center',
+                            }}
                         />
                     )}
                 </View>
