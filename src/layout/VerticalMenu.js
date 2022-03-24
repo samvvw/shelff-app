@@ -76,7 +76,7 @@ const VerticalMenu = ({ navigation }) => {
                                     backgroundColor: 'white',
                                     borderRadius: 20,
                                 },
-                                onPress: handleEssentialsAddItem,
+                                onPress: handleManualEntry,
                             },
                             {
                                 style: {
@@ -91,7 +91,7 @@ const VerticalMenu = ({ navigation }) => {
                                     backgroundColor: 'white',
                                     borderRadius: 20,
                                 },
-                                onPress: handleEssentialsAddItem,
+                                onPress: handleBarcodeScan,
                             },
                             {
                                 style: {

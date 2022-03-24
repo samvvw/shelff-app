@@ -357,7 +357,7 @@ const SwipableList = (props) => {
     }
 
     return (
-        <View style={swipableListStyles.container}>
+        <View style={[swipableListStyles.container, selectedList ? swipableListStyles.containerForList : null]}>
             {/* selectedList is for Listing, '' is for MyShelff */}
             {selectedList ? 
                 <Text style={swipableListStyles.header}>{selectedList}</Text> 

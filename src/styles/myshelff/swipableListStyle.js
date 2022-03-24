@@ -5,8 +5,12 @@ import { theme } from "../theme"
 export const swipableListStyle = StyleSheet.create({
     container: {
         width: screenWidth,
+        paddingBottom: 50,
         backgroundColor: 'white',
         minHeight: screenHeight/2.7,
+    },
+    containerForList: {
+        height: screenHeight * 0.7,
     },
     essentialContainer: {
         width: screenWidth,

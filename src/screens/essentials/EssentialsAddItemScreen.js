@@ -6,6 +6,8 @@ import { GET_ESSENTIALS } from '../../queries/queries'
 import EssentialsList from '../../components/essentials/EssentialsList'
 import { openDatabase, executeTransaction } from '../../services/sqllite'
 import { Spinner } from 'native-base'
+import { screenWidth, screenHeight } from "../../layout/layout"
+
 
 const EssentialsAddItemScreen = ({ navigation }) => {
     const [items, setItems] = useState([])
@@ -29,7 +31,7 @@ const EssentialsAddItemScreen = ({ navigation }) => {
 
     return (
         <>
-            {loading && <Spinner mt={100} />}
+            {loading && <Spinner style={styles.spinner}/>}
             {items?.length >= 1 && (
                 <View style={styles.listContainer}>
                     <EssentialsList data={items} isAdd={true} />
@@ -56,32 +58,35 @@ const EssentialsAddItemScreen = ({ navigation }) => {
 
 const styles = new StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        paddingHorizontal: 50,
-        marginTop: 30,
-        backgroundColor: 'white',
-        borderTopWidth: 0.5,
+        height: screenHeight / 2,
+        width: screenWidth,
+        justifyContent: "center",
+        alignItems: "center",
     },
-    listContainer: {},
+    spinner: {
+        position: 'relative',
+        top: 100,
+    },
+    listContainer: {
+        height: screenHeight,
+        backgroundColor: 'white',
+    },
     emptyImage: {
-        width: 96,
-        height: 96,
+        width: 80,
+        height: 80,
         borderRadius: 20,
         marginBottom: 20,
+        backgroundColor: "lightgray",
     },
     emptyTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: "bold",
+        textAlign: "center",
     },
     emptySubtitle: {
         fontSize: 16,
-        textAlign: 'center',
-        marginBottom: 15,
+        textAlign: "center",
+        width: '60%'
     },
 })
 
