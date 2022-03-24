@@ -18,7 +18,7 @@ const OnboardingScreen = ({ navigation }) => {
 
     const handleSkip = () => {
         navigation.replace('GetStarted')
-        AsyncStorage.setItem('isFirstTimeOpen', 'no')
+        // AsyncStorage.setItem('isFirstTimeOpen', 'no')
     }
 
     return (
