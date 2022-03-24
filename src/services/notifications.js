@@ -57,55 +57,58 @@ export const setNotification = async (
         //getreminder time
         AsyncStorage.getItem('reminder')
             .then((data) => {
-                let reminderTime = JSON.parse(data)
+                // let reminderTime = JSON.parse(data)
+                // const hInSec = reminderTime.hour * 60 * 60
+                // const mInSec = reminderTime.minute * 60
 
-                const hInSec = reminderTime.hour * 60 * 60
-                const mInSec = reminderTime.minute * 60
-
-                notificationTimings.map((notificate) => {
-                    const flatNotificate = notificate - (notificate % 86400)
-                    const dateTime = flatNotificate + hInSec + mInSec
-
-                    //To show the notification alert
-                    Notifications.setNotificationHandler({
-                        handleNotification: async () => ({
-                            shouldShowAlert: true,
-                            shouldPlaySound: true,
-                            shouldSetBadge: false,
-                        }),
-                    })
-
-                    //Instant Notification
-                    Notifications.scheduleNotificationAsync({
-                        content: {
-                            title: `Instant Notification`,
-                            body: `[${date}] ${itemName} in ${location}`,
-                        },
-                        trigger: null,
-                    }).catch((error) => {
-                        console.log('error', error)
-                    })
-
-                    //Scheduled Notification (it can be passed with UNIXTIME wich is mmsecond)
-                    Notifications.scheduleNotificationAsync({
-                        content: {
-                            title: 'Expiring Alert',
-                            body: `[${date}] ${itemName} in ${location}`,
-                        },
-                        trigger: { seconds: dateTime },
-                    }).catch((error) => {
-                        console.log('error', error)
-                    })
-
-                    //To Check Scheduled Notifications
-                    Notifications.getAllScheduledNotificationsAsync()
-                        .then((data) => {
-                            console.log('allNotifications', data)
-                        })
-                        .catch((error) => {
-                            console.log('error', error)
-                        })
+                //To show the notification alert
+                Notifications.setNotificationHandler({
+                    handleNotification: async () => ({
+                        shouldShowAlert: true,
+                        shouldPlaySound: true,
+                        shouldSetBadge: false,
+                    }),
                 })
+
+                //Instant Notification
+                Notifications.scheduleNotificationAsync({
+                    content: {
+                        title: `Shelff`,
+                        body: `${itemName} in ${location == 1 ? "Fridge" : location == 2 ? "Freezer" : "Pantry"} (Expiry: ${date})`,
+                    },
+                    trigger: null,
+                }).catch((error) => {
+                    console.log('error', error)
+                })
+
+                /****************************************************/
+                /* Scheduled Notification ***************************/
+                /* We won't show in presentation, so commenting out */
+                /****************************************************/
+                // notificationTimings.map((notificate) => {
+                //     const flatNotificate = notificate - (notificate % 86400)
+                //     const dateTime = flatNotificate + hInSec + mInSec
+
+                //     //Scheduled Notification (it can be passed with UNIXTIME wich is mmsecond)
+                //     Notifications.scheduleNotificationAsync({
+                //         content: {
+                //             title: 'Expiring Alert',
+                //             body: `${itemName} in ${location == 1 ? "Fridge" : location == 2 ? "Freezer" : "Pantry"} (Expiry: ${date})`,
+                //         },
+                //         trigger: { seconds: dateTime },
+                //     }).catch((error) => {
+                //         console.log('error', error)
+                //     })
+
+                //     //To Check Scheduled Notifications
+                //     Notifications.getAllScheduledNotificationsAsync()
+                //     .then((data) => {
+                //         console.log('allNotifications', data)
+                //     })
+                //     .catch((error) => {
+                //         console.log('error', error)
+                //     })
+                // })
             })
             .catch((error) => {
                 console.log('error', error)
