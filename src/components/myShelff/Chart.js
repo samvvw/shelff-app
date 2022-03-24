@@ -42,12 +42,12 @@ const Fresh = (props) => {
                 <View style={singleChartStyles.innerWrapper}>
                     {status === 'Fresh' && (
                         <LottieView
-                            source={require('../../assets/fresh-animation.json')}
+                            source={require('../../assets/fresh-better-animation.json')}
                             autoPlay
                             loop={true}
                             style={{
-                                width: 140,
-                                height: 140,
+                                width: 145,
+                                height: 145,
                                 backgroundColor: '#fff',
                                 justifyContent: 'center',
                             }}
@@ -55,7 +55,7 @@ const Fresh = (props) => {
                     )}
                     {status === 'Expiring' && (
                         <LottieView
-                            source={require('../../assets/expiring-animation.json')}
+                            source={require('../../assets/expiring-better-animation.json')}
                             autoPlay
                             loop={true}
                             style={{
@@ -68,7 +68,7 @@ const Fresh = (props) => {
                     )}
                     {status !== 'Fresh' && status !== 'Expiring' && (
                         <LottieView
-                            source={require('../../assets/expired-animation.json')}
+                            source={require('../../assets/expired-better-animation.json')}
                             autoPlay
                             loop={true}
                             style={{

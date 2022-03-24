@@ -45,7 +45,7 @@ const SplashScreen = ({ navigation }) => {
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
             <LottieView
-                source={require('../assets/splash-animation.json')}
+                source={require('../assets/splash-better-animation.json')}
                 autoPlay
                 loop={false}
                 style={{
