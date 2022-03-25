@@ -102,7 +102,7 @@ const EssentialForm = ({ navigation, route }) => {
             expirationDate: expDateFormatted,
             locationId: +location,
             shelfId: 1,
-            isEssential: item.isEssential ? true : false,
+            isEssential: true,
         }
         // console.log('userItem', userItem)
         await addUserItemList([userItem])

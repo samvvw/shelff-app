@@ -1,12 +1,21 @@
 import React, { useEffect, useContext } from 'react'
 import { FAB, Portal, Provider } from 'react-native-paper'
 import { useState } from 'react'
+import { StyleSheet, Text } from 'react-native'
 import { screenWidth, screenHeight } from './layout'
-import { Text } from 'react-native'
 import { UserContext } from '../context/UserContext'
 import { theme } from '../styles/theme'
+import { BlurView } from 'expo-blur'
 
 import Footer from './Footer'
+
+
+const BlurScreen = () => {
+    return (
+        <BlurView intensity={10} style={styles.blur} tint="light" />
+    )
+}
+
 
 const VerticalMenu = ({ navigation }) => {
     const { error } = useContext(UserContext)
@@ -36,6 +45,8 @@ const VerticalMenu = ({ navigation }) => {
         <>
             <Provider>
                 <Portal>
+                    {open ? <BlurScreen /> : null}
+
                     <FAB.Group
                         fabStyle={{
                             borderWidth: 2,
@@ -59,11 +70,11 @@ const VerticalMenu = ({ navigation }) => {
                                     marginRight: screenWidth / 2 - 42,
                                 },
                                 icon: 'format-letter-case',
-                                label: 'Manual Entry',
-                                labelTextColor: 'white',
+                                label: 'MANUAL ENTRY',
+                                labelTextColor: theme.primaryColour.crimson,
                                 labelStyle: {
-                                    backgroundColor:
-                                    theme.primaryColour.crimson,
+                                    backgroundColor: 'white',
+                                    borderRadius: 20,
                                 },
                                 onPress: handleManualEntry,
                             },
@@ -74,11 +85,11 @@ const VerticalMenu = ({ navigation }) => {
                                     marginRight: screenWidth / 2 - 42,
                                 },
                                 icon: 'barcode-scan',
-                                label: 'Scan',
-                                labelTextColor: 'white',
+                                label: 'SCAN BARCODE',
+                                labelTextColor: theme.primaryColour.crimson,
                                 labelStyle: {
-                                    backgroundColor:
-                                    theme.primaryColour.crimson,
+                                    backgroundColor: 'white',
+                                    borderRadius: 20,
                                 },
                                 onPress: handleBarcodeScan,
                             },
@@ -89,11 +100,11 @@ const VerticalMenu = ({ navigation }) => {
                                     marginRight: screenWidth / 2 - 42,
                                 },
                                 icon: 'heart-outline',
-                                label: 'Essentials',
-                                labelTextColor: 'white',
+                                label: 'ESSENTIALS',
+                                labelTextColor: theme.primaryColour.crimson,
                                 labelStyle: {
-                                    backgroundColor:
-                                    theme.primaryColour.crimson,
+                                    backgroundColor: 'white',
+                                    borderRadius: 20,
                                 },
                                 onPress: handleEssentialsAddItem,
                             },
@@ -114,3 +125,19 @@ const VerticalMenu = ({ navigation }) => {
 }
 
 export default VerticalMenu
+
+
+
+const styles = new StyleSheet.create({
+
+    blur: {
+        width: screenWidth,
+        height: screenHeight,
+    },
+    blurColor: {
+        width: screenWidth,
+        height: screenHeight,
+        backgroundColor: 'rgba(255, 255, 255, 0.4)'
+    }
+
+})
