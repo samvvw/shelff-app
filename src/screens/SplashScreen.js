@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Center } from 'native-base'
+import React, { useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { openDatabase, createTables } from '../services/sqllite'
-import { Image } from 'react-native'
+import { View, Dimensions } from 'react-native'
+import LottieView from 'lottie-react-native'
 
 const SplashScreen = ({ navigation }) => {
     const checkFirstLaunch = async () => {
@@ -28,7 +28,7 @@ const SplashScreen = ({ navigation }) => {
             if (isFirst) {
                 setTimeout(() => {
                     navigation.replace('Onboarding')
-                }, 1000)
+                }, 4000)
             } else {
                 const token = await AsyncStorage.getItem('token')
                 if (token) {
@@ -41,13 +41,20 @@ const SplashScreen = ({ navigation }) => {
     }, [])
 
     return (
-        <Center h="100%">
-            <Center>
-                <Image
-                    source={require('../../assets/images/FinalShelff-Logo.png')}
-                />
-            </Center>
-        </Center>
+        <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+            <LottieView
+                source={require('../assets/splash-better-animation.json')}
+                autoPlay
+                loop={false}
+                style={{
+                    width: Dimensions.get('window').width - 200,
+                    height: Dimensions.get('window').height - 200,
+                    backgroundColor: '#f2f2f2',
+                }}
+            />
+        </View>
     )
 }
 
