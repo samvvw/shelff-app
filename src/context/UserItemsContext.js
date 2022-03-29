@@ -1,5 +1,5 @@
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import { createContext, useReducer, useEffect } from 'react'
+import { createContext, useReducer, useEffect, useContext } from 'react'
 import {
     ADD_USER_ITEM,
     ADD_USER_ITEM_LIST,
@@ -9,6 +9,7 @@ import {
     UPDATE_USER_ITEM,
 } from '../queries/queries'
 import { UserItemsReducer } from './UserItemsReducer'
+import { UserContext } from './UserContext'
 
 const initialState = {
     loading: false,
@@ -26,13 +27,21 @@ export const UserItemsContext = createContext(initialState)
 
 export const UserItemsProvider = ({ children }) => {
     const [state, dispatch] = useReducer(UserItemsReducer, initialState)
+    const { idToken } = useContext(UserContext)
 
     // Get User Items
     const [getUserItemsRequest, getUserItemsResult] =
         useLazyQuery(GET_USER_ITEMS)
 
     const getUserItems = (userId) => {
-        getUserItemsRequest({ variables: { userId } })
+        getUserItemsRequest({
+            variables: { userId },
+            context: {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
+            },
+        })
     }
 
     useEffect(() => {
@@ -43,6 +52,7 @@ export const UserItemsProvider = ({ children }) => {
             dispatch({ type: 'ERROR', payload: getUserItemsResult.error })
         }
         if (getUserItemsResult.data) {
+            console.log('userItems', getUserItemsResult.data.userItems.length)
             dispatch({
                 type: 'GET_USER_ITEMS',
                 payload: getUserItemsResult.data,
@@ -73,9 +83,26 @@ export const UserItemsProvider = ({ children }) => {
                 shelfId,
                 isEssential,
             },
+            context: {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
+            },
             refetchQueries: [
-                { query: GET_USER_ITEMS, variables: { userId } },
-                { query: GET_ESSENTIALS, variables: { userId } },
+                {
+                    query: GET_USER_ITEMS,
+                    variables: { userId },
+                    context: {
+                        headers: { Authorization: `Bearer ${idToken}` },
+                    },
+                },
+                {
+                    query: GET_ESSENTIALS,
+                    variables: { userId },
+                    context: {
+                        headers: { Authorization: `Bearer ${idToken}` },
+                    },
+                },
             ],
         })
     }
@@ -89,14 +116,29 @@ export const UserItemsProvider = ({ children }) => {
             variables: {
                 itemList,
             },
+            context: {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
+            },
             refetchQueries: [
                 {
                     query: GET_USER_ITEMS,
                     variables: { userId: itemList[0].userId },
+                    context: {
+                        headers: {
+                            Authorization: `Bearer ${idToken}`,
+                        },
+                    },
                 },
                 {
                     query: GET_ESSENTIALS,
                     variables: { userId: itemList[0].userId },
+                    context: {
+                        headers: {
+                            Authorization: `Bearer ${idToken}`,
+                        },
+                    },
                 },
             ],
         })
@@ -120,7 +162,20 @@ export const UserItemsProvider = ({ children }) => {
                 userId,
                 creationDate: formattedCreationDate,
             },
-            refetchQueries: [{ query: GET_USER_ITEMS, variables: { userId } }],
+            context: {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
+            },
+            refetchQueries: [
+                {
+                    query: GET_USER_ITEMS,
+                    variables: { userId },
+                    context: {
+                        headers: { Authorization: `Bearer ${idToken}` },
+                    },
+                },
+            ],
         })
     }
 
@@ -165,7 +220,22 @@ export const UserItemsProvider = ({ children }) => {
                 locationId,
                 isEssential,
             },
-            refetchQueries: [{ query: GET_USER_ITEMS, variables: { userId } }],
+            context: {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                },
+            },
+            refetchQueries: [
+                {
+                    query: GET_USER_ITEMS,
+                    variables: { userId },
+                    context: {
+                        headers: {
+                            Authorization: `Bearer ${idToken}`,
+                        },
+                    },
+                },
+            ],
         })
     }
 
@@ -174,7 +244,10 @@ export const UserItemsProvider = ({ children }) => {
         useLazyQuery(GET_ESSENTIALS)
 
     const getEssentials = (userId) => {
-        getEssentialsRequest({ variables: { userId } })
+        getEssentialsRequest({
+            variables: { userId },
+            context: { headers: { Authorization: `Bearer ${idToken}` } },
+        })
     }
 
     useEffect(() => {

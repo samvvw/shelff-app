@@ -22,6 +22,7 @@ const initialState = {
     error: {},
     auth: {},
     token: '',
+    idToken: '',
     loading: true,
 }
 
@@ -59,6 +60,8 @@ export const UserProvider = ({ children }) => {
                             'token',
                             user.stsTokenManager.accessToken,
                         )
+                        const idToken = await getIdToken(auth.currentUser, true)
+
                         dispatch({
                             type: 'STORED_USER',
                             payload: {
@@ -66,6 +69,7 @@ export const UserProvider = ({ children }) => {
                                 email: user.email,
                                 fullName: user.displayName,
                                 photoURL: user.photoURL,
+                                idToken: idToken,
                             },
                         })
                     } catch (error) {
@@ -98,17 +102,25 @@ export const UserProvider = ({ children }) => {
                         user.stsTokenManager.accessToken,
                     )
 
+                    const idToken = await getIdToken(auth.currentUser, true)
+
                     await addUser({
                         variables: {
                             userId: user.uid,
                             email: user.email,
                             fullName: user.displayName,
                         },
+                        context: {
+                            headers: {
+                                Authorization: `Bearer ${idToken}`,
+                            },
+                        },
                     })
 
                     userTemp.current = {
                         user,
                         auth,
+                        idToken,
                         dispatch: 'GOOGLE_AUTH',
                     }
                 } catch (error) {
@@ -147,17 +159,25 @@ export const UserProvider = ({ children }) => {
                 user.stsTokenManager.accessToken,
             )
 
+            const idToken = await getIdToken(auth.currentUser, true)
+
             await addUser({
                 variables: {
                     userId: auth.currentUser.uid,
                     email: auth.currentUser.email,
                     fullName: auth.currentUser.displayName,
                 },
+                context: {
+                    headers: {
+                        Authorization: `Bearer ${idToken}`,
+                    },
+                },
             })
 
             userTemp.current = {
                 user,
                 auth,
+                idToken,
                 fullName: auth.currentUser.displayName,
                 dispatch: 'FIREBASE_AUTH',
             }
@@ -190,17 +210,25 @@ export const UserProvider = ({ children }) => {
                 user.stsTokenManager.accessToken,
             )
 
+            const idToken = await getIdToken(auth.currentUser, true)
+
             await addUser({
                 variables: {
                     userId: auth.currentUser.uid,
                     email: auth.currentUser.email,
                     fullName: auth.currentUser.displayName,
                 },
+                context: {
+                    headers: {
+                        Authorization: `Bearer ${idToken}`,
+                    },
+                },
             })
 
             userTemp.current = {
                 user,
                 auth,
+                idToken,
                 fullName: auth.currentUser.displayName,
                 dispatch: 'FIREBASE_AUTH',
             }
@@ -268,6 +296,7 @@ export const UserProvider = ({ children }) => {
                 error: state.error,
                 apolloError: error,
                 token: state.token,
+                idToken: state.idToken,
             }}
         >
             {children}
