@@ -6,17 +6,23 @@ import { GET_ESSENTIALS } from '../../queries/queries'
 import EssentialsList from '../../components/essentials/EssentialsList'
 import { openDatabase, executeTransaction } from '../../services/sqllite'
 import { Spinner } from 'native-base'
-import { screenWidth, screenHeight } from "../../layout/layout"
-
+import { screenWidth, screenHeight } from '../../layout/layout'
 
 const EssentialsAddItemScreen = ({ navigation }) => {
     const [items, setItems] = useState([])
-    const { user } = useContext(UserContext)
+    const { user, idToken } = useContext(UserContext)
     const [getEssentials, { data, loading }] = useLazyQuery(GET_ESSENTIALS)
 
     useEffect(() => {
         if (user?.uid) {
-            getEssentials({ variables: { userId: user?.uid } })
+            getEssentials({
+                variables: { userId: user?.uid },
+                context: {
+                    headers: {
+                        Authorization: `Bearer ${idToken}`,
+                    },
+                },
+            })
         } else {
             const db = openDatabase()
             const sql =
@@ -31,7 +37,7 @@ const EssentialsAddItemScreen = ({ navigation }) => {
 
     return (
         <>
-            {loading && <Spinner style={styles.spinner}/>}
+            {loading && <Spinner style={styles.spinner} />}
             {items?.length >= 1 && (
                 <View style={styles.listContainer}>
                     <EssentialsList data={items} isAdd={true} />
@@ -39,10 +45,10 @@ const EssentialsAddItemScreen = ({ navigation }) => {
             )}
             {items?.length === 0 && (
                 <View style={styles.container}>
-                    <Image 
-                        source={require('../../../assets/icon.png')} 
+                    <Image
+                        source={require('../../../assets/icon.png')}
                         alt={'icon'}
-                        style={styles.emptyImage}    
+                        style={styles.emptyImage}
                     />
                     <Text style={styles.emptyTitle}>
                         Your essential list is empty
@@ -60,8 +66,8 @@ const styles = new StyleSheet.create({
     container: {
         height: screenHeight / 2,
         width: screenWidth,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     spinner: {
         position: 'relative',
@@ -76,17 +82,17 @@ const styles = new StyleSheet.create({
         height: 80,
         borderRadius: 20,
         marginBottom: 20,
-        backgroundColor: "lightgray",
+        backgroundColor: 'lightgray',
     },
     emptyTitle: {
         fontSize: 18,
-        fontWeight: "bold",
-        textAlign: "center",
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     emptySubtitle: {
         fontSize: 16,
-        textAlign: "center",
-        width: '60%'
+        textAlign: 'center',
+        width: '60%',
     },
 })
 

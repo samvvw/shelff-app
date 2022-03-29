@@ -19,6 +19,7 @@ export const UserReducer = (state, action) => {
                     photoURL: action.payload.user.photoURL,
                 },
                 token: action.payload.user.stsTokenManager.accessToken,
+                idToken: action.payload.idToken,
                 auth: action.payload.auth,
             }
         case 'FIREBASE_AUTH':
@@ -32,6 +33,7 @@ export const UserReducer = (state, action) => {
                     photoURL: action.payload.user.photoURL,
                 },
                 token: action.payload.user.stsTokenManager.accessToken,
+                idToken: action.payload.idToken,
                 auth: action.payload.auth,
             }
         case 'STORED_USER':
@@ -44,6 +46,7 @@ export const UserReducer = (state, action) => {
                     email: action.payload.email,
                     photoURL: action.payload.photoURL,
                 },
+                idToken: action.payload.idToken,
                 token: action.payload.token,
             }
     }
