@@ -62,6 +62,7 @@ const classifyUserItemsByStatus = (userItems) => {
             action: '',
             expiresIn: Math.floor(differenceInDays),
             creationDate: item.creationDate,
+            userId: item.userId,
         }
 
         shelfItems.push(itemObject)
