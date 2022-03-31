@@ -32,7 +32,20 @@ export const singleChartStyle = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: theme.textColour.inactiveText 
     },
-    message: {
-        textAlign: 'center',
+    messageWrapper: {
+        transform: [{ rotate: '180deg'}], 
+        display: 'flex',
+        alignItems: 'center',
+        width: '80%',
+    },
+    messageHeading: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    messageBody: {
+        fontSize: 16,
+        marginBottom: 10,
+        textAlign: 'center'
     }
 });

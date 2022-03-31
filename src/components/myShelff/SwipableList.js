@@ -252,7 +252,17 @@ const SwipableList = (props) => {
                             <Text style={swipableListStyles.btnText}>Donated</Text>
                         </Animated.View>
                     </TouchableOpacity>
-                ) : null}
+                ) : (
+                    <TouchableOpacity
+                        style={[
+                            swipableListStyles.backRightBtn,
+                            swipableListStyles.backRightBtnLeft,
+                            swipableListStyles.expired,
+                        ]}
+                        onPress={onExpire}
+                    >
+                    </TouchableOpacity>
+                )}
 
                 {!leftActionActivated && (
                     <Animated.View

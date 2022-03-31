@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, View, Image, Text } from 'react-native'
 import { filter } from 'lodash'
 import SwipableList from '../myShelff/SwipableList'
 import { listDetailsStyles } from '../../styles/styles'
+
+const Empty = (selectedList) => {
+    return (
+        <View style={listDetailsStyles.empty}>
+            <Image 
+                source={require('../../../assets/icon.png')} 
+                alt={'icon'}
+                style={listDetailsStyles.logo}    
+            />
+            <Text style={listDetailsStyles.text}>{selectedList} is empty.</Text>
+        </View>
+    )
+}
 
 const ListDetails = ({route}) => {
     const { listType, selectedList, shelfItems, allItems } = route.params
@@ -27,11 +40,15 @@ const ListDetails = ({route}) => {
 
     return (
         <SafeAreaView style={listDetailsStyles.container}>
+            {listItems.length == 0 ? 
+            <Empty />
+            :
             <SwipableList
                 items={listItems}
                 allItems={allItems}
                 selectedList={selectedList}
             />
+            }
         </SafeAreaView>
     )
 }
