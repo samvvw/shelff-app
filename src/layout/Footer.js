@@ -124,15 +124,15 @@ const Footer = () => {
         // console.log('rendeerr')
     }, [user])
 
-    useEffect(() => {
-        if (userItems) {
-            // console.log('UserItemsLength', userItems.length)
-            // console.log('firstUserItems', userItems[0])
-            console.log('expiring', expiringItems)
-            console.log('fesh', freshItems)
-        }
-        console.log('rendeerr USERITEMSJ')
-    }, [userItems, expiringItems, freshItems])
+    // useEffect(() => {
+    //     if (userItems) {
+    //         // console.log('UserItemsLength', userItems.length)
+    //         // console.log('firstUserItems', userItems[0])
+    //         console.log('expiring', expiringItems)
+    //         console.log('fesh', freshItems)
+    //     }
+    //     console.log('rendeerr USERITEMSJ')
+    // }, [userItems, expiringItems, freshItems])
 
     
 

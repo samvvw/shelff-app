@@ -1,24 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { SafeAreaView, View, Image, Text } from 'react-native'
 import { filter } from 'lodash'
 import SwipableList from '../myShelff/SwipableList'
 import { listDetailsStyles } from '../../styles/styles'
 
-const Empty = (selectedList) => {
-    return (
-        <View style={listDetailsStyles.empty}>
-            <Image 
-                source={require('../../../assets/icon.png')} 
-                alt={'icon'}
-                style={listDetailsStyles.logo}    
-            />
-            <Text style={listDetailsStyles.text}>{selectedList} is empty.</Text>
-        </View>
-    )
-}
+import { UserContext } from '../../context/UserContext'
+import { UserItemsContext } from '../../context/UserItemsContext'
 
 const ListDetails = ({route}) => {
-    const { listType, selectedList, shelfItems, allItems } = route.params
+    const { listType, selectedList } = route.params
+
+    const { user } = useContext(UserContext)
+
+    const {
+        getUserItems,
+        shelfItems: shelfItems,
+        allItems: allItems,
+    } = useContext(UserItemsContext)
+
+    useEffect(() => {
+        if (user.uid) {
+            getUserItems(user.uid)
+        }
+    }, [user])
 
     const [listItems, setListItems] = useState(
         filter(allItems, (item) => {
@@ -41,7 +45,14 @@ const ListDetails = ({route}) => {
     return (
         <SafeAreaView style={listDetailsStyles.container}>
             {listItems.length == 0 ? 
-            <Empty />
+            <View style={listDetailsStyles.empty}>
+                <Image 
+                    source={require('../../../assets/icon.png')} 
+                    alt={'icon'}
+                    style={listDetailsStyles.image}    
+                />
+                <Text style={listDetailsStyles.text}>{selectedList} is empty.</Text>
+            </View>
             :
             <SwipableList
                 items={listItems}

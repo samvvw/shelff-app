@@ -1,4 +1,6 @@
+import { useContext } from 'react'
 import {
+
     View,
     Text,
     Image,
@@ -16,20 +18,22 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ConsumedIcon from '../../../assets/images/icons/ConsumedIcon.js'
 import DonatedIcon from '../../../assets/images/icons/DonatedIcon.js'
 import BinIcon from '../../../assets/images/icons/BinIcon.js'
+import { UserItemsContext } from '../../context/UserItemsContext'
 
 const SwipableList = (props) => {
     const { items, allItems, selectedList } = props
+    const {removeUserItem} = useContext(UserItemsContext);
 
     // console.log(items)
 
     const actionItem = (rowMap, rowKey, actionTaken) => {
-        const newData = [...allItems]
-        const index = findIndex(newData, (item) => {
-            return item.id === rowKey
-        })
-        newData[index].action = actionTaken
+        // const newData = [...allItems]
+        // const index = findIndex(newData, (item) => {
+        //     return item.id === rowKey
+        // })
+        // newData[index].action = actionTaken
         // setShelfItems(newData)
-        console.log('TODO: ACTION ITEM METHOD SwipableList.js')
+        removeUserItem(rowKey.id,rowKey.userId,rowKey.creationDate)
     }
 
     const VisibleItem = (props) => {
@@ -41,15 +45,15 @@ const SwipableList = (props) => {
             rightActionState,
         } = props
 
-        if (rightActionState) {
-            // console.log("SWIPE");
-            Animated.timing(rowHeightAnimatedValue, {
-                toValue: 0,
-                duration: 200,
-            }).start(() => {
-                actionItem()
-            })
-        }
+        // if (rightActionState) {
+        //     // console.log("SWIPE");
+        //     Animated.timing(rowHeightAnimatedValue, {
+        //         toValue: 0,
+        //         duration: 200,
+        //     }).start(() => {
+        //         actionItem()
+        //     })
+        // }
 
         const setCategoryIcon = (item) => {
             switch (item.category) {
@@ -176,7 +180,7 @@ const SwipableList = (props) => {
     /**** Actions ***/
     /****************/
     const onRowDidOpen = (rowKey) => {
-        console.log('This row opened', rowKey)
+        console.log('This row opened', rowKey,'<------')
     }
 
     const onLeftActionStatusChange = (rowKey) => {
@@ -359,9 +363,9 @@ const SwipableList = (props) => {
                 rowMap={rowMap}
                 rowActionAnimatedValue={rowActionAnimatedValue}
                 rowHeightAnimatedValue={rowHeightAnimatedValue}
-                onConsume={() => actionItem(rowMap, data.item.id, 'Consumed')}
-                onDonate={() => actionItem(rowMap, data.item.id, 'Donated')}
-                onExpire={() => actionItem(rowMap, data.item.id, 'Expired')}
+                onConsume={() => actionItem(rowMap, data.item, 'Consumed')}
+                onDonate={() => actionItem(rowMap, data.item, 'Donated')}
+                onExpire={() => actionItem(rowMap, data.item, 'Expired')}
             />
         )
     }

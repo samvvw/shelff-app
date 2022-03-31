@@ -5,14 +5,12 @@ import { FlatGrid } from 'react-native-super-grid'
 import { listStyles } from '../../styles/styles'
 
 const List = (props) => {
-    const { listType, listItems, shelfItems, allItems, navigation } = props
+    const { listType, listItems, navigation } = props
 
     const goToListDetails = (item) => {
         navigation.push('ListDetails', {
             listType: listType, 
             selectedList: item, 
-            shelfItems: shelfItems, 
-            allItems: allItems
         })
     }
 

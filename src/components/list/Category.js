@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Center, View } from 'native-base'
 import List from './List'
-
 import Bread from '../../../assets/images/icons/Bread.png'
 import CanFood from '../../../assets/images/icons/CanFood.png'
 import Chicken from '../../../assets/images/icons/Chicken.png'
@@ -10,10 +9,9 @@ import Fish from '../../../assets/images/icons/Fish.png'
 import Veggies from '../../../assets/images/icons/Veggies.png'
 import Meat from '../../../assets/images/icons/Meat.png'
 import Fruits from '../../../assets/images/icons/Fruits.png'
-import { ItemsContext } from '../../context/ItemsContext'
+// import { ItemsContext } from '../../context/ItemsContext'
 
-const Category = (props) => {
-    const { shelfItems, allItems, navigation } = props
+const Category = ({navigation}) => {
     const [categoryListB, setCategoryList] = useState([])
     // const { categories } = useContext(ItemsContext)
 
@@ -41,8 +39,6 @@ const Category = (props) => {
                     listType="Category"
                     listItems={categoryList}
                     navigation={navigation}
-                    shelfItems={shelfItems}
-                    allItems={allItems}
                 />
             </Center>
         </View>

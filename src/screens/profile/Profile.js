@@ -11,6 +11,8 @@ import {
 } from 'native-base'
 import { UserContext } from '../../context/UserContext'
 import { TouchableOpacity } from 'react-native'
+import { theme } from '../../styles/theme'
+
 export function Profile({ navigation }) {
     const { user } = useContext(UserContext)
 
@@ -49,7 +51,7 @@ export function Profile({ navigation }) {
                                 </Text>
                                 <Text>{user.email}</Text>
                             </VStack>
-                            <ChevronRightIcon color={'blue.400'} />
+                            <ChevronRightIcon color={theme.primaryColour.crimson} />
                         </HStack>
                     </TouchableOpacity>
                 )}
@@ -87,7 +89,7 @@ export function Profile({ navigation }) {
                         justifyContent={'flex-start'}
                         colorScheme={'secondary'}
                     >
-                        <Text fontSize={'lg'} color="primary.500">
+                        <Text fontSize={'lg'} color={theme.primaryColour.crimson}>
                             Log Out
                         </Text>
                     </Button>

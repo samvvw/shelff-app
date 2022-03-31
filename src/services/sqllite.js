@@ -1,14 +1,14 @@
 import * as SQLite from 'expo-sqlite'
 
 export const openDatabase = () => {
-    // if (Platform.OS === "web") {
-    //   return {
-    //     transaction: () => {
-    //       return {
-    //         executeSql: () => {},
-    //       };
-    //     },
-    //   };
+    // if (Platform.OS === 'web') {
+    //     return {
+    //         transaction: () => {
+    //             return {
+    //                 executeSql: () => {},
+    //             }
+    //         },
+    //     }
     // }
 
     const db = SQLite.openDatabase('shelff', '1', '', 1, (msg) => {
@@ -25,6 +25,7 @@ export const createTables = (db) => {
    categoryId int not null, locationId not null, shelfId not null,
    isEssential boolean not null default false, barcode text not null
     );`
+
 
     db.transaction((txn) => {
         // txn.executeSql(
