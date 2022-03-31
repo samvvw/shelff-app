@@ -8,10 +8,10 @@ const CategoryList = ({ category, setCategory }) => {
 
     return (
         <Select
-            w={120}
-            placeholderTextColor="blue"
+            w={140}
+            placeholderTextColor='gray.700'
             borderRadius={15}
-            placeholder="Category"
+            placeholder="select category"
             selectedValue={
                 category &&
                 categories &&
@@ -30,7 +30,7 @@ const CategoryList = ({ category, setCategory }) => {
                 <Icon
                     as={Ionicons}
                     size="5"
-                    color={theme.primaryColour.crimson}
+                    color='gray.500'
                     name="chevron-down"
                 />
             }

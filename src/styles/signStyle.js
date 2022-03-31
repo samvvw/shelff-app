@@ -6,37 +6,30 @@ import { theme } from './theme'
 
 export const signStyle = StyleSheet.create({
     screenContainer: {
-        // height: screenHeight,
+        height: screenHeight,
         width: screenWidth,
-        padding: 10,
-    },
-    stack: {
-        // height: screenHeight,
-        height: '100%',
-        display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
     },
-    image: {
-        marginTop: 70,
+    logoBox: {
+        flex: 1,
+        flexDirection: 'column',
     },
-    heading: {
-        paddingTop: 40,
+    image: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     subheading: {
-        paddingTop: 20,
-        fontSize: 28,
-    },
-    headingText: {
-        fontSize: 72,
-        fontFamily: styleFonts.medium.fontFamily,
+        paddingTop: 50,
+        fontSize: 30,
     },
     buttonBox: {
-        flexGrow: 1,
+        marginBottom: 30,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
-        marginTop: 100,
+        justifyContent: 'center',
     },
     loginButtonBox: {
         marginTop: 20,
@@ -58,9 +51,6 @@ export const signStyle = StyleSheet.create({
     },
     buttonText: {
         color: theme.primaryColour.crimson,
-    },
-    buttonLink: {
-        // backgroundColor: 'transparent',
     },
     buttonLinkText: {
         color: '#000',

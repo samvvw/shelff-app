@@ -12,7 +12,19 @@ export const newItemStyle = StyleSheet.create({
         marginBottom: 0,
         backgroundColor: 'white',
     },
-
+    iconWrapper: {
+        backgroundColor: 'lightgray',
+        borderRadius: 50,
+        marginRight: 5,
+        paddingRight: 8,
+        paddingLeft: 8,
+        paddingTop: 8,
+        paddingBottom: 8,
+    },
+    icon: {
+        width: '100%',
+        height: '100%',
+    },
     labels: {
         fontSize: 17,
     },

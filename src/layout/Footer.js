@@ -58,6 +58,7 @@ function List(props) {
                         {...props}
                         shelfItems={shelfItems}
                         allItems={allItems}
+                        navigation={navigation}
                     />
                 )}
             </Tab.Screen>
@@ -82,6 +83,7 @@ function List(props) {
                         {...props}
                         shelfItems={shelfItems}
                         allItems={allItems}
+                        navigation={navigation}
                     />
                 )}
             </Tab.Screen>
@@ -151,9 +153,8 @@ const Footer = () => {
                 name="MyShelff"
                 options={{
                     tabBarLabel: 'My Shelff',
-                    tabBarIcon: ({ color, size }) => (
+                    tabBarIcon: ({ color }) => (
                         <HomeIcon
-                            size={size}
                             color={color}
                         />
                     ),
@@ -175,10 +176,9 @@ const Footer = () => {
                 component={EssentialsScreen}
                 options={{
                     tabBarLabel: 'Essentials',
-                    tabBarIcon: ({ color, size }) => (
+                    tabBarIcon: ({ color }) => (
                         <EssentialIcon
                             color={color}
-                            size={size}
                         />
                     ),
                 }}
@@ -194,10 +194,9 @@ const Footer = () => {
                 name="Listing"
                 options={{
                     tabBarLabel: 'Listing',
-                    tabBarIcon: ({ color, size }) => (
+                    tabBarIcon: ({color}) => (
                         <ListingIcon
                             color={color}
-                            size={size}
                         />
                     ),
                 }}
@@ -218,7 +217,6 @@ const Footer = () => {
                     tabBarIcon: ({ color, size }) => (
                         <ProfileIcon
                             color={color}
-                            size={size}
                         />
                     ),
                 }}

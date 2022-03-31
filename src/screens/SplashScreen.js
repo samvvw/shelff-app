@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { openDatabase, createTables } from '../services/sqllite'
-import { View, Dimensions } from 'react-native'
-import LottieView from 'lottie-react-native'
+import { View, Image, Dimensions } from 'react-native'
+// import LottieView from 'lottie-react-native'
+import Logo from '../../assets/images/logo-with-letter.png'
 
 const SplashScreen = ({ navigation }) => {
     const checkFirstLaunch = async () => {
-        // AsyncStorage.clear() //to check onboarding
+        AsyncStorage.clear() //to check onboarding
         const firstTimeCheck = await AsyncStorage.getItem('isFirstTimeOpen')
         console.log('firstTimeCheck', firstTimeCheck)
         if (firstTimeCheck == null) {
@@ -44,7 +45,7 @@ const SplashScreen = ({ navigation }) => {
         <View
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
-            <LottieView
+            {/* <LottieView
                 source={require('../assets/splash-better-animation.json')}
                 autoPlay
                 loop={false}
@@ -53,7 +54,11 @@ const SplashScreen = ({ navigation }) => {
                     height: Dimensions.get('window').height - 200,
                     backgroundColor: '#f2f2f2',
                 }}
-            />
+            /> */}
+                <Image
+                    source={Logo}
+                    alt={"logo"}
+                />
         </View>
     )
 }

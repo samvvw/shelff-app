@@ -14,18 +14,17 @@ const Onboarding1 = ({ navigation, handleNext, handleSkip }) => {
     return (
         <View style={onboardingStyles.screenContainer}>
             <Image
-                source={require('../../../assets/images/onboarding/onboarding1.jpg')}
+                source={require('../../../assets/images/onboarding/onboarding1.png')}
                 alt="onboarding1"
                 style={onboardingStyles.image}
             />
-            <View style={onboardingStyles.wrapper}>
+            <View style={[onboardingStyles.wrapper, onboardingStyles.wrapperGS]}>
                 <View style={onboardingStyles.textWrapper}>
                     <Text style={onboardingStyles.heading}>
-                        How to Add New Item
+                        Add New Items
                     </Text>
                     <Text style={onboardingStyles.text}>
-                        It is a long established fact that a reader will be
-                        distracted by the readable content of a page.
+                        They are three ways to add a new items to your Shelff. You just need to click on the “Add button” to choose the way that best suits you.
                     </Text>
                 </View>
                 <View style={onboardingStyles.buttonWrapper}>

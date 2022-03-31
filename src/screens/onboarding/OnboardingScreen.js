@@ -27,7 +27,7 @@ const OnboardingScreen = ({ navigation }) => {
             ref={swiper}
             paginationStyle={{
                 position: 'absolute',
-                top: 80,
+                top: 110,
             }}
             dotColor={theme.components.boundaryLines}
             activeDotColor={theme.primaryColour.crimson}

@@ -5,11 +5,15 @@ import { FlatGrid } from 'react-native-super-grid'
 import { listStyles } from '../../styles/styles'
 
 const List = (props) => {
-    const { listItems, setListDetailsOpen, setSelectedList } = props
+    const { listType, listItems, shelfItems, allItems, navigation } = props
 
-    const showListDetails = (item) => {
-        setSelectedList(item)
-        setListDetailsOpen(true)
+    const goToListDetails = (item) => {
+        navigation.push('ListDetails', {
+            listType: listType, 
+            selectedList: item, 
+            shelfItems: shelfItems, 
+            allItems: allItems
+        })
     }
 
     return (
@@ -23,7 +27,7 @@ const List = (props) => {
                 spacing={20}
                 renderItem={({ item }) => (
                     <TouchableOpacity
-                        onPress={() => showListDetails(item.name)} //passing selected category or storage
+                        onPress={() => goToListDetails(item.name) }
                         style={listStyles.card}
                     >
                         <Image

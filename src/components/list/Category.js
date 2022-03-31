@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Center, View } from 'native-base'
 import List from './List'
-import ListDetails from './ListDetails'
 
 import Bread from '../../../assets/images/icons/Bread.png'
 import CanFood from '../../../assets/images/icons/CanFood.png'
@@ -14,9 +13,7 @@ import Fruits from '../../../assets/images/icons/Fruits.png'
 import { ItemsContext } from '../../context/ItemsContext'
 
 const Category = (props) => {
-    const { shelfItems, allItems } = props
-    const [listDetailsOpen, setListDetailsOpen] = useState(false)
-    const [selectedList, setSelectedList] = useState()
+    const { shelfItems, allItems, navigation } = props
     const [categoryListB, setCategoryList] = useState([])
     // const { categories } = useContext(ItemsContext)
 
@@ -40,21 +37,13 @@ const Category = (props) => {
     return (
         <View backgroundColor={'white'}>
             <Center>
-                {!listDetailsOpen ? (
-                    <List
-                        listItems={categoryList}
-                        setSelectedList={setSelectedList}
-                        setListDetailsOpen={setListDetailsOpen}
-                    />
-                ) : (
-                    <ListDetails
-                        listType="Category"
-                        selectedList={selectedList}
-                        shelfItems={shelfItems}
-                        allItems={allItems}
-                        setListDetailsOpen={setListDetailsOpen}
-                    />
-                )}
+                <List
+                    listType="Category"
+                    listItems={categoryList}
+                    navigation={navigation}
+                    shelfItems={shelfItems}
+                    allItems={allItems}
+                />
             </Center>
         </View>
     )

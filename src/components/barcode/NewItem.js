@@ -14,8 +14,10 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
-import { TextInput, Platform } from 'react-native'
+import { TextInput, Platform, Image } from 'react-native'
 import { theme } from '../../styles/theme'
+import CategoryIcon from '../../../assets/images/icons/categoryIcon.png'
+import CalendarIcon from '../../../assets/images/icons/calendarIcon.png'
 
 //Toast to send messages validations
 import Toast from 'react-native-root-toast'
@@ -457,12 +459,12 @@ const NewItem = ({
                         <Box style={newItemStyles.labelBoxDate}>
                             <HStack style={newItemStyles.counterHBarDate}>
                                 <HStack style={newItemStyles.category}>
-                                    <Icon
-                                        color={'gray'}
-                                        size={16}
-                                        name="shapes"
-                                        style={{ marginRight: 15 }}
-                                    />
+                                <View style={newItemStyles.iconWrapper}>
+                                        <Image 
+                                            source={CategoryIcon}
+                                            alt={'category'}
+                                        />
+                                    </View>
 
                                     <CategoryList
                                         category={category}
@@ -476,17 +478,15 @@ const NewItem = ({
                                     }}
                                 >
                                     <View>
-                                        <Button
+                                    <Button
                                             leftIcon={
-                                                <Icon
-                                                    color={'pink'}
-                                                    size={20}
-                                                    name="calendar"
+                                                <Image 
+                                                    source={CalendarIcon}
+                                                    alt={'calebdar'}
+                                                    onPress={showDatePicker}
                                                 />
                                             }
-                                            style={{
-                                                backgroundColor: 'transparent',
-                                            }}
+                                            style={newItemStyles.iconWrapper}
                                             onPress={showDatePicker}
                                         />
                                         <DateTimePickerModal
