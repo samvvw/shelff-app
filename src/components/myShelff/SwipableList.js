@@ -256,7 +256,17 @@ const SwipableList = (props) => {
                             <Text style={swipableListStyles.btnText}>Donated</Text>
                         </Animated.View>
                     </TouchableOpacity>
-                ) : null}
+                ) : (
+                    <TouchableOpacity
+                        style={[
+                            swipableListStyles.backRightBtn,
+                            swipableListStyles.backRightBtnLeft,
+                            swipableListStyles.expired,
+                        ]}
+                        onPress={onExpire}
+                    >
+                    </TouchableOpacity>
+                )}
 
                 {!leftActionActivated && (
                     <Animated.View
@@ -362,12 +372,6 @@ const SwipableList = (props) => {
 
     return (
         <View style={[swipableListStyles.container, selectedList ? swipableListStyles.containerForList : null]}>
-            {/* selectedList is for Listing, '' is for MyShelff */}
-            {selectedList ? 
-                <Text style={swipableListStyles.header}>{selectedList}</Text> 
-            : null}
-            
-            {items.length === 0 ? <Text style={swipableListStyles.noItem}>No Item</Text> : null}
 
             <SwipeListView
                 keyExtractor={(item) =>

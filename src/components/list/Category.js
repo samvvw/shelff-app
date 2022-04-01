@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Center, View } from 'native-base'
 import List from './List'
-import ListDetails from './ListDetails'
-
 import Bread from '../../../assets/images/icons/Bread.png'
 import CanFood from '../../../assets/images/icons/CanFood.png'
 import Chicken from '../../../assets/images/icons/Chicken.png'
@@ -11,12 +9,9 @@ import Fish from '../../../assets/images/icons/Fish.png'
 import Veggies from '../../../assets/images/icons/Veggies.png'
 import Meat from '../../../assets/images/icons/Meat.png'
 import Fruits from '../../../assets/images/icons/Fruits.png'
-import { ItemsContext } from '../../context/ItemsContext'
+// import { ItemsContext } from '../../context/ItemsContext'
 
-const Category = (props) => {
-    const { shelfItems, allItems } = props
-    const [listDetailsOpen, setListDetailsOpen] = useState(false)
-    const [selectedList, setSelectedList] = useState()
+const Category = ({navigation}) => {
     const [categoryListB, setCategoryList] = useState([])
     // const { categories } = useContext(ItemsContext)
 
@@ -40,21 +35,11 @@ const Category = (props) => {
     return (
         <View backgroundColor={'white'}>
             <Center>
-                {!listDetailsOpen ? (
-                    <List
-                        listItems={categoryList}
-                        setSelectedList={setSelectedList}
-                        setListDetailsOpen={setListDetailsOpen}
-                    />
-                ) : (
-                    <ListDetails
-                        listType="Category"
-                        selectedList={selectedList}
-                        shelfItems={shelfItems}
-                        allItems={allItems}
-                        setListDetailsOpen={setListDetailsOpen}
-                    />
-                )}
+                <List
+                    listType="Category"
+                    listItems={categoryList}
+                    navigation={navigation}
+                />
             </Center>
         </View>
     )

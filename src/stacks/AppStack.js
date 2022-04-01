@@ -13,6 +13,7 @@ import EssentialsAddItemScreen from '../screens/essentials/EssentialsAddItemScre
 import EssentialForm from '../components/essentials/EssentialForm'
 import PersonalInfo from '../screens/profile/PersonalInfo'
 import NotificationsSettings from '../screens/profile/NotificationsSettings'
+import ListDetails from '../components/list/ListDetails'
 
 const Stack = createNativeStackNavigator()
 
@@ -87,6 +88,12 @@ const AppStack = () => {
                     component={NotificationsSettings}
                     options={{ title: 'Set Notifications' }}
                 />
+                <Stack.Screen
+                    name="ListDetails"
+                    component={ListDetails}
+                    options={({ route }) => ({ title: route.params.selectedList })}
+                />
+                
             </Stack.Navigator>
         </NavigationContainer>
     )

@@ -1,12 +1,28 @@
-import React, { useState, useEffect } from 'react'
-import { SafeAreaView, TouchableOpacity, Text } from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
+import { SafeAreaView, View, Image, Text } from 'react-native'
 import { filter } from 'lodash'
 import SwipableList from '../myShelff/SwipableList'
 import { listDetailsStyles } from '../../styles/styles'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const ListDetails = (props) => {
-    const { listType, selectedList, shelfItems, allItems, setListDetailsOpen } = props
+import { UserContext } from '../../context/UserContext'
+import { UserItemsContext } from '../../context/UserItemsContext'
+
+const ListDetails = ({route}) => {
+    const { listType, selectedList } = route.params
+
+    const { user } = useContext(UserContext)
+
+    const {
+        getUserItems,
+        shelfItems: shelfItems,
+        allItems: allItems,
+    } = useContext(UserItemsContext)
+
+    useEffect(() => {
+        if (user.uid) {
+            getUserItems(user.uid)
+        }
+    }, [user])
 
     const [listItems, setListItems] = useState(
         filter(allItems, (item) => {
@@ -28,25 +44,22 @@ const ListDetails = (props) => {
 
     return (
         <SafeAreaView style={listDetailsStyles.container}>
-            <TouchableOpacity
-                onPress={() => setListDetailsOpen(false)}
-                style={listDetailsStyles.goBack}
-            >
-                <Text style={listDetailsStyles.icon}>
-                    <MaterialCommunityIcons
-                        name="chevron-left"
-                        size={30}
-                        color="#535657"
-                    />
-                </Text>
-                <Text style={listDetailsStyles.text}>{listType} List</Text>
-            </TouchableOpacity>
-
+            {listItems.length == 0 ? 
+            <View style={listDetailsStyles.empty}>
+                <Image 
+                    source={require('../../../assets/icon.png')} 
+                    alt={'icon'}
+                    style={listDetailsStyles.image}    
+                />
+                <Text style={listDetailsStyles.text}>{selectedList} is empty.</Text>
+            </View>
+            :
             <SwipableList
                 items={listItems}
                 allItems={allItems}
                 selectedList={selectedList}
             />
+            }
         </SafeAreaView>
     )
 }

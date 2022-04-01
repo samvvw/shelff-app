@@ -6,9 +6,9 @@ const LocationList = ({ location, setLocation }) => {
     return (
         <Select
             w={140}
-            placeholderTextColor="blue"
+            placeholderTextColor='gray.700'
             borderRadius={15}
-            placeholder="Location"
+            placeholder="select location"
             selectedValue={location}
             color={theme.primaryColour.crimson}
             accessibilityLabel="select location"

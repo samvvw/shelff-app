@@ -21,6 +21,8 @@ import {
     getAllItemsInLocalDB,
 } from '../components/barcode/saveItems'
 
+import Logo from '../../assets/images/logo-with-letter.png'
+
 const Sign = ({ navigation }) => {
     const [items, setItems] = useState()
     const {
@@ -79,18 +81,17 @@ const Sign = ({ navigation }) => {
 
     return (
         <View style={signStyles.screenContainer}>
-            <VStack style={signStyles.stack}>
-                <Center style={{ flexGrow: 2 }}>
-                    <Image
-                        style={signStyles.image}
-                        source={require('../../assets/images/FinalShelff-Logo.png')}
-                    />
-                    <Heading style={signStyles.heading}>
-                        <Text style={signStyles.headingText}>Shelff</Text>
-                    </Heading>
-                    <Text style={signStyles.subheading}>
-                        Welcome to Shelff.
-                    </Text>
+                <Center style={signStyles.logoBox}>
+                    <View style={signStyles.image}>
+                        <Image
+                            source={Logo}
+                            alt="Logo"
+                        />
+                        <Text style={signStyles.subheading}>
+                            Welcome to Shelff.
+                        </Text>
+                    </View>
+
                     {error?.code && (
                         <Text>{JSON.stringify(error, null, 2)}</Text>
                     )}
@@ -148,7 +149,6 @@ const Sign = ({ navigation }) => {
                         </Button>
                     </Box>
                 </Center>
-            </VStack>
         </View>
     )
 }

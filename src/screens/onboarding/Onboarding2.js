@@ -15,18 +15,17 @@ const Onboarding2 = ({ navigation, handleNext, handleSkip }) => {
     return (
         <View style={onboardingStyles.screenContainer}>
             <Image
-                source={require('../../../assets/images/onboarding/onboarding2.jpg')}
+                source={require('../../../assets/images/onboarding/onboarding2.png')}
                 alt="onboarding2"
                 style={onboardingStyles.image}
             />
             <View style={onboardingStyles.wrapper}>
                 <View style={onboardingStyles.textWrapper}>
                     <Text style={onboardingStyles.heading}>
-                        How to Discard Items
+                        Manage an Item
                     </Text>
                     <Text style={onboardingStyles.text}>
-                        It is a long established fact that a reader will be
-                        distracted by the readable content of a page.
+                        You can manage your Shelff items individualy by swipping on each card. The status of each item will identify the possible actions for them.
                     </Text>
                 </View>
                 <View style={onboardingStyles.buttonWrapper}>

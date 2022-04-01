@@ -1,15 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Center, View } from 'native-base'
 import List from './List'
-import ListDetails from './ListDetails'
 import Fridge from '../../../assets/images/icons/Fridge.png'
 import Frezzer from '../../../assets/images/icons/Frezzer.png'
 import Pantry from '../../../assets/images/icons/Pantry.png'
 
-const Storage = (props) => {
-    const { shelfItems, allItems } = props
-    const [listDetailsOpen, setListDetailsOpen] = useState(false)
-    const [selectedList, setSelectedList] = useState()
+const Storage = ({navigation}) => {
 
     const storageList = [
         { name: 'Fridge', icon: Fridge },
@@ -20,21 +16,11 @@ const Storage = (props) => {
     return (
         <View backgroundColor={'white'}>
             <Center>
-                {!listDetailsOpen ? (
-                    <List
-                        listItems={storageList}
-                        setSelectedList={setSelectedList}
-                        setListDetailsOpen={setListDetailsOpen}
-                    />
-                ) : (
-                    <ListDetails
-                        listType="Storage"
-                        selectedList={selectedList}
-                        shelfItems={shelfItems}
-                        allItems={allItems}
-                        setListDetailsOpen={setListDetailsOpen}
-                    />
-                )}
+                <List
+                    listType="Storage"
+                    listItems={storageList}
+                    navigation={navigation}
+                />
             </Center>
         </View>
     )

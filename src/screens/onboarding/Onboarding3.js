@@ -11,31 +11,22 @@ const Onboarding3 = ({ navigation, handleSkip }) => {
     return (
         <View style={onboardingStyles.screenContainer}>
             <Image
-                source={require('../../../assets/images/onboarding/onboarding3.jpg')}
+                source={require('../../../assets/images/onboarding/onboarding3.png')}
                 alt="onboarding3"
                 style={onboardingStyles.image}
             />
             <View style={onboardingStyles.wrapper}>
                 <View style={onboardingStyles.textWrapper}>
                     <Text style={onboardingStyles.heading}>
-                        Learn Preservation Tips
+                        Essential List
                     </Text>
                     <Text style={onboardingStyles.text}>
-                        It is a long established fact that a reader will be
-                        distracted by the readable content of a page.
+                        You can create an essential item list by toggling on the related button which you can edit on the item detailed page. This feature will help you to add the items in the future.
                     </Text>
                 </View>
                 <View style={onboardingStyles.buttonWrapper}>
-                    <TouchableOpacity
-                        onPress={toGetStarted}
-                        style={onboardingStyles.button}
-                    >
-                        <Text style={onboardingStyles.buttonText}>
-                            Continue
-                        </Text>
-                    </TouchableOpacity>
                     <Text onPress={toGetStarted} style={onboardingStyles.skip}>
-                        Skip
+                        Next
                     </Text>
                 </View>
             </View>

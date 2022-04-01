@@ -7,18 +7,29 @@ export const onboardingStyle = StyleSheet.create({
         height: screenHeight,
         width: screenWidth,
         flex: 1,
+        backgroundColor: 'white',
     },
     image: {
         width: '100%',
-        height: '50%',
+        height: '55%',
+    },
+    logoImage: {
+        width: '100%',
+        height: '55%',
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     },
     wrapper: {
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginHorizontal: 30,
+        marginHorizontal: 40,
         marginTop: 40,
         marginBottom: 30,
+    },
+    wrapperGS: {
+        marginBottom: 60,
     },
     textWrapper: {
         width: '100%',
@@ -31,7 +42,8 @@ export const onboardingStyle = StyleSheet.create({
         fontSize: 24,
     },
     text: {
-        fontSize: 18,
+        fontSize: 16,
+        textAlign: 'center',
     },
     buttonWrapper: {
         width: '100%',
