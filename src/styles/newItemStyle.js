@@ -13,7 +13,7 @@ export const newItemStyle = StyleSheet.create({
         backgroundColor: 'white',
     },
     iconWrapper: {
-        backgroundColor: 'lightgray',
+        backgroundColor: theme.secondaryColour.chip,
         borderRadius: 50,
         marginRight: 5,
         paddingRight: 8,
@@ -131,4 +131,7 @@ export const newItemStyle = StyleSheet.create({
         paddingTop: 10,
         marginBottom: 15,
     },
+    buttonText: {
+        color: 'white',
+    }
 })

@@ -23,7 +23,7 @@ const LocationList = ({ location, setLocation }) => {
             }
         >
             <Select.Item label="Fridge" value="1" />
-            <Select.Item label="Frezzer" value="2" />
+            <Select.Item label="Freezer" value="2" />
             <Select.Item label="Pantry" value="3" />
         </Select>
     )

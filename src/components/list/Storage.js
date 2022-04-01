@@ -2,14 +2,14 @@ import React from 'react'
 import { Center, View } from 'native-base'
 import List from './List'
 import Fridge from '../../../assets/images/icons/Fridge.png'
-import Frezzer from '../../../assets/images/icons/Frezzer.png'
+import Freezer from '../../../assets/images/icons/Freezer.png'
 import Pantry from '../../../assets/images/icons/Pantry.png'
 
 const Storage = ({navigation}) => {
 
     const storageList = [
         { name: 'Fridge', icon: Fridge },
-        { name: 'Freezer', icon: Frezzer },
+        { name: 'Freezer', icon: Freezer },
         { name: 'Pantry', icon: Pantry },
     ]
 
