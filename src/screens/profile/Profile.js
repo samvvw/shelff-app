@@ -64,7 +64,7 @@ export function Profile({ navigation }) {
                     colorScheme={'secondary'}
                     onPress={() => navigation.push('SetNotifications')}
                 >
-                    <Text fontSize={'lg'}>Push Notifications</Text>
+                    <Text fontSize={'lg'}>Notifications</Text>
                 </Button>
                 <Divider
                     width={'90%'}

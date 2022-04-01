@@ -407,7 +407,7 @@ const ManualEntryItem = ({ navigation }) => {
                                             leftIcon={
                                                 <Image 
                                                     source={CalendarIcon}
-                                                    alt={'calebdar'}
+                                                    alt={'calendar'}
                                                     onPress={showDatePicker}
                                                 />
                                             }
@@ -507,7 +507,7 @@ const ManualEntryItem = ({ navigation }) => {
                             onPress={() => handleDone()}
                             style={newItemStyles.saveButton}
                         >
-                            <Text>Done</Text>
+                            <Text style={newItemStyles.buttonText}>Done</Text>
                         </Button>
                         {/* <Button
                             onPress={() => handleSaveContinue()}

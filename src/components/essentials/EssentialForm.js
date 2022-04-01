@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     Text,
     Platform,
+    Image
 } from 'react-native'
 import LocationList from '../elements/LocationList'
 import QuantityCounter from './QuantityCounter'
@@ -16,6 +17,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import { UserContext } from '../../context/UserContext'
 import { UserItemsContext } from '../../context/UserItemsContext'
 import { ItemsContext } from '../../context/ItemsContext'
+import CategoryIcon from '../../../assets/images/icons/categoryIcon.png'
+import CalendarIcon from '../../../assets/images/icons/calendarIcon.png'
 
 const EssentialForm = ({ navigation, route }) => {
     const { user } = useContext(UserContext)
@@ -160,7 +163,12 @@ const EssentialForm = ({ navigation, route }) => {
                     <View style={styles.row}>
                         {item?.categoryId && (
                             <View style={styles.pair}>
-                                <View style={styles.icon}></View>
+                                    <View style={styles.iconWrapper}>
+                                        <Image 
+                                            source={CategoryIcon}
+                                            alt={'category'}
+                                        />
+                                    </View>
                                 <Text>{category}</Text>
                             </View>
                         )}
@@ -169,15 +177,13 @@ const EssentialForm = ({ navigation, route }) => {
                             <View>
                                 <Button
                                     leftIcon={
-                                        <Icon
-                                            color={'pink'}
-                                            size={20}
-                                            name="calendar"
+                                        <Image 
+                                            source={CalendarIcon}
+                                            alt={'calendar'}
+                                            onPress={showDatePicker}
                                         />
                                     }
-                                    style={{
-                                        backgroundColor: 'transparent',
-                                    }}
+                                    style={styles.iconWrapper}
                                     onPress={showDatePicker}
                                 />
                                 <DateTimePickerModal
@@ -275,6 +281,15 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         marginVertical: 20,
+    },
+    iconWrapper: {
+        backgroundColor: 'transparent',
+        borderRadius: 50,
+        marginRight: 5,
+        paddingRight: 8,
+        paddingLeft: 8,
+        paddingTop: 8,
+        paddingBottom: 8,
     },
     pair: {
         flexDirection: 'row',

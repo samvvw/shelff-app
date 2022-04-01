@@ -16,6 +16,10 @@ export const listStyle = StyleSheet.create({
         padding: 15,
         flex: 1,
         justifyContent: 'space-between',
+        shadowColor: '#999',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 1,
     },
     image: {
         width: 80,

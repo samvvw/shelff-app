@@ -114,6 +114,10 @@ const styles = new StyleSheet.create({
         margin: 20,
         marginBottom: 40,
         elevation: 5,
+        shadowColor: '#999',
+        shadowOffset: { width: 0, height: 35 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
     },
     rowFrontVisible: {
         backgroundColor: 'white',
