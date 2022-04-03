@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     buttonsContainer: {
-        marginTop: 20,
+        // marginTop: 20,
     },
 })
 
