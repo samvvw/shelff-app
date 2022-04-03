@@ -133,5 +133,5 @@ export const newItemStyle = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-    }
+    },
 })

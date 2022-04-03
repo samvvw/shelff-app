@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     Text,
     Platform,
-    Image
+    Image,
 } from 'react-native'
 import LocationList from '../elements/LocationList'
 import QuantityCounter from './QuantityCounter'
@@ -19,11 +19,13 @@ import { UserItemsContext } from '../../context/UserItemsContext'
 import { ItemsContext } from '../../context/ItemsContext'
 import CategoryIcon from '../../../assets/images/icons/categoryIcon.png'
 import CalendarIcon from '../../../assets/images/icons/calendarIcon.png'
+import { newItemStyles } from '../../styles/styles'
 
 const EssentialForm = ({ navigation, route }) => {
     const { user } = useContext(UserContext)
     const { addUserItemList } = useContext(UserItemsContext)
     const { categories } = useContext(ItemsContext)
+    const [loading, setLoading] = useState(false)
 
     const todayDate = new Date()
     const { item } = route.params
@@ -73,6 +75,7 @@ const EssentialForm = ({ navigation, route }) => {
 
     const onSubmit = async () => {
         if (currentDate && location && quantity) {
+            setLoading(true)
             if (user?.uid) {
                 await sendUserItemToServer()
             } else {
@@ -90,7 +93,7 @@ const EssentialForm = ({ navigation, route }) => {
                     },
                 ])
             }
-
+            setLoading(false)
             navigation.navigate('VerticalMenu')
         }
     }
@@ -163,12 +166,12 @@ const EssentialForm = ({ navigation, route }) => {
                     <View style={styles.row}>
                         {item?.categoryId && (
                             <View style={styles.pair}>
-                                    <View style={styles.iconWrapper}>
-                                        <Image 
-                                            source={CategoryIcon}
-                                            alt={'category'}
-                                        />
-                                    </View>
+                                <View style={styles.iconWrapper}>
+                                    <Image
+                                        source={CategoryIcon}
+                                        alt={'category'}
+                                    />
+                                </View>
                                 <Text>{category}</Text>
                             </View>
                         )}
@@ -177,7 +180,7 @@ const EssentialForm = ({ navigation, route }) => {
                             <View>
                                 <Button
                                     leftIcon={
-                                        <Image 
+                                        <Image
                                             source={CalendarIcon}
                                             alt={'calendar'}
                                             onPress={showDatePicker}
@@ -228,13 +231,24 @@ const EssentialForm = ({ navigation, route }) => {
                         />
                     </View>
                     <View style={styles.buttonsContainer}>
-                        <TouchableOpacity onPress={() => onSubmit()}>
+                        {/* <TouchableOpacity onPress={() => onSubmit()}>
                             <View style={[styles.button, styles.primary]}>
                                 <Text style={{ color: 'white' }}>
                                     Add to my shelf
                                 </Text>
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                        <Button
+                            onPress={() => onSubmit()}
+                            style={[
+                                newItemStyles.saveButton,
+                                styles.button,
+                                styles.primary,
+                            ]}
+                            isLoading={loading}
+                        >
+                            <Text style={[newItemStyles.buttonText]}>Done</Text>
+                        </Button>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
                             <View style={styles.button}>
                                 <Text>Cancel</Text>
@@ -273,6 +287,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 8,
         backgroundColor: '#e8e8e8',
+        height: 50,
     },
     primary: {
         backgroundColor: '#ed4074',
