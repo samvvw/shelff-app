@@ -23,7 +23,7 @@ const initialState = {
     auth: {},
     token: '',
     idToken: '',
-    loading: true,
+    loading: false,
 }
 
 export const UserContext = createContext(initialState)
