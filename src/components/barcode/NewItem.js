@@ -53,6 +53,7 @@ const NewItem = ({
 }) => {
     const { addNewItemToDB, locations } = useContext(ItemsContext)
     const { addUserItemList } = useContext(UserItemsContext)
+    const [loading, setLoading] = useState(false)
 
     const { user } = useContext(UserContext)
     /*states to save data from user*/
@@ -190,6 +191,7 @@ const NewItem = ({
     const handleDoneScanning = async () => {
         const msg = handleValidation()
         if (msg === '') {
+            setLoading(true)
             //save all items in server database
             console.log('arrayItems', arrItems)
             // console.log('user in new item', user)
@@ -322,6 +324,7 @@ const NewItem = ({
             }
 
             setArrItems([])
+            setLoading(false)
             navigation.push('VerticalMenu')
         }
     }
@@ -459,8 +462,8 @@ const NewItem = ({
                         <Box style={newItemStyles.labelBoxDate}>
                             <HStack style={newItemStyles.counterHBarDate}>
                                 <HStack style={newItemStyles.category}>
-                                <View style={newItemStyles.iconWrapper}>
-                                        <Image 
+                                    <View style={newItemStyles.iconWrapper}>
+                                        <Image
                                             source={CategoryIcon}
                                             alt={'category'}
                                         />
@@ -478,9 +481,9 @@ const NewItem = ({
                                     }}
                                 >
                                     <View>
-                                    <Button
+                                        <Button
                                             leftIcon={
-                                                <Image 
+                                                <Image
                                                     source={CalendarIcon}
                                                     alt={'calebdar'}
                                                     onPress={showDatePicker}
@@ -586,6 +589,7 @@ const NewItem = ({
                         <Button
                             onPress={() => handleDoneScanning()}
                             style={newItemStyles.saveButton}
+                            isLoading={loading}
                         >
                             <Text style={newItemStyles.saveButtonText}>
                                 Done
