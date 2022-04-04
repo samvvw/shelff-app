@@ -99,6 +99,8 @@ export const newItemStyle = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: theme.primaryColour.crimson,
         borderRadius: 10,
+        height: 50,
+        marginTop: 20,
     },
     saveButtonText: {
         color: 'white',
@@ -108,6 +110,7 @@ export const newItemStyle = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         borderColor: theme.primaryColour.crimson,
+        height: 50,
     },
     moreItemsButtonText: {
         color: theme.primaryColour.crimson,
@@ -133,5 +136,5 @@ export const newItemStyle = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-    }
+    },
 })

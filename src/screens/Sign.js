@@ -22,6 +22,7 @@ import {
 } from '../components/barcode/saveItems'
 
 import Logo from '../../assets/images/logo-with-letter.png'
+import Loader from '../components/loader/Loader'
 
 const Sign = ({ navigation }) => {
     const [items, setItems] = useState()
@@ -32,6 +33,7 @@ const Sign = ({ navigation }) => {
         error,
         apolloError,
         user,
+        loading,
     } = useContext(UserContext)
     const { addUserItemList } = useContext(UserItemsContext)
 
@@ -80,76 +82,81 @@ const Sign = ({ navigation }) => {
     }, [items])
 
     return (
-        <View style={signStyles.screenContainer}>
-                <Center style={signStyles.logoBox}>
-                    <View style={signStyles.image}>
-                        <Image
-                            source={Logo}
-                            alt="Logo"
-                        />
-                        <Text style={signStyles.subheading}>
-                            Welcome to Shelff.
-                        </Text>
-                    </View>
+        <>
+            {loading && <Loader />}
+            {!loading && token?.length === 0 && (
+                <View style={signStyles.screenContainer}>
+                    <Center style={signStyles.logoBox}>
+                        <View style={signStyles.image}>
+                            <Image source={Logo} alt="Logo" />
+                            <Text style={signStyles.subheading}>
+                                Welcome to Shelff.
+                            </Text>
+                        </View>
 
-                    {error?.code && (
-                        <Text>{JSON.stringify(error, null, 2)}</Text>
-                    )}
-                    {apolloError && (
-                        <Text>
-                            Apollo error: {JSON.stringify(apolloError, null, 2)}
-                        </Text>
-                    )}
-                </Center>
+                        {error?.code && (
+                            <Text>{JSON.stringify(error, null, 2)}</Text>
+                        )}
+                        {apolloError && (
+                            <Text>
+                                Apollo error:{' '}
+                                {JSON.stringify(apolloError, null, 2)}
+                            </Text>
+                        )}
+                    </Center>
 
-                <Center style={signStyles.buttonBox}>
-                    <Button
-                        style={signStyles.button}
-                        onPress={() => onSignUp()}
-                        size={'lg'}
-                    >
-                        Create your Account
-                    </Button>
-                    <Text textAlign={'center'}>OR</Text>
-                    <Button
-                        style={signStyles.buttonOutline}
-                        disabled={!googleRequest}
-                        onPress={() => googlePromptAsync()}
-                        variant="outline"
-                        colorScheme="primary"
-                        size={'lg'}
-                        leftIcon={
-                            <Icon
-                                style={signStyles.buttonText}
-                                as={AntDesign}
-                                name="google"
-                                size={'sm'}
-                            />
-                        }
-                    >
-                        <Text style={signStyles.buttonText}>
-                            Continue with Google
-                        </Text>
-                    </Button>
-                    <Box style={signStyles.loginButtonBox}>
+                    <Center style={signStyles.buttonBox}>
                         <Button
-                            onPress={toLogin}
-                            style={signStyles.buttonLink}
-                            variant="ghost"
-                            endIcon={
+                            style={signStyles.button}
+                            onPress={() => onSignUp()}
+                            size={'lg'}
+                        >
+                            Create your Account
+                        </Button>
+                        <Text textAlign={'center'}>OR</Text>
+                        <Button
+                            style={signStyles.buttonOutline}
+                            disabled={!googleRequest}
+                            onPress={() => googlePromptAsync()}
+                            variant="outline"
+                            colorScheme="primary"
+                            size={'lg'}
+                            leftIcon={
                                 <Icon
                                     style={signStyles.buttonText}
                                     as={AntDesign}
-                                    name="right"
+                                    name="google"
                                     size={'sm'}
                                 />
                             }
                         >
-                            <Text style={signStyles.buttonText}>Log In</Text>
+                            <Text style={signStyles.buttonText}>
+                                Continue with Google
+                            </Text>
                         </Button>
-                    </Box>
-                </Center>
-        </View>
+                        <Box style={signStyles.loginButtonBox}>
+                            <Button
+                                onPress={toLogin}
+                                style={signStyles.buttonLink}
+                                variant="ghost"
+                                endIcon={
+                                    <Icon
+                                        style={signStyles.buttonText}
+                                        as={AntDesign}
+                                        name="right"
+                                        size={'sm'}
+                                    />
+                                }
+                            >
+                                <Text style={signStyles.buttonText}>
+                                    Log In
+                                </Text>
+                            </Button>
+                        </Box>
+                    </Center>
+                </View>
+            )}
+        </>
     )
 }
 

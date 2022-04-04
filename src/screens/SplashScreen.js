@@ -55,10 +55,7 @@ const SplashScreen = ({ navigation }) => {
                     backgroundColor: '#f2f2f2',
                 }}
             /> */}
-                <Image
-                    source={Logo}
-                    alt={"logo"}
-                />
+            <Image source={Logo} alt={'logo'} />
         </View>
     )
 }

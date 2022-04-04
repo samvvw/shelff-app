@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { useState, useEffect } from 'react'
 import { newItemStyles } from '../../styles/styles'
-import { theme } from "../../styles/theme"
+import { theme } from '../../styles/theme'
 import { TextInput, Platform, Image } from 'react-native'
 import CategoryIcon from '../../../assets/images/icons/categoryIcon.png'
 import CalendarIcon from '../../../assets/images/icons/calendarIcon.png'
@@ -48,6 +48,7 @@ const ManualEntryItem = ({ navigation }) => {
     const [counter, setCounter] = useState(1)
     const [essential, setEssential] = useState(false)
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     /****************************** */
     /*Date picker*/
@@ -187,6 +188,7 @@ const ManualEntryItem = ({ navigation }) => {
     const handleDone = async () => {
         const msg = handleValidation()
         if (msg === '') {
+            setLoading(true)
             const item = await addItemToServer()
             if (user?.uid) {
                 await sendUserItemsToServer(item)
@@ -194,6 +196,7 @@ const ManualEntryItem = ({ navigation }) => {
                 sendItemtoLocalStorage()
             }
 
+            setLoading(false)
             navigation.push('VerticalMenu')
             setNotification(
                 itemName,
@@ -385,7 +388,7 @@ const ManualEntryItem = ({ navigation }) => {
                             <HStack style={newItemStyles.counterHBarDate}>
                                 <HStack style={newItemStyles.category}>
                                     <View style={newItemStyles.iconWrapper}>
-                                        <Image 
+                                        <Image
                                             source={CategoryIcon}
                                             alt={'category'}
                                         />
@@ -405,7 +408,7 @@ const ManualEntryItem = ({ navigation }) => {
                                     <View>
                                         <Button
                                             leftIcon={
-                                                <Image 
+                                                <Image
                                                     source={CalendarIcon}
                                                     alt={'calendar'}
                                                     onPress={showDatePicker}
@@ -506,6 +509,7 @@ const ManualEntryItem = ({ navigation }) => {
                         <Button
                             onPress={() => handleDone()}
                             style={newItemStyles.saveButton}
+                            isLoading={loading}
                         >
                             <Text style={newItemStyles.buttonText}>Done</Text>
                         </Button>
