@@ -145,17 +145,25 @@ export const UserItemsProvider = ({ children }) => {
     }
 
     // Remove userItem
-    const [removeUserItemRequest] = useMutation(REMOVE_USER_ITEM)
+    const [removeUserItemRequest, removeUserItemResponse] =
+        useMutation(REMOVE_USER_ITEM)
 
     const removeUserItem = (itemId, userId, creationDate) => {
+        // const formattedCreationDate = new Date(+creationDate)
+        //     .toLocaleString(undefined, {
+        //         dateStyle: 'short',
+        //         hour12: false,
+        //         timeStyle: 'medium',
+        //     })
+        //     .replace(/\//g, '-')
+        //     .replace(',', '')
         const formattedCreationDate = new Date(+creationDate)
-            .toLocaleString(undefined, {
-                dateStyle: 'short',
-                hour12: false,
-                timeStyle: 'medium',
-            })
-            .replace(/\//g, '-')
-            .replace(',', '')
+            .toISOString()
+            .replace(/T/, ' ')
+            .replace(/\..+/, '')
+
+        console.log('>>>>>>dateee', formattedCreationDate)
+
         removeUserItemRequest({
             variables: {
                 itemId,
